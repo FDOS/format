@@ -1,11 +1,11 @@
 /*
 // Program:  Format
 // Written By:  Brian E. Reifsnyder
-// Version:  0.91s
+// Version:  0.91v
 // (0.90b ... 0.90f and 0.91b ... 0.91j are updates by Eric Auer 2003)
 // (0.91k ... are by Eric Auer 2004)
 // (0.91t ... are by Eric Auer 2005)
-// Copyright:  2002-2005 under the terms of the GNU GPL, Version 2.
+// Copyright:  2002-2006 under the terms of the GNU GPL, Version 2.
 // Module Name:  FORMAT.H
 // Module Description:  Main header file for format.
 */
@@ -17,7 +17,7 @@
 */
 
 #define NAME "Format"
-#define VERSION "0.91u" /* the only update 0.91o -> 0.91u in this file... */
+#define VERSION "0.91v" /* the only update 0.91o -> 0.91u in this file... */
 
 
 #ifdef MAIN

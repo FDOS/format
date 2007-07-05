@@ -1,12 +1,13 @@
 /*
 // Program:  Format
-// Version:  0.91u
+// Version:  0.91v
 // (0.90b/c/d - better error messages - Eric Auer - May 2003)
 // (0.91b..g - Eric Auer 2003 / 0.91k ... Eric Auer 2004)
 // (0.91t - message tuning - EA 2005)
 // (0.91u - label charset check, Watcom / ... country support - EA 2005)
+// (0.91v - year 2006, nicer Ask_User_To_Insert_Disk - EA 2006)
 // Written By:  Brian E. Reifsnyder
-// Copyright:  2002-2005 under the terms of the GNU GPL, Version 2
+// Copyright:  2002-2006 under the terms of the GNU GPL, Version 2
 // Module Name:  userint.c
 // Module Description:  User interfacing functions.
 */
@@ -133,9 +134,11 @@ void ASCII_CD_Number(unsigned long number)
 void Ask_User_To_Insert_Disk()
 {
   printf(" Insert new diskette for drive %c:\n",param.drive_letter[0]);
+  if (!isatty(1)) write(2, " Insert new disk please,\n",25);	/* 0.91v */
   write(isatty(1) ? 1 : 2,
-    " Press ENTER when the right disk is in drive...\n", 48);
+    " Press ENTER when the right disk is in drive...", 47);
   /* write to STDERR for the case of STDOUT being redirected */
+  if (!isatty(1)) write(2, "\n", 1);
 
   /* Wait for a key */
 
@@ -168,7 +171,8 @@ void Confirm_Hard_Drive_Formatting(int format) /* 0 unformat, 1 format */
 #define KEYGET_ECHO regs.h.ah = 0x07; /* Get keypress, upcase and echo */ \
   intdos(&regs, &regs); \
   regs.h.al = toupper(regs.h.al); \
-  printf("%c",regs.h.al)
+  if (regs.h.al>7) printf("%c",regs.h.al)
+  /* 0.91v: suppress displaying of a few control chars - like 3, Ctrl C */
 
   KEYGET_ECHO;
   if ( regs.h.al != 'Y' )
@@ -479,7 +483,7 @@ void Display_Help_Screen(int detailed)
 {
   printf("FreeDOS %6s Version %s\n",NAME,VERSION);
   printf("Written by Brian E. Reifsnyder, Eric Auer and others.\n");
-  printf("Copyright 1999 - 2005 under the terms of the GNU GPL, Version 2.\n\n");
+  printf("Copyright 1999 - 2006 under the terms of the GNU GPL, Version 2.\n\n");
 
   if (detailed)
     printf("Syntax (see documentation for more details background information):\n\n");
@@ -531,7 +535,7 @@ void Display_Help_Screen(int detailed)
   printf("This FORMAT is made for the http://www.freedos.org/ project.\n");
   printf("  See http://www.gnu.org/ for information about GNU GPL license.\n");
   printf("Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n");
-  printf("  Maintainer for 0.90 / 0.91 2003-2005: Eric Auer <eric@coli.uni-sb.de>\n");
+  printf("  Maintainer for 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n");
   printf("Contributors: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n");
   printf("  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n\n");
 
@@ -590,6 +594,12 @@ void Display_Help_Screen(int detailed)
 
 void Display_Percentage_Formatted(unsigned long percentage)
 {
+#if I_AM_ALAIN
+  /* support abort with Ctrl-C (can spoil ESC handling) */
+  /* note that you can always abort with Ctrl-Break...  */
+  while (my_kbhit()) { if (my_getch() == 3) Exit(3,3); }
+#endif
+
   if (debug_prog==TRUE)
     {
     printf("%3d%% ", percentage);

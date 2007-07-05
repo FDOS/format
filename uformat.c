@@ -1,12 +1,13 @@
 /*
 // Program:  Format
-// Version:  0.91t
+// Version:  0.91v
 // (0.90b/c/d fixing compiler warnings - Eric Auer 2003)
 // (0.91b..i all kinds of fixes and clean-ups - Eric Auer 2003)
 // (0.91k... Eric Auer 2004 (no updates in o/p/q))
 // (0.91t - some message tuning, conio removed - Eric Auer 2005)
+// (0.91v - small "error in track 0" optimization - Eric Auer 2006)
 // Written By:  Brian E. Reifsnyder
-// Copyright:  2002-2005 under the terms of the GNU GPL, Version 2
+// Copyright:  2002-2006 under the terms of the GNU GPL, Version 2
 // Module Name:  uformat.c
 // Module Description:  Unconditional Format Functions
 */
@@ -82,15 +83,15 @@ void Unconditional_Floppy_Format()
     {
     /* is it correct that ONE SIDED means "head 0 only" ? */
     buggy += Format_Floppy_Cylinder(index, 0);
-    if ( (parameter_block.bpb.number_of_heads==2) &&
-         ((buggy==0) || (index!=0)) ) /* bugs only allowed in tracks > 0 */
-      buggy += Format_Floppy_Cylinder(index, 1);
 
     if ((index==0) && (buggy>0)) /* -ea */
       {
       printf("Format error in track 0, giving up.\n");
       Exit(4,35);
       }
+
+    if (parameter_block.bpb.number_of_heads==2)
+      buggy += Format_Floppy_Cylinder(index, 1);
 
     percentage = (100*index) / cylinders;
 
@@ -111,20 +112,22 @@ void Unconditional_Floppy_Format()
 }
 
 
-/* Changed 0.91k: processing I/O errors properly in surface scan */
+
+/* Format harddisk, do a surface scan / wipe. Always 512 bytes per sector! */
 void Unconditional_Hard_Disk_Format()
-{
-  /* int error_code; */
+{	/* Bugfix 0.91k: process I/O errors properly in surface scan. */
   int number_of_sectors;
   char correct_sector[512]; /* new in 0.91g, faster */
 
   unsigned long percentage_old = 999;
+  unsigned long mbytes_old = 999;	/* 0.91v */
 
   unsigned index = 0;
 
   unsigned long last_bad_sector;
   unsigned long sector_number;
   unsigned long percentage;
+  unsigned long mbytes;			/* 0.91v */
 
   unsigned long max_logical_sector = parameter_block.bpb.total_sectors; /* assume 16bit first */
    
@@ -239,9 +242,19 @@ void Unconditional_Hard_Disk_Format()
       ( sector_number / (max_logical_sector/100UL) ) ;
       /* improved in 0.91g+ */
 
+    mbytes = sector_number / (1024L*1024/512);	/* 0.91v */
+
+    if (mbytes!=mbytes_old)	/* 0.91v: more frequent update for large disks */
+      {
+      mbytes_old = mbytes;
+      printf("%lu MBytes ", mbytes);	/* 0.91v */
+      Display_Percentage_Formatted(percentage);
+      }
+
     if (percentage!=percentage_old)
       {
       percentage_old = percentage;
+      printf("%lu MBytes ", mbytes);	/* 0.91v */
       Display_Percentage_Formatted(percentage);
       if (badsec1 != 0)
         { /* added better output -ea */
@@ -249,9 +262,8 @@ void Unconditional_Hard_Disk_Format()
         badsec2 += badsec1;
         badsec1 = 0;
         }
-      if ( (sector_number > 0x11000UL) && (percentage != 0) &&
-           my_kbhit() && (my_getch() == 27) ) /* 0.91g+ */
-        {
+      if ( (sector_number > 0x11000UL) && my_kbhit() && (my_getch() == 27) )
+        {	/* surface scan / wipe abort possibility added 0.91g+ */
         printf("\nESC pressed - skipping surface scan!\n");
         sector_number = max_logical_sector;
         }

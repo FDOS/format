@@ -1,14 +1,15 @@
 /*
 // Program:  Format
-// Version:  0.91u
+// Version:  0.91v
 // (0.91b/c/d - DMA in track_address_fields fix - Eric Auer May 2003)
 // (0.91e/f - more formats, better media type setting - Eric Auer)
 // (0.91g/h/i - using BPB in more consistent way - Eric Auer Dec 2003)
 // (0.91k ... - Eric Auer 2004)
 // (0.91t - treat int 13.8 drive type BL 10 ATAPI as 1440k floppy - EA 2005)
 // (0.91u - support for Watcom C, using #defines from FreeDOS kernel - 2005)
+// (0.91v - expect disk change error at 13.5..., gap len info - EA Jan 2006)
 // Written By:  Brian E. Reifsnyder
-// Copyright:  2002-2005 under the terms of the GNU GPL, Version 2
+// Copyright:  2002-2006 under the terms of the GNU GPL, Version 2
 // Module:  floppy.c
 // Description:  Floppy disk specific functions.
 */
@@ -201,6 +202,7 @@ int Format_Floppy_Cylinder(int cylinder,int head)
     printf("[DEBUG]  Formatting: Cylinder: %2d  Head: %2d  Sectors: %2d\n",
       cylinder, head, secPerTrack);
 
+  track0again:
   /* Format the Track */
   result = 0;
   regs.h.ah = 0x05;
@@ -216,6 +218,10 @@ int Format_Floppy_Cylinder(int cylinder,int head)
   result = (regs.x.cflag) ? (regs.h.ah) : 0;	/* cflag check added 0.91s */
 
   if (result!=0) {
+    if ((result == 6) && (cylinder == 0)) {	/* expected disk change 0.91v */
+      if (debug_prog==TRUE) printf("[DEBUG]  New disk found...\n");
+      goto track0again;
+    }
     printf("Format_Floppy_Cylinder( head=%d cylinder=%d ) sectors=%d [int 13.5]\n",
       head, cylinder, secPerTrack );
     Critical_Error_Handler(BIOS, result); /* this would abort, no? */
@@ -301,7 +307,7 @@ retry:
 	      ( (cylinder * (parameter_block.bpb.number_of_heads) )
 	      * parameter_block.bpb.sectors_per_cylinder)
 	      + (head * parameter_block.bpb.sectors_per_cylinder)
-	      + sector_index;
+	      + (sector_index - 1);	/* off by 1 fixed 0.91v, thanks Alain! */
 
 	    bad_sector_map_pointer++;
 	    drive_statistics.bad_sectors++;
@@ -797,7 +803,10 @@ void Set_Floppy_Media_Type()
 !   regs.x.cflag = 0;
 #endif
     RestoreDDPT();
-    int86x(0x13, &regs, &regs, &sregs); /* FUNC 18 (AT): SET GEOMETRY */
+    do
+      {
+      int86x(0x13, &regs, &regs, &sregs); /* FUNC 18 (AT): SET GEOMETRY */
+      } while ((regs.x.cflag != 0) && (regs.h.ah == 6));	/* 0.91v */
     /* 40x[1,2]x8 (?), 80x2x[18,36]: 120, 320, 1440, 2880k */
 
     /* replaced CFLAG check by AH check in 0.91s: RBIL "uses" no CF for 13.18! */
@@ -937,6 +946,8 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
       {
       /* *** values from Ch. Hochstaetters FDFORMAT/88 1.8 *** */
       /* *** those values are for interleave 2, but we use 3. Problem??? *** */
+      /* 2M (postcardware by Ciriaco Garcia de Celis) would use roughly the  */
+      /* value: gap_len = ( (25*kbps)-(62+(sectors*512))-142-32 ) / sectors  */
       case 8:  gap_len = 0x58; break;  /* 160k and 320k */
       case 9:  gap_len = 0;    break;  /* (360k/720k: 0x50 / my BIOS: 0x2a) */
       case 10: gap_len = 0x2e; break;  /* 400k */
@@ -944,8 +955,11 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
       case 18: gap_len = 0;    break;  /* (1440k: 0x6c / my BIOS: 0x1b) */
       case 19:
       case 20: gap_len = 0x2a; break; /* (unused) */
-      case 21: gap_len = 0x0c; break; /* > 1440k. Smaller gap than 30 or 40! */
+      case 21: gap_len = 0x0c; break; /* > 1440k. Smaller gap than 30 or 40!  */
                                       /* small gap only works with interleave */
+      case 22: gap_len = 22;   break; /* Hmmm... Ciri would say 45? Unused!   */
+      case 23: gap_len = 20;   break; /* Ciri's formula: Not yet used. 0.91v  */
+        /* 2M uses direct hardware access. 23 sectors/track is really a limit */
       default: gap_len = 0;
       } /* case */
 

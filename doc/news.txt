@@ -2,6 +2,21 @@ NEWS.TXT
 
 Version History:
 
+Version 0.91v (14 Jan 2006)
+              Changes by Eric Auer fixing bugs found by Alain Mouette:
+              - fixed prf.c, which had no %h... short int modifier support
+              - do not attempt to let DOS read the BPB (int 21.32) of a
+                disk which has a readable but nonsensical boot sector
+              - avoid truename subst/join check on possibly lowlevel-
+                unformatted a:/b: (seems to be no problem on harddisks)
+              - return errorlevel 1 if bad clusters found during format,
+                but only if /d or /y or /z:seriously option active
+              - fixed off by one diskette bad sector map recording bug
+              - allow disk change right before start of lowlevel format
+              - nicer Ask_User_To_Insert_Disk in redirected-output case
+              - small floppy changes, new notes about gap length / 2M
+              - more frequent progress info update in harddisk wipe (/u)
+
 Version 0.91u (27 Apr 2005 / 25 May 2005)
               Changes by Eric Auer ("charset research" by Wilhelm Spiegl)
               - volume label prompt and volume label command line option

@@ -97,10 +97,12 @@ FORMAT /U. FASTEST mode is FORMAT /Q /U because it skips unformat backups.
 If you only want to create mirror data without formatting the disk, use
 FreeDOS MIRROR or the /Z:mirror flag. Read the warning for /Z:mirror above!
 
-Errorlevels: 0 okay, 3 user abort, 4 format error, 5 user did not confirm
+Errorlevels: 0 okay, 1 bad sectors detected (only if /y or /d), 2 help
+screen shown or syntax error, 3 user abort, 4 format error, 5 user did
+not confirm. Errorlevels 1 and 2 are extensions beyond MS FORMAT style.
 If you use the /D flag, errorlevels will be different. They will be
 specific to the particular FORMAT version. In 0.91t, for example:
-0 okay, 1 help displayed, 2 syntax error,
+0 okay, 1 bad sectors detected, 2 help displayed or syntax error,
 10..13 userint error (not confirmed / syntax error)
 20..22 createfs error (filesystem creation),
 25..29 drive I/O error,

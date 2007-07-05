@@ -26,7 +26,7 @@
 /* Cambridge, MA 02139, USA.                                    */
 /****************************************************************/
 
-/* This printf/sprintf supports only % escapes udscoxX and l 0-9 prefix */
+/* This printf/sprintf supports only % escapes udscoxX and lh0-9 prefix */
 /* Make sure that only %[-]*[0-9]*[l]*[uXxodsc] is used (not [0-9.]*!). */
 /* This prf version supports %%.  Replace %4.4x by %04x when using prf. */
 
@@ -169,7 +169,7 @@ int do_printf(const char * fmt, va_list arg)
   int base;
   char s[11], far * p;
   int c, flag, size, fill;
-  int longarg;
+  int longarg = 0;	/* 0 int, 1 long, -1 short, added short 0.91v */
   long currentArg;
 
   while ((c = *fmt++) != '\0')
@@ -180,7 +180,7 @@ int do_printf(const char * fmt, va_list arg)
       continue;
     }
 
-    longarg = FALSE;
+    longarg = 0;
     size = 0;
     flag = RIGHT;
     fill = ' ';
@@ -204,7 +204,12 @@ int do_printf(const char * fmt, va_list arg)
 
     if (*fmt == 'l')
     {
-      longarg = TRUE;
+      longarg = 1;
+      fmt++;
+    } else
+    if (*fmt == 'h')
+    {
+      longarg = -1;	/* new 0.91v */
       fmt++;
     }
 
@@ -265,11 +270,15 @@ int do_printf(const char * fmt, va_list arg)
         base = 16;
 
       lprt:
-        if (longarg)
-          currentArg = va_arg(arg, long);
-        else
-          currentArg = base < 0 ? (long)va_arg(arg, int) :
-              (long)va_arg(arg, unsigned int);
+        switch (longarg)
+          {
+          case 1: currentArg = va_arg(arg, long); break;
+          case 0: currentArg = (base < 0) ? (long)va_arg(arg, int) :
+              (long)va_arg(arg, unsigned int); break;
+          case -1: /* short int (%hd, %hx, %hu...) handling added 0.91v */
+              currentArg = (base < 0) ? (long)va_arg(arg, short int) :
+                  (long)va_arg(arg, unsigned short int);
+          } /* switch */
         ltob(currentArg, s, base);
 
         p = s;

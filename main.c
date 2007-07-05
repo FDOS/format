@@ -1,12 +1,13 @@
 /*
 // Program:  Format
-// Version:  0.91u
+// Version:  0.91v
 // (0.90b/c/d/e/f - mixed improvements - Eric Auer 2003)
 // (0.91b..i - Eric Auer 2003 / 0.91k ... Eric Auer 2004)
 // (0.91t - improved SYS call, subst/net/... detection - Eric Auer 2005)
 // (0.91u - label char checking - Eric Auer 2005)
+// (0.91v - no truename on a:/b:, exit 1/2 style, boot plausibility - EA 2006)
 // Written By:  Brian E. Reifsnyder
-// Copyright:  2002-2004 under the terms of the GNU GPL, Version 2
+// Copyright:  2002-2006 under the terms of the GNU GPL, Version 2
 // Module Name:  main.c
 // Module Description:  Main Module
 */
@@ -68,6 +69,11 @@ void Check_Remote_Subst(void)
     Exit(4,60);
   }
 
+  if (param.drive_number < 2) {	/* no truename for a: or b: because we ... */
+    if (debug_prog==TRUE) printf("[DEBUG]  Skipped ASSIGN check for diskette drive.\n");
+    return;			/* ... would get critical error on unformatted disks */
+  }
+
   regs.x.ax = 0x6000;	/* truename */
   prename[0] = param.drive_letter[0];
   regs.x.si = FP_OFF(prename);
@@ -123,6 +129,18 @@ char Check_For_Format(void)
       /* 8 DMA error 4 sector not found 2 bad address mark 1 bad command */
       /*  (int 26 would have special extra code 3, write protect error)  */
       printf("  Boot sector unreadable, disk not yet formatted\n");
+      return FALSE;
+    }
+
+    /* test if sectors per track are 1..63, if the 55 aa magic is, */
+    /* present and if the bytes per sector word has the value 512  */
+    /* added 0.91v as MS DOS criterrs on int 21.32 if no FAT file- */
+    /* system is present on disk. problem found by Alain Mouette.  */
+  if ((sector_buffer[0x18]>63) || (sector_buffer[0x18]==0) ||
+    (sector_buffer[0x1fe]!=0x55) || (sector_buffer[0x1ff]!=0xaa) ||
+    (sector_buffer[0x0b]!=0) || (sector_buffer[0x0c]!=2))
+    {
+      printf(" Boot sector contents implausible, disk not yet FAT formatted\n");
       return FALSE;
     }
 
@@ -251,7 +269,7 @@ void main(int argc, char *argv[])
   if (argc == 1)
     {
     Display_Help_Screen(0); /* SHORT version */
-    Exit(0,1);
+    Exit(2,2); /* Exit(0,1); pre 0.91v */
     }
 
   /* (jh) check command line */
@@ -315,10 +333,10 @@ void main(int argc, char *argv[])
 	  if (!stricmp(optarg+1,"longhelp"))
 	    {
             Display_Help_Screen(1); /* LONG version */
-            Exit(0,1);	    
+            Exit(2,2);	/* Exit(0,1); pre 0.91v */
 	    }
 	  printf("Invalid /Z:mode - valid: MIRROR, UNFORMAT, SERIOUSLY\n");
-	  Exit(0,2);
+          Exit(2,2);	/* Exit(0,2); pre 0.91v */
           break;
 
 	case 'Q': /* quick - flush metadata only */
@@ -422,7 +440,7 @@ void main(int argc, char *argv[])
 
         case '?':
           Display_Help_Screen(0); /* SHORT version */
-          Exit(0,1);
+          Exit(2,2);	/* Exit(0,1); pre 0.91v */
 
 	case '/':			/* Ignore '/' in middle of option */
 	  break;
@@ -430,7 +448,7 @@ void main(int argc, char *argv[])
 	default:
 	  printf("Unrecognized option: /%c\n", index);
 	  Display_Help_Screen(0); /* SHORT version */
-	  Exit(4,2);
+          Exit(2,2);	/* Exit(4,2); pre 0.91v */
 
 	}       /* switch (index) */
     }         /* for all args (getopt) */
@@ -815,7 +833,7 @@ next_disk:
           write(isatty(1) ? 1 : 2, "\nFormat", 7);
       else
           write(isatty(1) ? 1 : 2, "\nProcess", 8);
-      write(isatty(1) ? 1 : 2, " another floppy (y/n)?\n", 23);
+      write(isatty(1) ? 1 : 2, " another floppy (y/n)? ", 23);
       /* write to STDERR to keep message visible even if STDOUT redirected */
 
       /* Get keypress */
@@ -843,7 +861,13 @@ next_disk:
 
         goto next_disk; /* *** LOOP AROUND FOR MULTIPLE FLOPPY DISKS *** */
         }
+        printf("\n");
     } /* another floppy question, possibly jumping back */
+
+  if (((debug_prog==TRUE) || (param.force_yes!=FALSE)) &&
+    (bad_sector_map[0]>0) && (!special))
+    exit(1);	/* 0.91v for Alain: errorlevel 1 for "has bad clusters" */
+		/* (only if /z:seriously or /y or /d option active)     */
 
   exit(0);	/* not using Exit() here: no dual errorlevel, no unlock */
 

@@ -1,12 +1,13 @@
 /*
 // Program:  Format
-// Version:  0.91u
+// Version:  0.91v
 // (0.90b/c/d - warnings fixed, buffers far, boot sector IO - EA 2003)
 // (0.91b..j / k... - more fixes - Eric Auer 2003 / 2004)
 // (0.91q Locking more Win9x compatible - EA)
 // (0.91u allow "get access flag" error code 0x11 for DW ramdisk - EA 2005)
+// (0.91v "physical lock: access denied": warn only if /d - EA for Alain 2006)
 // Written By:  Brian E. Reifsnyder
-// Copyright:  2002-2005 under the terms of the GNU GPL, Version 2
+// Copyright:  2002-2006 under the terms of the GNU GPL, Version 2
 // Module Name:  driveio.c
 // Module Description:  Functions specific to accessing a disk.
 */
@@ -167,11 +168,14 @@ void Lock_Unlock_Drive(int lock)
 
               regs.x.ax = 0x3000; /* get full DOS version and OEM ID */
               intdos(&regs, &regs);
-              if (regs.h.bh == 0xfd)
-                  printf(" FreeDOS p. lock error 0x%x ignored.\n", lockerrno);
-              else
-                  printf(" Could not lock physical floppy drive (error 0x%x)!?\n",
-                    lockerrno);
+              if (debug_prog==TRUE)	/* error 5, "access denied", is "normal", */
+                {			/* so limit warning to /d mode - 0.91v    */
+                  if (regs.h.bh == 0xfd)
+                      printf(" FreeDOS p. lock error 0x%x ignored.\n", lockerrno);
+                  else
+                      printf(" Could not lock physical floppy drive (error 0x%x)!?\n",
+                        lockerrno);
+                }
                   /* could { ... exit(1); } here, but MSDN does not even */
                   /* suggest getting a physical drive lock at all..!? */
             } /* LOCK error */
