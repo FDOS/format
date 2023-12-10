@@ -126,7 +126,7 @@ unsigned long BadClustPreserve32(void) /* should use multisector read here */
           bad_sector_map_pointer--; /* too-many-bad-clusters workaround! */
         }
         bad_sector_map[bad_sector_map_pointer] =
-          cluststart + ((j+i-2) * parameter_block.bpb.sectors_per_cluster);
+          cluststart + ((j+i-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
         bad_sector_map_pointer++;
         countbad++;
       }
@@ -145,7 +145,7 @@ unsigned long BadClustPreserve32(void) /* should use multisector read here */
   printf("\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n",
     countused, countbad, countitems, last_used);
   return ( cluststart +
-    ( (1+last_used-2) * parameter_block.bpb.sectors_per_cluster ) - 1 );
+    ( (1+last_used-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ) - 1 );
     /* we round up to the END of the cluster */
 } /* BadClustPreserve32 */
 
@@ -204,7 +204,7 @@ unsigned long BadClustPreserve16(void)
           bad_sector_map_pointer--; /* too-many-bad-clusters workaround! */
         }
         bad_sector_map[bad_sector_map_pointer] =
-          cluststart + ((j+i-2) * parameter_block.bpb.sectors_per_cluster);
+          cluststart + ((j+i-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
         bad_sector_map_pointer++;
         countbad++;
       }
@@ -216,7 +216,7 @@ unsigned long BadClustPreserve16(void)
   printf("\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n",
     countused, countbad, countitems, last_used);
   return ( cluststart +
-    ( (1+last_used-2) * parameter_block.bpb.sectors_per_cluster ) - 1 );
+    ( (1+last_used-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ) - 1 );
     /* we round up to the END of the cluster */
 } /* BadClustPreserve16 */
 
@@ -270,7 +270,7 @@ unsigned long BadClustPreserve12(void) /* FAT12 is max 12 sectors / FAT, simple 
         bad_sector_map_pointer--; /* too-many-bad-clusters workaround! */
       }
       bad_sector_map[bad_sector_map_pointer] =
-        cluststart + ((clust-2) * parameter_block.bpb.sectors_per_cluster);
+        cluststart + ((clust-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
       bad_sector_map_pointer++;
     }
     if (clustb > 0xff0) {
@@ -280,7 +280,7 @@ unsigned long BadClustPreserve12(void) /* FAT12 is max 12 sectors / FAT, simple 
         bad_sector_map_pointer--; /* too-many-bad-clusters workaround! */
       }
       bad_sector_map[bad_sector_map_pointer] =
-        cluststart + ((clust+1-2) * parameter_block.bpb.sectors_per_cluster);
+        cluststart + ((clust+1-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
       bad_sector_map_pointer++;
     }
     if (clusta > 0) {
@@ -297,7 +297,7 @@ unsigned long BadClustPreserve12(void) /* FAT12 is max 12 sectors / FAT, simple 
   printf("\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n",
     countused, countbad, countitems, last_used);
   return ( cluststart +
-    ( (1+last_used-2) * parameter_block.bpb.sectors_per_cluster ) - 1 );
+    ( (1+last_used-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ) - 1 );
     /* we round up to the END of the cluster */
 } /* BadClustPreserve12 */
 

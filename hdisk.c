@@ -344,19 +344,23 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
       Exit(4,58);
     }
 
-  i = parameter_block.bpb.sectors_per_cluster;
-  if (i == 128)
+  i = BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
+
+  if (i > 128)
     {
-      printf("WARNING: Cluster size is 64k. Will not work with Win9x or MS DOS!\n");
-      printf("  WinME, WinNT/2k/XP/2003 and FreeDOS will be okay, though.\n");
-    /* Examples of systems which do support 64k cluster size: FreeDOS and WinXP */
+      printf("WARNING: Clusters larger than 64k. This is highly incompatible!\n");
     }
-  while ((i < 128) && (i != 0)) 
-    i += i;	/* shift left until 64k / cluster */
-  if (i != 128) /* SANITY CHECK */
+  else if (i > 64)
     {
-    i = parameter_block.bpb.sectors_per_cluster;
-    printf("FATAL: Cluster size not 0.5, 1, 2, 4, 8, 16, 32 or 64k but %d.%dk!\n",
+      printf("WARNING: Clusters larger than 32k. Will not work with Win9x or MS DOS!\n");
+      printf("  WinME, WinNT/2k/XP/2003 and FreeDOS will be okay, though.\n");
+    }
+  while ((i < 256) && (i != 0)) 
+    i += i;	/* shift left until 128k / cluster */
+  if (i != 256) /* SANITY CHECK */
+    {
+    i = BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
+    printf("FATAL: Cluster size not 0.5, 1, 2, 4, 8, 16, 32, 64k or 128k but %d.%dk!\n",
       i/2, (i & 1) ? 5 : 0);
     Exit(4,59);
     }
@@ -396,7 +400,7 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
 
   /* changed 0.91i */
   drive_statistics.sect_available_on_disk = file_sys_info.total_clusters
-    * parameter_block.bpb.sectors_per_cluster;
+    * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
 
   if (param.fat_type == FAT32)
     drive_statistics.sect_available_on_disk -= file_sys_info.number_root_dir_sect;
@@ -406,7 +410,7 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
   unsigned long slack = drive_statistics.sect_available_on_disk;
 
   drive_statistics.sect_available_on_disk &=
-    ~( (unsigned long) ( parameter_block.bpb.sectors_per_cluster - 1 ) );
+    ~( (unsigned long) ( BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) - 1 ) );
 
   slack -= drive_statistics.sect_available_on_disk;
 
@@ -421,7 +425,7 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
   /* now "total" is "diskimage" size and "avail" is "free in data area" size. */
 
   drive_statistics.sect_in_each_allocation_unit =
-    parameter_block.bpb.sectors_per_cluster;
+    BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
    
   /* 0.91k - already tell the user what she has to expect size-wise */
   if (drive_statistics.bytes_per_sector == 512) {
