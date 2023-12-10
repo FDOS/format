@@ -40,13 +40,6 @@ int Is_Even(unsigned long number)
 
 void Record_Bad_Clusters(void)
 {
-  if (parameter_block.bpb.sectors_per_cluster == 0)
-    {
-    /* Terminate the program... internal error in FORMAT */
-    printf("\nInternal R.B.C. error!\n");
-    Exit(4,31);
-    }
-
   if (param.fat_type==FAT12) Record_Bad_Clusters_FAT12();
   if (param.fat_type==FAT16) Record_Bad_Clusters_FAT16();
   if (param.fat_type==FAT32) Record_Bad_Clusters_FAT32();
@@ -112,8 +105,8 @@ void Record_Bad_Clusters_FAT12(void)
     /* Translate the sector into a cluster number. */
     /* *** is this correct? *** */
     bad_cluster = ( (bad_sector_map[index] - first_data_sector)
-     + parameter_block.bpb.sectors_per_cluster - 1 ) /* round up */
-       / parameter_block.bpb.sectors_per_cluster;
+     + BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) - 1 ) /* round up */
+       / BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
     bad_cluster += 2; /* 2 based counting */
 
     if (bad_cluster != last_bad_cluster)
@@ -234,8 +227,8 @@ void Record_Bad_Clusters_FAT16(void)
 	/* *** changed in 0.91i - hope it is correct now??? *** */
 	bad_cluster = (
 	   (bad_sector_map[bad_sector_map_index] - first_data_sector)
-	   + parameter_block.bpb.sectors_per_cluster - 1 ) /* round up */
-	 / parameter_block.bpb.sectors_per_cluster;
+	   + BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) - 1 ) /* round up */
+	 / BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
 	bad_cluster += 2; /* 2 based counting */
 	}
       else
@@ -244,7 +237,7 @@ void Record_Bad_Clusters_FAT16(void)
       if ( (bad_cluster != last_bad_cluster) && (bad_cluster != 100000L) )
 	{
 	drive_statistics.bad_sectors +=
-	  parameter_block.bpb.sectors_per_cluster;
+	  BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
 
 	last_bad_cluster = bad_cluster;
 	drive_statistics.allocation_units_with_bad_sectors++; /* 0.91c */
@@ -329,8 +322,8 @@ void Record_Bad_Clusters_FAT32(void) /* added actual FAT writing in 0.91j */
     /* *** changed in 0.91i - correct now? *** */
     bad_cluster = (
       ( bad_sector_map[bad_sector_map_index] - first_data_sector )
-      + parameter_block.bpb.sectors_per_cluster - 1 ) /* round up */
-      / parameter_block.bpb.sectors_per_cluster;
+      + BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) - 1 ) /* round up */
+      / BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
     bad_cluster += 2; /* 2 based counting */
 
     /* no extra rounding needed... 4 bytes per FAT entry. */

@@ -278,12 +278,12 @@ void Create_FS_Info_Sector()
 
   fs_info_sector.free_count         = file_sys_info.total_clusters -
     ( file_sys_info.number_root_dir_sect
-      / parameter_block.bpb.sectors_per_cluster ); /* root dir consumes clusters! */
+      / BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ); /* root dir consumes clusters! */
 
 #if 0 /* more correct but not even MS FORMAT seems to use that value! */
   fs_info_sector.next_free          = 2UL + /* 2 based counting */
     ( file_sys_info.number_root_dir_sect
-      / parameter_block.bpb.sectors_per_cluster ); /* root dir consumes clusters! */
+      / BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ); /* root dir consumes clusters! */
 #else
   fs_info_sector.next_free          = 2UL;
 #endif
@@ -317,12 +317,7 @@ static unsigned long cluster_count(void)
   if (param.fat_type != FAT32) /* in FAT32, root dir uses normal clusters */
     totalsect -= file_sys_info.number_root_dir_sect;
 
-  if (parameter_block.bpb.sectors_per_cluster==0) {
-    printf("0 sectors/cluster in BPB!? Aborting.\n");
-    Exit(4,20);
-  } /* new 0.91b sanity check */
-
-  return (totalsect / parameter_block.bpb.sectors_per_cluster);
+  return (totalsect / BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
 }
 
 
@@ -376,7 +371,7 @@ void Get_FS_Info()
       unsigned long rdent = 512; /* default number of root dir entries */
 
       entries_per_cluster = parameter_block.bpb.bytes_per_sector / 32;
-      entries_per_cluster *= parameter_block.bpb.sectors_per_cluster;
+      entries_per_cluster *= BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
 
       parameter_block.bpb.root_directory_entries = 0; /* must be 0 for FAT32 */
 
@@ -714,7 +709,7 @@ void Write_FAT_Tables()
     /* ADDED CLUSTER CHAIN CREATION - 0.91e, fixed 0.91i+ */
     sbp = 8;
     nclust = file_sys_info.number_root_dir_sect;
-    nclust /= parameter_block.bpb.sectors_per_cluster;
+    nclust /= BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
     printf(" Optimized initial Root Directory size: %lu clusters.\n",
       nclust);
     cnum = 2; /* first data cluster has number 2, not 0...: 2 based counting */

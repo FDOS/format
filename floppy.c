@@ -996,7 +996,7 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
     / parameter_block.bpb.bytes_per_sector;
 
   drive_statistics.sect_in_each_allocation_unit =
-    (unsigned long)parameter_block.bpb.sectors_per_cluster;
+    (unsigned long)BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
 
   drive_statistics.bad_sectors = 0; /* 0.91c */
   drive_statistics.bytes_per_sector =
