@@ -25,6 +25,10 @@ typedef struct Standard_Boot_Sector_Fields
   BT8 oem_id[8];   /* 0x03   3 */
 } STD_BS;
 
+/* Helper macro to support cluster sizes of 256 sectors. This is encoded 
+   as zero in bpb.sectors_per_cluster */
+#define BPB_SECTORS_PER_CLUSTER(bpb)(((bpb).sectors_per_cluster) ? (bpb).sectors_per_cluster : 256)
+
 typedef struct Standard_BPB
 {
   BT16 bytes_per_sector       ;   /* 0x0b   11 */

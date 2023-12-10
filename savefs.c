@@ -213,7 +213,8 @@ void Save_File_System(int overwrite)
           }
       } /* root directory an FAT and drive size was plausible */
 
-      sectors_per_cluster = BSWord(0x0d) & 0xff; /* only a byte */
+      sectors_per_cluster = BSWord(0x0d) & 0xff;
+      if (!sectors_per_cluster) sectors_per_cluster = 256;
 
       if (fat_type == FAT32)
         {
@@ -267,7 +268,7 @@ void Save_File_System(int overwrite)
   if ((fat_type == param.fat_type) &&
       (reserved_sectors == parameter_block.bpb.reserved_sectors) &&
       (number_of_fats == parameter_block.bpb.number_of_fats) &&
-      (sectors_per_cluster == parameter_block.bpb.sectors_per_cluster) &&
+      (sectors_per_cluster == BPB_SECTORS_PER_CLUSTER(parameter_block.bpb)) &&
       ( (sectors_per_fat & 0xffff) ==
         ( (fat_type == FAT32) ? parameter_block.xbpb.fat_size_low
                               : parameter_block.bpb.sectors_per_fat ) )
@@ -290,9 +291,9 @@ void Save_File_System(int overwrite)
       if (number_of_fats != parameter_block.bpb.number_of_fats)
         printf("Number of FATs differs: FOUND %lu / PLANNED %hu\n",
           number_of_fats, parameter_block.bpb.number_of_fats);
-      if (sectors_per_cluster != parameter_block.bpb.sectors_per_cluster)
+      if (sectors_per_cluster != BPB_SECTORS_PER_CLUSTER(parameter_block.bpb))
         printf("Cluster size differs: FOUND %lu / PLANNED %hu (sectors)\n",
-          sectors_per_cluster, parameter_block.bpb.sectors_per_cluster);
+          sectors_per_cluster, BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
       scratch = parameter_block.xbpb.fat_size_high;
       scratch <<= 16;
       scratch |= parameter_block.xbpb.fat_size_low;
