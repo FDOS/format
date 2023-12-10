@@ -8,7 +8,7 @@ CFLAGS=-w -0 -ms -fpc -zp1 -q
 # -ms small memory model -zp1 byte-align structures
 LDFLAGS=
 LDLIBS=
-RM=command /c del
+RM=rm -f
 OBJS1=createfs.obj floppy.obj hdisk.obj main.obj savefs.obj bcread.obj prf.obj
 OBJS2=userint.obj driveio.obj getopt.obj init.obj recordbc.obj uformat.obj
 
@@ -24,10 +24,10 @@ format.exe: $(OBJS1) $(OBJS2)
 
 # clean up:
 
-clean:
+clean: .SYMBOLIC
 	$(RM) *.obj
 
-clobber: 
+clobber: .SYMBOLIC
 	$(RM) *.bak
 	$(RM) *.dsk
 	$(RM) *.exe
