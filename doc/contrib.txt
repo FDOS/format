@@ -34,6 +34,8 @@ Anthony Williams    Rewrote OpenWatcom makefile, fixed some warnings
 
 Bernd Boeckmann     add support for 128K clusters, OpenWatcom makefile updates
 
+Kenneth J Davis     minor fix with using extended keys while entering volume label
+
 Additional tests    2003/2004: Bernd Blaauw, Wilhelm Spiegl, Geraldo
                     Netto, David Flechl, Johnson Lam, Tyler H. D.,
                     Matthew Gruett and many others before. Using DOS

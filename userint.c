@@ -27,6 +27,15 @@
 #include "userint.h"
 
 
+#define KEYGET_ECHO regs.h.ah = 0x07; /* Get keypress, upcase and echo */ \
+  intdos(&regs, &regs); \
+  if (!regs.h.al) { \
+    regs.h.ah = 0x07; intdos(&regs, &regs); regs.h.al = 0x00; \
+  } /* ignore extended keys */ \
+  regs.h.al = toupper(regs.h.al); \
+  if (regs.h.al>7) printf("%c",regs.h.al)
+  /* 0.91v: suppress displaying of a few control chars - like 3, Ctrl C */
+
 
 
 void ASCII_CD_Number(unsigned long number)
@@ -168,12 +177,6 @@ void Confirm_Hard_Drive_Formatting(int format) /* 0 unformat, 1 format */
   write(isatty(1) ? 1 : 2, "format (YES/NO)? ", 17);
   /* write to STDERR for the case of STDOUT being redirected */
 
-#define KEYGET_ECHO regs.h.ah = 0x07; /* Get keypress, upcase and echo */ \
-  intdos(&regs, &regs); \
-  regs.h.al = toupper(regs.h.al); \
-  if (regs.h.al>7) printf("%c",regs.h.al)
-  /* 0.91v: suppress displaying of a few control chars - like 3, Ctrl C */
-
   KEYGET_ECHO;
   if ( regs.h.al != 'Y' )
     {
@@ -222,12 +225,16 @@ int Ask_Label(char * str)
   /* write to STDERR for the case of STDOUT being redirected */
 
   label_len = 0;
-  str[0] = '\0';
+  str[0] = '\0';  /* Warning: str length is defined in format.h as char[12] */
   while (1==1) {
       KEYGET_ECHO;	/* (backspace is nondestructive in this _ECHO) */
 
       if (regs.h.al == 3)			/* ctrl-c */
           Exit(3,3);				/* aborted by user */
+		  
+      if (regs.h.al == 0)			/* extended key, eg up/down/left/right */
+          continue;					/* ignore it */
+	
 
 #if 0 /* pre 0.91u version: A-Z 0-9 and ASCII 0x20-0x2f and 0x3a-0x40 */
 !      if ((regs.h.al > 'Z') ||
