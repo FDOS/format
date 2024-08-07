@@ -1,6 +1,6 @@
 /*
 // Program:  Format
-// Version:  0.91u
+// Version:  0.91w
 // (0.90b/c - avoid saving info when inappropriate - Eric Auer 2003)
 // (0.91d - handle non-standard FAT12/FAT16 formats, debugging: Eric Auer 2003)
 // (0.91k - w/o Convert_Huge_To_Integers, preserving bad sector list - EA 2004)
@@ -8,6 +8,7 @@
 // (0.91p - merged "NOT saving..." messages, better FAT32 support - EA 2004)
 // (0.91t - avoid double 100% display - EA 2005)
 // (0.91u - mmapsec is unsigned long, not unsigned long unsigned :-P - 2005)
+// (0.91w - remove spurious semicolon from line 139 (ignored if statement)
 // Written By:  Brian E. Reifsnyder
 // Copyright:  2002-2005 under the terms of the GNU GPL, Version 2
 // Module Name:  savefs.c
@@ -136,7 +137,7 @@ void Save_File_System(int overwrite)
       {
         printf("WARNING: Reserved sectors are %u but will be %u after format.\n",
           reserved_sectors, parameter_block.bpb.reserved_sectors);
-        if ((reserved_sectors < 1) || (reserved_sectors > 64));
+        if ((reserved_sectors < 1) || (reserved_sectors > 64)) /* no ; */
           bad_boot_sector = TRUE;        
       }
 
@@ -673,7 +674,7 @@ void Restore_File_System(void)
           if (original_sector == 0UL)
             {
               number_of_fats = sector_buffer[0x10]; /* should be or 1 2 */
-              if ((number_of_fats < 0) || (number_of_fats > 2))
+              if ( /* (number_of_fats < 0) || */ (number_of_fats > 2))
                 {
                   if (!number_of_fats) number_of_fats++;
                   if (number_of_fats > 2) number_of_fats = 2;

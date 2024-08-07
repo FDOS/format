@@ -1,7 +1,7 @@
 /*
 // Program:  Format
 // Written By:  Brian E. Reifsnyder
-// Version:  0.91v
+// Version:  0.91w
 // (0.90b ... 0.90f and 0.91b ... 0.91j are updates by Eric Auer 2003)
 // (0.91k ... are by Eric Auer 2004)
 // (0.91t ... are by Eric Auer 2005)
@@ -17,7 +17,7 @@
 */
 
 #define NAME "Format"
-#define VERSION "0.91v" /* the only update 0.91o -> 0.91u in this file... */
+#define VERSION "0.91w" /* the only update 0.91o -> 0.91u in this file... */
 
 
 #ifdef MAIN
@@ -214,7 +214,7 @@ typedef struct Parameter_Block_Structure
    * sectors_per_fat_{low,high} is used to distinguish FAT16 <-> FAT32.
    * word ext_flags at 1dh: bit 7 donotmirrorfats 3..0 activefat
    * file_sys_info_sec and backup_boot_sec_num can be -1
-  /* Ending of parameter block */
+   * Ending of parameter block */
 
   FBYTE reserved_2[32];  /* 0x3c: reserved for int 21.440d.4860 */
 

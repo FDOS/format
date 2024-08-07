@@ -187,8 +187,10 @@ char Check_For_Format(void)
 /* Write System Files */
 void Write_System_Files(void)
 {
+#ifdef __TURBOC__
   char * syspath = NULL;
   char sysarg0[3] = { 'x', ':', 0 };
+#endif
   int retval;
 
 #if defined(__TURBOC__)
@@ -692,7 +694,7 @@ next_disk:
     Set_Hard_Drive_Media_Parameters(align); /* get default BPB etc., find FATxx fat_type */
     Enable_Disk_Access();
 
-    } /* </HARDDISK>
+    } /* </HARDDISK> */
   /* *** Maybe we should have done drive setup earlier, for Check_...? *** */
 
 

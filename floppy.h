@@ -30,6 +30,7 @@ STD_BPB drive_specs[18]=
     v  v v FATS   SEC_PER_FAT  v v v v LARGE_CNT
     v  v v v  ROOT_DIR_ENT  v  v v v v v v
     v  v v v  v  SIZE DESC  v  v v v v v v
+  */
 /* 5.25 inch 40 track: 0..3 (H/S: 1/8, 1/9, 2/8, 2/9) */
   {512,1,1,2, 64, 320,0xfe, 1, 8,1,0,0,0,0}, /* FD160  5.25 SS 40 */
   {512,1,1,2, 64, 360,0xfc, 2, 9,1,0,0,0,0}, /* FD180  5.25 SS 40 */

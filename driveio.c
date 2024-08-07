@@ -135,7 +135,7 @@ void Lock_Unlock_Drive(int lock)
 
           if (lockerrno == 0x0f) /* invalid drive */
             {
-              locking_invalid_drive:
+              /* locking_invalid_drive: */
               printf(" Invalid drive! Aborting.\n");
               Exit(4,29);
             }

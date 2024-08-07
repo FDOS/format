@@ -2,6 +2,11 @@ NEWS.TXT
 
 Version History:
 
+Version 0.91w (19 Sep 2017)
+              - new OpenWatcom makefile (and .EXE)
+              - fixed some useless compiler warnings
+              - fixed one potential bug (bad semicolon after if statement)
+
 Version 0.91v (14 Jan 2006)
               Changes by Eric Auer fixing bugs found by Alain Mouette:
               - fixed prf.c, which had no %h... short int modifier support

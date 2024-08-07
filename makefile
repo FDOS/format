@@ -1,90 +1,39 @@
-# This makefile is for format and Borland Turbo C++ 3.0.
-# Changed to use line-initial TAB rather than space: Makes it
-# Borland Turbo C 2.01 compatible. Also using no generic rule
-# anymore and splitting OBJS into 2 variables, for del command
-# line. Plus made command /c explicit for using del!
-# Do not forget that all Turbo C must be in PATH and that you
-# must have TURBOC.CFG in the current directory.
-# Update 2005: link with prf.c light drop-in printf replacement.
-#
-# Minimum CFLAGS: -ms
-# Smaller for Turbo C: -M -O -N -Z -w -a- -f- -ms
+# Asterisk for supporting long cmdlines in raw DOS (via env. var.)
+# (only supported by certain OW tools). Run "whelp tools" for more.
+CC=wcc
+CLINK=*wcl
 
-CC=tcc
-CLINK=tcc
-CFLAGS=-M -N -ln -w -a- -f- -f87- -ms -r- -c
-# -M linkmap -O jump optimize -N stack check -f87- no fpu code
-# -w warnall -a- no word align -f- no fpu emulator
-# -ms small memory model -ln no default libs linked ...
-# -r register variables -k standard stack frame ...
-LDFLAGS=-M -N -ln -w -a- -f- -f87- -ms -r-
+LDFLAGS=
 LDLIBS=
-RM=command /c del
-OBJS1=createfs.obj floppy.obj hdisk.obj main.obj savefs.obj bcread.obj prf.obj
-OBJS2=userint.obj driveio.obj getopt.obj init.obj recordbc.obj uformat.obj
 
-# build targets:
+UPX=upx
+UPXFLAGS=-qq --ultra-brute --8086
 
-all: format.exe
+CFLAGS=-wx -0 -ms -fpc -zp1
 
-format.exe: $(OBJS1) $(OBJS2)
-	$(CLINK) $(LDFLAGS) -eformat *.obj $(LDLIBS) 
+# -wx  warnall
+# -0   8086 compat
+# -ms  small memory model
+# -fpc floating point library calls (no FPU)
+# -zp1 byte-align structures
 
-# compile targets:
+OBJS=createfs.obj floppy.obj hdisk.obj main.obj   &
+     savefs.obj bcread.obj prf.obj userint.obj    &
+     driveio.obj getopt.obj init.obj recordbc.obj &
+     uformat.obj
 
-# very convenient but not available in Turbo C 2.01 - generic C/OBJ rule:
-# .c.obj:
-#	$(CC) $(CFLAGS) -c $*.c
+pack: format.exe .SYMBOLIC
+  $(UPX) $(UPXFLAGS) $<
 
-createfs.obj:
-	$(CC) $(CFLAGS) createfs.c
+format.exe: $(OBJS)
+  $(CLINK) $(CFLAGS) $(LDFLAGS) $< $(LDLIBS) -fe=$@
 
-floppy.obj:
-	$(CC) $(CFLAGS) floppy.c
+.c.obj:
+  $(CC) $(CFLAGS) $*.c
 
-hdisk.obj:
-	$(CC) $(CFLAGS) hdisk.c
+# rm is built-in to wmake
+clean: .SYMBOLIC
+  rm *.obj
 
-main.obj:
-	$(CC) $(CFLAGS) main.c
-
-savefs.obj:
-	$(CC) $(CFLAGS) savefs.c
-
-userint.obj:
-	$(CC) $(CFLAGS) userint.c
-
-driveio.obj:
-	$(CC) $(CFLAGS) driveio.c
-
-getopt.obj:
-	$(CC) $(CFLAGS) getopt.c
-
-init.obj:
-	$(CC) $(CFLAGS) init.c
-
-recordbc.obj:
-	$(CC) $(CFLAGS) recordbc.c
-
-uformat.obj:
-	$(CC) $(CFLAGS) uformat.c
-
-bcread.obj:
-	$(CC) $(CFLAGS) bcread.c
-
-prf.obj:
-	$(CC) $(CFLAGS) prf.c
-
-
-# clean up:
-
-clean:
-	$(RM) *.obj
-
-clobber: 
-	$(RM) *.bak
-	$(RM) *.dsk
-	$(RM) *.exe
-	$(RM) *.obj
-	$(RM) *.swp
-
+clobber: .SYMBOLIC
+  rm -f *.bak *.dsk *.exe *.obj *.swp *.map *.err

@@ -50,8 +50,8 @@ void Initialization(void)
     printf("DMA tuning: using alternative huge_sector_buffer\n");
   }
 
-  param.drive_letter[0]=NULL;
-  param.volume_label[0]=NULL;
+  param.drive_letter[0]='\0';
+  param.volume_label[0]='\0';
 
   param.drive_type=0; /* not NULL; */
   param.drive_number=0; /* not NULL; */

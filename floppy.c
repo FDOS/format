@@ -1021,7 +1021,6 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
     printf("Floppy controller reset failed (code %x) - DDPT rejected?\n",
       regs.x.ax);
   }
-  /* 
 
   /* *** Extra: check 0x40:[0x90 + BIOS drive number] value for sanity *** */
   /* *** bits are: BB D K xxxx, where xxxx = 7 "default", 4/5? "1200k" *** */
