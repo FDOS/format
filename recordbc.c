@@ -46,11 +46,12 @@ void Record_Bad_Clusters(void)
   if (param.fat_type==FAT32) Record_Bad_Clusters_FAT32();
 }
 
+static unsigned char fat12_fat[6145];
 void Record_Bad_Clusters_FAT12(void)
 {
   unsigned long bad_cluster;
   unsigned long last_bad_cluster;
-  unsigned char fat12_fat[6145];
+  /* unsigned char fat12_fat[6145]; -- causes stack overflow with default Open Watcom build */
 
   int index;
   int sector;
