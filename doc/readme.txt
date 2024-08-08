@@ -2,7 +2,7 @@ README.TXT
 
 Program:     FORMAT
 
-Version:     0.91 series
+Version:     0.91/0.92 series
 
 Author:      Brian E. Reifsnyder (1999-2003)
              reifsnyderb@mindspring.com

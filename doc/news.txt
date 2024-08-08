@@ -2,6 +2,12 @@ NEWS.TXT
 
 Version History:
 
+Version 0.92  (07 Aug 2024)
+              - add 128KB cluster supported (may still have edge cases?)
+              - tweaked Open Watcom makefile
+              - fix bug with using extended keys while entering volume label (GitHub issue #3)
+              - for bad sectors, move FAT12 buffer from stack to heap (GitHub issue #4)
+
 Version 0.91w (19 Sep 2017)
               - new OpenWatcom makefile (and .EXE)
               - fixed some useless compiler warnings

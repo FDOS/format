@@ -1,3 +1,5 @@
+*** outdated -- the source may still compile with Borland tools, but OpenWatcom is now the officially supported compiler!
+
 INSTALL
 
 To compile the source code you need (version 0.91 or newer):

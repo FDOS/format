@@ -1,5 +1,7 @@
 Future Plans
 
+TO-DO         Update TODO.TXT and implement some of these.
+
 TO-DO         Add international language support (e.g. with KITTEN library).
 
 TO-DO         Debug FAT32 support. Debug all mirror / unformat data writes.

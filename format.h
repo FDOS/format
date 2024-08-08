@@ -17,7 +17,7 @@
 */
 
 #define NAME "Format"
-#define VERSION "0.91w" /* the only update 0.91o -> 0.91u in this file... */
+#define VERSION "0.92" /* the only update 0.91o -> 0.91u in this file... */
 
 
 #ifdef MAIN
