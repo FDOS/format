@@ -264,6 +264,10 @@ int Format_Floppy_Cylinder(int cylinder,int head)
         result);
       }
 
+#ifdef DEBUG_FAKE_BAD_SECTOR /* fake errors for testing */
+if (cylinder==2 && head==1) {sector_index = 6; goto fakebad; }
+#endif
+
     if (result!=0)
       {
 
@@ -302,6 +306,7 @@ retry:
 
 	  if (retry_count>=3)
 	    {
+fakebad:
 	    /* Record this sector as bad. */
 	    bad_sector_map[bad_sector_map_pointer] =
 	      ( (cylinder * (parameter_block.bpb.number_of_heads) )

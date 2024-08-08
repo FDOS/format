@@ -180,6 +180,7 @@ void Create_File_System()
 //  Force_Drive_Recheck();	/* Tell DOS that things have changed */
 #endif
 
+  if (debug_prog==TRUE) printf("[DEBUG]  File System Created\n");
 }
 
 

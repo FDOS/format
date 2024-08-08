@@ -40,6 +40,7 @@ int Is_Even(unsigned long number)
 
 void Record_Bad_Clusters(void)
 {
+  if (debug_prog==TRUE) printf("[DEBUG]  Record Bad Clusters ");
   if (param.fat_type==FAT12) Record_Bad_Clusters_FAT12();
   if (param.fat_type==FAT16) Record_Bad_Clusters_FAT16();
   if (param.fat_type==FAT32) Record_Bad_Clusters_FAT32();
@@ -56,6 +57,8 @@ void Record_Bad_Clusters_FAT12(void)
 
   unsigned long first_data_sector;
   unsigned long first_root_sector;
+  
+  if (debug_prog==TRUE) printf("FAT12\n");
 
   first_data_sector = parameter_block.bpb.reserved_sectors;
   first_data_sector += parameter_block.bpb.number_of_fats
@@ -179,6 +182,8 @@ void Record_Bad_Clusters_FAT16(void)
   unsigned long first_data_sector;
   unsigned long first_root_sector;
 
+  if (debug_prog==TRUE) printf("FAT16\n");
+
   first_data_sector = parameter_block.bpb.reserved_sectors;
   first_data_sector += parameter_block.bpb.number_of_fats
     * parameter_block.bpb.sectors_per_fat;
@@ -288,6 +293,8 @@ void Record_Bad_Clusters_FAT32(void) /* added actual FAT writing in 0.91j */
   unsigned long fat_size_32;
   unsigned long first_data_sector;
   unsigned long first_fat_sector = parameter_block.bpb.reserved_sectors;
+
+  if (debug_prog==TRUE) printf("FAT32\n");
 
   fat_size_32 = parameter_block.xbpb.fat_size_high;
   fat_size_32 <<= 16;
