@@ -306,7 +306,9 @@ retry:
 
 	  if (retry_count>=3)
 	    {
+#ifdef DEBUG_FAKE_BAD_SECTOR /* fake errors for testing */
 fakebad:
+#endif
 	    /* Record this sector as bad. */
 	    bad_sector_map[bad_sector_map_pointer] =
 	      ( (cylinder * (parameter_block.bpb.number_of_heads) )
