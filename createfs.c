@@ -20,7 +20,7 @@
 #include <dos.h>	/* FP_OFF, FP_SEG */
 #include <stdio.h>	/* printf */
 
-/* #include "hdisk.h" */	/* Force_Drive_Recheck (not HERE - 0.91q) */
+#include "hdisk.h" 	/* Force_Drive_Recheck */
 #include "userint.h"	/* Display_Percentage_Formatted */
 
 void E_memcpy(unsigned char far *, char *, size_t);
@@ -164,9 +164,15 @@ void Create_File_System()
 
 
   
-#if 0	/* YES, this is too early, caused a sharing violation - 0.91q */
-//  Force_Drive_Recheck();	/* or is this too early??? - 0.91k */
-#endif
+/* From version 0.91q this caused a sharing violation */
+/* but from 0.92, if we don't do this then formating
+   changes floppy disk paramters then first time 
+   attempting to format can fail if no previous format 
+   (e.g. 720KB disk [with zeroed image] is in 1.44MB drive) */
+/* In what cases does a sharing violation occur? 
+   To minimaze chances, only do this if formatting floppy */
+  if(param.drive_type==FLOPPY) Force_Drive_Recheck();
+
 
   /* Clear the OTHER reserved sectors, if any */
   if (parameter_block.bpb.reserved_sectors > 1)

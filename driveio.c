@@ -525,6 +525,7 @@ unsigned int FloppyBootReadWrite(char DosDrive, int count, ULONG sector,
         {
 
 #if 0	/* better do this where Drive_IO is CALLED, not implicitly! */
+// see Force_Drive_Recheck()
 //        regs.h.ah = 0x0d;
 //        intdos(&regs,&regs); /* flush buffers, reset disk system */
 //
