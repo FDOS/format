@@ -1,0 +1,62 @@
+# FreeDOS FORMAT.EXE message set - version 0.92a and later
+# version (on help screen)
+0,0:FreeDOS %6s version %s\n
+0,1:êcrit par Brian E. Reifsnyder, Eric Auer et d'autres.\n
+0,2:Copyright 1999 - 2024 sous les termes de GNU GPL, Version 2+.\n\n
+
+# common
+1,0:\n
+
+# help screen
+2,0:Syntaxe (cf. documentation pour plus des informations dÇtaillÇes):\n\n
+2,1:Syntaxe (cf. documentation ou utiliser /Z:longhelp pour plus d'options):\n\n
+# only shown if compiled with LEGACY_HELP
+2,3:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/F:taille] [/B | /S] [/D]\n
+2,4:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/T:pistes /N:secteurs] [/B | /S] [/D]\n
+2,5:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/4] [/B | /S] [/D]\n
+2,6:FORMAT lecteur: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n
+2,12: /B         GardÇ pour la compatibilitÇ, rÇservait de l'espace pour les fichiers d'amoráage.\n
+2,22: /1         Formate une seule face d'une disquette (160 ko / 180 ko).\n
+2,23: /8         Formate une disquette 5.25\" avec 8 secteurs par piste (160 ko / 320 ko).\n
+# only shown if compiled without LEGACY_HELP
+2,7:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/F:taille] [/S] [/D]\n
+2,8:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/T:pistes /N:secteurs] [/S] [/D]\n
+#  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
+#  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
+2,9:FORMAT drive: [/V[:Çtiquette]] [/Q] [/U] [/4] [/S] [/D]\n\n
+# shown for all
+2,10: /V:label   SpÇcifie une Çtiquette de volume pour le disque, enregistre son horodatage.\n
+2,11: /S         Appelle SYS pour rendre le disque amoráable et ajouter des fichiers systäme.\n
+2,13: /D         Träs bavard et affiche la sortie de dÇbogage. Pour les rapports de bug.\n
+2,14: /Q         Formate rapidement le disque. Si non combinÇ avec /U, peut àtre UNFORMATÇ\n
+2,15:            et prÇserve les informations de mauvais clusters (/Q /U ne le fait pas).\n
+2,16: /U         Formate le disque sans condition. Si disquette, formatage de bas niveau.\n
+2,17: /F:size    SpÇcifie la taille de la disquette Ö formater. Les tailles normales sont:\n
+2,18:            360, 720, 1200, 1440, or 2880 (unitÇ: kilooctets). /F:0 affiche une liste.\n
+2,19: /4         Formate une disquette 360 ko dans un lecteur de disquettes de 1,2 MB.\n
+2,20: /T:pistes  SpÇcifie le nombre de pistes sur une disquette.\n
+2,21: /N:secteurs SpÇcifie le nombre de secteurs sur une disquette.\n
+
+# detailed help screen
+3,0:Cette commande FORMAT est Çcrite pour le projet http://www.freedos.org/.\n
+3,1:  Cf. http://www.gnu.org/ pour des informations sur la licence GNU GPL.\n
+3,2:êcrite en 1999-2003 par Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n
+3,3:  Mainteneur pour 0.90 / 0.91 2003-2006 : Eric Auer <eric@coli.uni-sb.de>\n
+3,4:Contributeurs: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
+3,5:  Bart Oldeman, Jim Hall et d'autres. N'oublions pas tous les testeurs !\n\n
+
+3,6:Options et fonctionnalitÇs additionnelles expliquÇes :\n
+3,7:/D (dÇbogage) et /Y (sauter la confirmation) sont toujours autorisÇes.\n
+3,8:/B (rÇserver de l'espace pour sys) est vide et ne peut àtre combinÇe avec /S (sys)\n
+3,9:/V:Çtiquette n'est pas pour les disques 160k/320k. L'Çtiquette enregistre l'horodatage du formatage.\n\n
+
+3,10:Les spÇcifications de taille ne marchent que pour les disquettes. Vous pouvez\n
+3,11:utiliser soit /F:taille (en kilooctets, la taille 0 affiche une liste des tailles autorisÇes)\n
+3,12:soit     /T:pistes /N:secteurs_par_piste\n
+3,13:soit toute combinaison de /1 (une face, 160k/180 ko),\n
+3,14:                      /8 (8 secteurs par piste, 160k/320 ko, DOS 1.x)\n
+3,15:                  et  /4 (formater une disquette de  160-360 ko dans un lecteur de 1200 ko)\n\n
+
+3,16:Pour supprimer l'invite de confirmation de formatage de disque dur, utilisez    /Z:seriously\n
+3,17:Pour sauvegarder seulement les informations unformat (mirror) sans formater, utilisez /Z:mirror\n
+3,18:Pour UNFORMATer un disque pour laquelle des donnÇes miroir fraåches existent, utilisez  /Z:unformat\n
