@@ -6,6 +6,9 @@
 
 # common
 1,0:\n
+# these two options for Yes and No are only 1 character and must be upper case
+1,1:O
+1,2:N
 
 # help screen
 2,0:Syntaxe (cf. documentation pour plus des informations d‚taill‚es):\n\n
@@ -60,3 +63,87 @@
 3,16:Pour supprimer l'invite de confirmation de formatage de disque dur, utilisez    /Z:seriously\n
 3,17:Pour sauvegarder seulement les informations unformat (mirror) sans formater, utilisez /Z:mirror\n
 3,18:Pour UNFORMATer un disque pour laquelle des donn‚es miroir fraŒches existent, utilisez  /Z:unformat\n
+3,19:Les modes pour les DISQUETTES sont : tente d'utiliser le formatage rapide. N'utilise le formatage\n
+3,20:  de bas niveau que si n‚cessaire. Le formatage rapide s–r enregistre les donn‚es mirror pour unformat.\n
+3,21:Les modes pour les DISQUES DURS sont : tente d'utiliser le formatage rapide s–r. N'utilise le formatage\n
+3,22:  rapide complet que si n‚cessaire. Le formatage rapide s–r ne fait que r‚initialiser le systŠme de fichiers\n
+3,23:Si vous voulez forcer le formatage de bas niveau (disquettes) ou bien balayer toute la surface\n
+3,24:  du disque et toutes les donn‚es effac‚es (disques durs), utilisez /U.\n
+3,25:  FORMAT /Q /U est le formatage rapide complet (pas de bas niveau / balayage / effacement !)\n
+3,26:  FORMAT /Q est le formatage rapide s–r (enregistrer les donn‚es mirror si possible)\n
+3,27:    les donn‚es mirror ‚craseront toujours la fin de la zone des donn‚es !\n
+3,28:  FORMAT s‚lectionne automatiquement un mode (cf. ci-dessus) si vous ne choisissez ni /Q ni /U\n\n
+
+3,29:Les types FAT pris en charge sont : FAT12, FAT16, FAT32, tous avec mirror / unformat.\n
+3,30:Les tailles de disquettes prises en charge sont : 160k 180k 320k 360k et 1200k pour 5.25 pouces\n
+3,31:  et 720k et 1440k (2880k jamais test‚ jusqu'ici) pour les lecteurs 3.5 pouces.\n
+#3,32:Les lecteurs DD sont limit‚s … 360k/720k respectivement. 2880k est pour les lecteurs ED seulement.\n
+3,33:Les surformatages pris en charge sont : 400k 800k 1680k (et 3660k) avec plus de secteurs\n
+3,34:  et 1494k (au lieu de 1200k) et 1743k (et 3486k) avec plus de pistes, aussi.\n
+3,35:  Plus de pistes ne fonctionnera pas sur tous les lecteurs, utilisez … vos risques et p‚rils.\n
+3,36:  Avertissement : les versions anciennes de DOS ne peuvent utiliser le surformatage qu'avec un pilote.\n
+3,37:  720k dans 1440k n‚cessite un disque 720k. Utilisez un lecteur 360k pour formater du 360k.\n\n
+
+3,38:Pour le formatage FAT32, vous pouvez utiliser l'option /A pour forcer l'alignement 4k.\n
+
+# main()
+4,0:CaractŠre ill‚gal dans l'‚tiquette du volume de : %c\n
+4,1:Les caractŠres autoris‚s sont 0-9, A-Z, l'espace, les caractŠres sp‚ciaux 128-255\n
+4,2:et tout ce qui suit :
+# the following is printed for valid label characters from ordinal(' ')+1 through 127
+4,3: %c
+4,4:\nmais pas les caractŠres de contr“le et aucun de ce qui suit :
+# and now for enumerating illegal characters from ordinal(' ')+1 through 127
+4,5: %c"
+# /F:size
+4,6:Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n
+4,7:Sp‚cial:  400, 800, 1680, 3360,    1494, 1743, 3486.\n
+# /T tracks (cylinders)
+4,8:OK : 40, 80. ???: 83.\n
+# /N sectors per track
+4,9:Standard: 8, 9, 15, 18, 36.\n
+4,10:Sp‚cial:  10, 21, 42.\n
+# other options
+4,11:Option non reconnue : /%c\n
+4,12:Vous devez sp‚cifier une lettre de lecteur.\n
+4,13:Vous ne pouvez pas combiner /T et /N.\n
+4,14:La taille sera modifi‚e par le formatage - for‡age du formatage complet\n
+4,15:Ancien : %d secteurs par piste, %d tˆtes. Nouveau : %d sect. %d tˆtes\n
+4,16:Impossible de trouver le format existant - for‡age du formatage complet\n
+4,17:Impossible de trouver le format existant -  les donn‚es UNFORMAT ne seront pas enregistr‚es.\n
+4,18:criture d'une copie des secteurs systŠme … la fin du lecteur :\n
+4,19:Secteur d'amor‡age, un FAT, le r‚pertoire racine. Utile pour UNFORMAT.\n
+4,20:crasement du secteur d'amor‡age, des FAT et du r‚pertoire racine par\n
+4,21:les donn‚es MIRROR/UNFORMAT que vous avez pr‚c‚demment enregistr‚.\n
+# message 4,22 should never be reached/shown
+4,22:/Z:comment ???\n
+4, 23: Formatage complet (effacement de toutes les donn‚es)\n
+4, 24: Formatage rapide (vidage uniquement des m‚tadonn‚es)\n
+4, 25: Avertissement : r‚initialise les marques de clusters d‚fectueux s'il existent.\n
+4, 26: Formatage rapide s–r (tentative de sauvegarde des donn‚es UnFormat)\n
+# 4,27 through 4,32 display: <action> complete\n
+4,27:Formatage
+4,28:Formatage rapide
+4,29:Formatage rapide s–r
+4,30:Mirror
+4,31:UnFormat
+4,32: termin‚.\n
+# 4,33 thru 4,35 are to ask user to repeat previous action
+4,33:Formater
+4,34:Traiter
+4,35: une autre disquette (o/n)?
+# 4,36 thru 4,38 tell user we are repeating action
+4,36:Traitement
+4,37:Formatage
+4,38:%s prochaine disquette...\n
+
+# the following are long option keywords /Z:keyword
+5,0:/Z:mode invalide - valide : MIRROR, UNFORMAT, SERIOUSLY\n"));
+# take a new mirror data snapshot
+5,1:mirror
+# revert to mirrored state, dangerous!
+5,2:unformat
+# User MEANS to format harddisk
+5,3:seriously
+# display LONG (detailed) version of help
+5,4:longhelp
