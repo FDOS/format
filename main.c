@@ -40,6 +40,7 @@
 #include "floppy.h"
 
 #include "getopt.h"			/* (jh) support for getopt */
+#include "kitten.h"
 
 void Check_Remote_Subst(void);
 char Check_For_Format(void);
@@ -248,6 +249,8 @@ void main(int argc, char *argv[])
   int align = 1;	/* new 0.91m */
 
   int drive_letter_found = FALSE;
+  
+  catalog = catopen(argv[0], 0); /* init support for translated messages */
 
   Initialization();
 
@@ -865,6 +868,8 @@ next_disk:
         }
         printf("\n");
     } /* another floppy question, possibly jumping back */
+
+  catclose(catalog);
 
   if (((debug_prog==TRUE) || (param.force_yes!=FALSE)) &&
     (bad_sector_map[0]>0) && (!special))

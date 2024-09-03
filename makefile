@@ -20,7 +20,7 @@ CFLAGS=-wx -0 -ms -fpc -zp1
 OBJS=createfs.obj floppy.obj hdisk.obj main.obj   &
      savefs.obj bcread.obj prf.obj userint.obj    &
      driveio.obj getopt.obj init.obj recordbc.obj &
-     uformat.obj
+     uformat.obj kitten.obj
 
 pack: format.exe .SYMBOLIC
   $(UPX) $(UPXFLAGS) $<

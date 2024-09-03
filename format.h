@@ -17,7 +17,7 @@
 */
 
 #define NAME "Format"
-#define VERSION "0.92" /* the only update 0.91o -> 0.91u in this file... */
+#define VERSION "0.92a"
 
 
 #ifdef MAIN
@@ -36,6 +36,7 @@ extern int debug_prog;
 #include <mem.h>	/* memset memcpy */
 
 #include "btstrct.h"	/* BPB and FAT32_BPB etc. */
+#include "kitten.h"
 
 /*
 /////////////////////////////////////////////////////////////////////////////
@@ -80,6 +81,8 @@ EXTERN unsigned int bad_sector_map_pointer;
 
 EXTERN union  REGS  regs;
 EXTERN struct SREGS sregs;
+
+EXTERN nl_catd catalog;
 
 /*
 /////////////////////////////////////////////////////////////////////////////
