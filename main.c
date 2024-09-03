@@ -297,21 +297,21 @@ void main(int argc, char *argv[])
 	      ch = param.volume_label[n];
 	      if (!isLabelChar (ch))	/* new valid-character check 0.91u */
 	        {
-	        printf ("Illegal character in volume label: %c\n", ch);
-	        printf ("Allowed chars are 0-9, A-Z, space, special / country-specific chars 128-255\n"
-	                "and all of");
+	        printf (catgets(catalog, 4, 0, "Illegal character in volume label: %c\n"), ch);
+	        printf (catgets(catalog, 4, 1, "Allowed chars are 0-9, A-Z, space, special / country-specific chars 128-255\n"));
+	        printf (catgets(catalog, 4, 2, "and all of"));
 	        for (ch = ' '+1; ch < 128; ch++)
 	          {
 	            if ( (!isalnum (ch)) && (isLabelChar (ch)) )
-	              printf (" %c", ch);
+	              printf (catgets(catalog, 4, 3, " %c"), ch);
 	          } /* enumerate legal chars */
-	        printf ("\nbut no control chars and none of");
+	        printf (catgets(catalog, 4, 4, "\nbut no control chars and none of"));
 	        for (ch = ' '+1; ch < 128; ch++)
 	          {
 	            if (!isLabelChar (ch))
-	              printf (" %c", ch);
+	              printf (catgets(catalog, 4, 5, " %c"), ch);
 	          } /* enumerate illegal chars */
-	        printf ("\n");
+	        printf (catgets(catalog, 1, 0, "\n"));
 	        Exit(0,2);
 	        } /* illegal char in label */
 	      param.volume_label[n] = toupper (ch);
@@ -320,27 +320,27 @@ void main(int argc, char *argv[])
 
         case 'Z': /* our getopt has no "long" support, so we use /Z:keyword */
 	case 'z': /* 0.91l - extra (long) options */
-	  if (!stricmp(optarg+1,"mirror")) /* +1 to skip initial ":" */
+	  if (!stricmp(optarg+1,catgets(catalog, 5, 1, "mirror"))) /* +1 to skip initial ":" */
 	    {
 	    special = MIRROR;      /* take a new mirror data snapshot */
 	    break;
 	    }
-	  if (!stricmp(optarg+1,"unformat"))
+	  if (!stricmp(optarg+1,catgets(catalog, 5, 2, "unformat")))
 	    {
 	    special = UNFORMAT;	   /* revert to mirrored state, dangerous! */
 	    break;
 	    }
-	  if (!stricmp(optarg+1,"seriously"))
+	  if (!stricmp(optarg+1,catgets(catalog, 5, 3, "seriously")))
 	    {
 	    param.force_yes = TRUE + TRUE; /* User MEANS to format harddisk */
 	    break;
 	    }
-	  if (!stricmp(optarg+1,"longhelp"))
+	  if (!stricmp(optarg+1,catgets(catalog, 5, 4, "longhelp")))
 	    {
             Display_Help_Screen(1); /* LONG version */
             Exit(2,2);	/* Exit(0,1); pre 0.91v */
 	    }
-	  printf("Invalid /Z:mode - valid: MIRROR, UNFORMAT, SERIOUSLY\n");
+	  printf(catgets(catalog, 5, 0, "Invalid /Z:mode - valid: MIRROR, UNFORMAT, SERIOUSLY\n"));
           Exit(2,2);	/* Exit(0,2); pre 0.91v */
           break;
 
@@ -396,8 +396,8 @@ void main(int argc, char *argv[])
 	    }
 	  else
 	    {
-            printf("Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n");
-            printf("Special:  400, 800, 1680, 3360,    1494, 1743, 3486.\n");
+            printf(catgets(catalog, 4, 6, "Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n"));
+            printf(catgets(catalog, 4, 7, "Special:  400, 800, 1680, 3360,    1494, 1743, 3486.\n"));
 	    IllegalArg("/F",optarg);
 	    }
 	  break;
@@ -413,7 +413,7 @@ void main(int argc, char *argv[])
 	    }
 	  else
 	    {
-            printf("Ok: 40, 80. ???: 83.\n");
+            printf(catgets(catalog, 4, 8, "Ok: 40, 80. ???: 83.\n"));
 	    IllegalArg("/T",optarg);
 	    }
 	  break;
@@ -430,8 +430,8 @@ void main(int argc, char *argv[])
 	    }
 	  else
 	    {
-            printf("Standard: 8, 9, 15, 18, 36.\n");
-            printf("Special:  10, 21, 42.\n");
+            printf(catgets(catalog, 4, 9, "Standard: 8, 9, 15, 18, 36.\n"));
+            printf(catgets(catalog, 4, 10, "Special:  10, 21, 42.\n"));
 	    IllegalArg("/N",optarg);
 	    }
 	  break;
@@ -451,7 +451,7 @@ void main(int argc, char *argv[])
 	  break;
 
 	default:
-	  printf("Unrecognized option: /%c\n", index);
+	  printf(catgets(catalog, 4, 11, "Unrecognized option: /%c\n"), index);
 	  Display_Help_Screen(0); /* SHORT version */
           Exit(2,2);	/* Exit(4,2); pre 0.91v */
 
@@ -470,7 +470,7 @@ void main(int argc, char *argv[])
   else
     if (drive_letter_found == FALSE)
       {
-      printf("Must specify drive letter.\n");
+      printf(catgets(catalog, 4, 12, "Must specify drive letter.\n"));
       Exit(0,2);
       }
 
@@ -518,7 +518,7 @@ void main(int argc, char *argv[])
   if ( ( (param.t==TRUE) && (param.n!=TRUE) ) || 
        ( (param.n==TRUE) && (param.t!=TRUE) ) ) 
     {
-    printf("You cannot combine /T and /N.\n");
+    printf(catgets(catalog, 4, 13, "You cannot combine /T and /N.\n"));
     Display_Invalid_Combination();
     /* you must give BOTH track and sector arguments if giving either */
     }
@@ -679,8 +679,8 @@ next_disk:
              found_format_sectors_per_track ) ||
            ( found_format_heads != parameter_block.bpb.number_of_heads ) )
         {
-        printf("Will change size by formatting - forcing full format\n");
-        printf("Old: %d sectors per track, %d heads. New: %d sect. %d heads\n",
+        printf(catgets(catalog, 4, 14, "Will change size by formatting - forcing full format\n"));
+        printf(catgets(catalog, 4, 15, "Old: %d sectors per track, %d heads. New: %d sect. %d heads\n"),
           found_format_sectors_per_track, found_format_heads,
           parameter_block.bpb.sectors_per_cylinder,
           parameter_block.bpb.number_of_heads);
@@ -705,9 +705,9 @@ next_disk:
     {
     if ( (param.drive_type==FLOPPY) &&
          ( (param.u!=TRUE) || (param.q!=FALSE) ) )
-      printf("Cannot find existing format - forcing full format\n");
+      printf(catgets(catalog, 4, 16, "Cannot find existing format - forcing full format\n"));
     if ( (param.drive_type!=FLOPPY) && (param.u==FALSE) )
-      printf("Cannot find existing format - not saving UNFORMAT data.\n");
+      printf(catgets(catalog, 4, 17, "Cannot find existing format - not saving UNFORMAT data.\n"));
     }
 
 
@@ -718,8 +718,8 @@ next_disk:
       case 0:		/* do nothing special */
         break;
       case MIRROR:	/* only update mirror data */
-        printf("Writing a copy of the system sectors to the end of the drive:\n");
-        printf("Boot sector, one FAT, root directory. Useful for UNFORMAT.\n");
+        printf(catgets(catalog, 4, 18, "Writing a copy of the system sectors to the end of the drive:\n"));
+        printf(catgets(catalog, 4, 19, "Boot sector, one FAT, root directory. Useful for UNFORMAT.\n"));
 #if 0	/* warning obsolete 0.91r */
 //        printf("WARNING: This will OVERWRITE up to %s of possibly used space!\n",
 //          (param.fat_type==FAT32) ? "ca. 16 MB" :
@@ -731,14 +731,14 @@ next_disk:
         goto format_complete;
         /* break; */
       case UNFORMAT:	/* only write back FAT/root/boot from mirror */
-        printf("Overwriting boot sector, FATs and root directory with\n");
-        printf("MIRROR/UNFORMAT data which you have saved earlier.\n");
+        printf(catgets(catalog, 4, 20, "Overwriting boot sector, FATs and root directory with\n"));
+        printf(catgets(catalog, 4, 21, "MIRROR/UNFORMAT data which you have saved earlier.\n"));
         Restore_File_System(); /* restore is an euphemism for what it does! */
         what_completed = WHAT_UN; /* new 0.91p */
         goto format_complete;
         /* break; */
       default:
-        printf("/Z:what???\n"); /* should never be reached */
+        printf(catgets(catalog, 4, 22, "/Z:what???\n")); /* should never be reached */
     } /* switch special */
 
 
@@ -756,7 +756,7 @@ next_disk:
     {
     /* /U is Unconditional Format. */
     /* If floppy is unformatted or geometry changes, we must use this. */
-    printf(" Full Formatting (wiping all data)\n");
+    printf(catgets(catalog, 4, 23, " Full Formatting (wiping all data)\n"));
     Unconditional_Format();
     Create_File_System();
     what_completed = WHAT_FORMAT; /* new 0.91p */
@@ -770,8 +770,8 @@ next_disk:
     /* Even unformatted harddisks do not need full "/U" format    */
     /* (harddisk /U format means "wipe all data, do surface scan) */
     /* (harddisk LOWLEVEL format is never done by this program!)  */
-    printf(" QuickFormatting (only flushing metadata)\n");
-    printf(" Warning: Resets bad cluster marks if any.\n");
+    printf(catgets(catalog, 4, 24, " QuickFormatting (only flushing metadata)\n"));
+    printf(catgets(catalog, 4, 25, " Warning: Resets bad cluster marks if any.\n"));
     Create_File_System();
     what_completed = WHAT_QUICK; /* new 0.91p */
     goto format_complete;
@@ -786,7 +786,7 @@ next_disk:
 
     /* /Q is Safe Quick Format (checking for existing bad cluster list) */
     /* -- is Safe Quick Format (the same :-)) */
-    printf(" Safe QuickFormatting (trying to save UnFormat data)\n");
+    printf(catgets(catalog, 4, 26, " Safe QuickFormatting (trying to save UnFormat data)\n"));
     Save_File_System(1); /* side effect: checks for existing bad clust list */
     			/* 0.91r: 1 is "allow trashing of data clusters" -ea */
     			/* (unformat data is allowed to overwrite files)     */
@@ -805,15 +805,16 @@ next_disk:
     Record_Bad_Clusters(); /* write list of bad clusters */
     /* may include copied list from previous filesystem - not in special modes! */
 
+  printf(catgets(catalog, 1, 0, "\n"));
   switch (what_completed) /* new 0.91p - custom message */
     {
-      case WHAT_FORMAT: printf("\nFormat"); break;
-      case WHAT_QUICK: printf("\nQuickFormat"); break;
-      case WHAT_SAFE: printf("\nSafe QuickFormat"); break;
-      case WHAT_MIRROR: printf("\nMirror"); break;
-      case WHAT_UN: printf("\nUnFormat"); break;
+      case WHAT_FORMAT: printf(catgets(catalog, 4, 27, "Format")); break;
+      case WHAT_QUICK: printf(catgets(catalog, 4, 28, "QuickFormat")); break;
+      case WHAT_SAFE: printf(catgets(catalog, 4, 29, "Safe QuickFormat")); break;
+      case WHAT_MIRROR: printf(catgets(catalog, 4, 30, "Mirror")); break;
+      case WHAT_UN: printf(catgets(catalog, 4, 31, "UnFormat")); break;
     } /* switch */
-  printf(" complete.\n");
+  printf(catgets(catalog, 4, 32, " complete.\n"));
 
   Lock_Unlock_Drive(0);	/* unlock drive again (in Win9x / DOS 7.x) */
 			/* release SECOND lock: enable filesystem  */
@@ -834,39 +835,42 @@ next_disk:
       union REGS regs;
 
       /* printf("\nFormat another floppy (y/n)?\n"); */
+      write(isatty(1) ? 1 : 2, catgets(catalog, 1, 0, "\n"), 1);
       if (!special) /* or use what_completed switch / case with WHAT_...? */
-          write(isatty(1) ? 1 : 2, "\nFormat", 7);
+          write(isatty(1) ? 1 : 2, catgets(catalog, 4, 33, "Format"), strlen(catgets(catalog, 4, 33, "Format")));
       else
-          write(isatty(1) ? 1 : 2, "\nProcess", 8);
-      write(isatty(1) ? 1 : 2, " another floppy (y/n)? ", 23);
+          write(isatty(1) ? 1 : 2, catgets(catalog, 4, 34, "Process"), strlen(catgets(catalog, 4, 34, "Process")));
+      write(isatty(1) ? 1 : 2, catgets(catalog, 4, 35, " another floppy (y/n)?"), strlen(catgets(catalog, 4, 35, " another floppy (y/n)?")));
+	  write(isatty(1) ? 1 : 2, " ", 1); /* Note: we print trailing space directly as kittenc compiler will trim whitespace */
       /* write to STDERR to keep message visible even if STDOUT redirected */
 
       /* Get keypress */
       regs.h.ah = 0x07;
       intdos(&regs, &regs);
 
-      if (toupper(regs.h.al) == 'Y')
+      if (toupper(regs.h.al) == catgets(catalog, 1, 1, "Y")[0])
         {
-        int bads;
-        printf("\n%s next floppy...\n",
-          special ? "Processing" : "Formatting");
+          int bads;
+		  printf(catgets(catalog, 1, 0, "\n"));
+          printf(catgets(catalog, 4, 38, "%s next floppy...\n"),
+          special ? catgets(catalog, 4, 36, "Processing") : catgets(catalog, 4, 37, "Formatting"));
 
-	drive_statistics.bad_sectors = 0;
-	bad_sector_map_pointer = 0;
-	for (bads=0; bads < MAX_BAD_SECTORS; bads++)
-	  {
-	  bad_sector_map[bads] = 0;
-	  }
+          drive_statistics.bad_sectors = 0;
+          bad_sector_map_pointer = 0;
+          for (bads=0; bads < MAX_BAD_SECTORS; bads++)
+            {
+              bad_sector_map[bads] = 0;
+            }
 
         Lock_Unlock_Drive(1);	/* lock drive (needed in Win9x / DOS 7.x) */
-				/* FIRST lock, file system still enabled. */
-	/* (second level will be entered again when we really need it...) */
+        /* FIRST lock, file system still enabled. */
+        /* (second level will be entered again when we really need it...) */
 
         param.v = FALSE;	/* force asking for new label for next disk */
 
         goto next_disk; /* *** LOOP AROUND FOR MULTIPLE FLOPPY DISKS *** */
         }
-        printf("\n");
+        printf(catgets(catalog, 1, 0, "\n"));
     } /* another floppy question, possibly jumping back */
 
   catclose(catalog);
