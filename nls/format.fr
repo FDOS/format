@@ -147,3 +147,20 @@
 5,3:seriously
 # display LONG (detailed) version of help
 5,4:longhelp
+
+# Check_Remote_Subst()
+6,0:Impossible de formater des lecteurs distants ou ceux avec la commande SUBST (code %04x). Annulation.\n
+6,1:Lecteur invalide ! Annulation.\n
+6,2:Impossible de formater les lecteurs sur lesquels ASSIGN, JOIN ou SUBST ont ‚t‚ utilis‚s. Annulation.\n
+
+# Check_For_Format()
+7,0:  Secteur d'amor‡age illisible, le disque n'est pas encore format‚\n
+7,1: Conteu du secteur d'amor‡age non plausible, le disque n'est pas encore format‚ en FAT\n
+7,2:Invalide %sBPB (code 0x%x). PAS encore format‚.\n
+
+# Write_System_Files()
+8,0:\nAVERTISSEMENT : Pas de SYS dans PATH - ‚chec de l'installation des fichiers systŠme !\n
+8,1:\nEx‚cution de SYS : %s %s\n
+8,2:\nEx‚cution de SYS dans un shell : %s\n
+8,3:\nSYS a retourn‚ le niveau d'erreur %d.\n
+8,4:\nAVERTISSEMENT : ‚chec de l'ex‚cution de SYS.\n

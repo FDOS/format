@@ -147,3 +147,20 @@
 5,3:seriously
 # display LONG (detailed) version of help
 5,4:longhelp
+
+# Check_Remote_Subst()
+6,0:SUBST komutunun kullanld§ veya uzaktaki srcler bi‡imlendirilemez (kod %04x). ˜ptal ediliyor.\n
+6,1:Ge‡ersiz src! ˜ptal ediliyor.\n
+6,2:ASSIGN, JOIN veya SUBST komutlarnn kullanld§ srcler bi‡imlendirilemez. ˜ptal ediliyor.\n
+
+# Check_For_Format()
+7,0:  BaŸlatma sekt”r okunamaz, disk henz bi‡imlendirilmemiŸ\n
+7,1: BaŸlatma sekt”r i‡eri§i makul de§il, disk henz FAT ile bi‡imlendirilmemiŸ\n
+7,2:Ge‡ersiz %sBPB (kod 0x%x). Henz bi‡imlendirilmemiŸ.\n
+
+# Write_System_Files()
+8,0:\n˜KAZ: No SYS in PATH - could not install system files!\n
+8,1:\nSYS ‡alŸtrlyor: %s %s\n
+8,2:\nSYS bir kabukta ‡alŸtrlyor: %s\n
+8,3:\nSYS %d hata seviyesini geri g”nderdi.\n
+8,4:\˜KAZ: SYS ‡alŸtrlmas baŸarsz oldu.\n
