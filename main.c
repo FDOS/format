@@ -65,7 +65,7 @@ void Check_Remote_Subst(void)
   intdos(&regs, &regs);
   if ((regs.x.dx & 0x9000) != 0)	/* 8000: subst, 1000: remote */
   {
-    printf("Cannot format remote or SUBSTed drives (code %04x). Aborting.\n",
+    printf(catgets(catalog, 6, 0, "Cannot format remote or SUBSTed drives (code %04x). Aborting.\n"),
       regs.x.dx);
     Exit(4,60);
   }
@@ -84,12 +84,12 @@ void Check_Remote_Subst(void)
   intdosx(&regs, &regs, &sregs);
   if (regs.x.cflag != 0)
   {
-    printf("Invalid Drive! Aborting.\n");
+    printf(catgets(catalog, 6, 1, "Invalid Drive! Aborting.\n"));
     Exit(4,61);
   }
   if (stricmp(prename, postname))
   {
-    printf("Cannot format ASSIGNed, JOINed or SUBSTed drives. Aborting.\n");
+    printf(catgets(catalog, 6, 2, "Cannot format ASSIGNed, JOINed or SUBSTed drives. Aborting.\n"));
     if (debug_prog==TRUE) printf("[DEBUG]  Truename: %s\n", postname);
     Exit(4,62);
   }
@@ -129,7 +129,7 @@ char Check_For_Format(void)
       /* bits: 80 timeout 40 seek 20 controller fail 10 CRC error        */
       /* 8 DMA error 4 sector not found 2 bad address mark 1 bad command */
       /*  (int 26 would have special extra code 3, write protect error)  */
-      printf("  Boot sector unreadable, disk not yet formatted\n");
+      printf(catgets(catalog, 7, 0, "  Boot sector unreadable, disk not yet formatted\n"));
       return FALSE;
     }
 
@@ -141,7 +141,7 @@ char Check_For_Format(void)
     (sector_buffer[0x1fe]!=0x55) || (sector_buffer[0x1ff]!=0xaa) ||
     (sector_buffer[0x0b]!=0) || (sector_buffer[0x0c]!=2))
     {
-      printf(" Boot sector contents implausible, disk not yet FAT formatted\n");
+      printf(catgets(catalog, 7, 1, " Boot sector contents implausible, disk not yet FAT formatted\n"));
       return FALSE;
     }
 
@@ -178,7 +178,7 @@ char Check_For_Format(void)
     }
   else
     {
-    printf("Invalid %sBPB (code 0x%x). NOT yet formatted.\n",
+    printf(catgets(catalog, 7, 2, "Invalid %sBPB (code 0x%x). NOT yet formatted.\n"),
       ((param.fat_type == FAT32) ? "x" : ""), regs.x.ax);
     return FALSE; /* is this is a network drive or something? */
     }
@@ -201,24 +201,24 @@ void Write_System_Files(void)
     syspath = searchpath("sys.exe");
   if (syspath == NULL)
   {
-    printf("\nWARNING: No SYS in PATH - could not install system files!\n");
+    printf(catgets(catalog, 8, 0, "\nWARNING: No SYS in PATH - could not install system files!\n"));
     return;
   }
 
   sysarg0[0] = param.drive_letter[0];
-  printf("\nRunning SYS: %s %s\n", syspath, sysarg0);
+  printf(catgets(catalog, 8, 1, "\nRunning SYS: %s %s\n", syspath, sysarg0));
   retval = spawnl(P_WAIT, syspath, syspath, sysarg0, NULL);
 #else
   /* use less efficient / less safe style with a new shell: */
   /* Issue the command to write system files. */
   char sys[7] = {'s','y','s',' ','x',':',0};
   sys[4] = param.drive_letter[0];
-  printf("\nRunning SYS in a shell: %s\n", sys);
+  printf(catgets(catalog, 8, 2, "\nRunning SYS in a shell: %s\n"), sys);
   retval = system(sys);
 #endif
 
-  if (retval > 0) printf("\nSYS returned errorlevel %d.\n", retval);
-  if (retval < 0) printf("\nWARNING: Running SYS failed.\n");
+  if (retval > 0) printf(catgets(catalog, 8, 3, "\nSYS returned errorlevel %d.\n"), retval);
+  if (retval < 0) printf(catgets(catalog, 8, 4, "\nWARNING: Running SYS failed.\n"));
 } /* Write_System_Files */
 
 

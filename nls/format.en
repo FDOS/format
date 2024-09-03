@@ -147,3 +147,20 @@
 5,3:seriously
 # display LONG (detailed) version of help
 5,4:longhelp
+
+# Check_Remote_Subst()
+6,0:Cannot format remote or SUBSTed drives (code %04x). Aborting.\n
+6,1:Invalid Drive! Aborting.\n
+6,2:Cannot format ASSIGNed, JOINed or SUBSTed drives. Aborting.\n
+
+# Check_For_Format()
+7,0:  Boot sector unreadable, disk not yet formatted\n
+7,1: Boot sector contents implausible, disk not yet FAT formatted\n
+7,2:Invalid %sBPB (code 0x%x). NOT yet formatted.\n
+
+# Write_System_Files()
+8,0:\nWARNING: No SYS in PATH - could not install system files!\n
+8,1:\nRunning SYS: %s %s\n
+8,2:\nRunning SYS in a shell: %s\n
+8,3:\nSYS returned errorlevel %d.\n
+8,4:\nWARNING: Running SYS failed.\n
