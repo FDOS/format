@@ -6,6 +6,9 @@
 
 # common
 1,0:\n
+# these two options for Yes and No are only 1 character and must be upper case
+1,1:E
+1,2:H
 
 # help screen
 2,0:S”z dizimi (daha fazla ayrnt i‡in belgelendirmeye bakn):\n\n
@@ -60,3 +63,87 @@
 3,16:Sabit disk bi‡imlendirme teyit talebini susturmak i‡in /Z:seriously kullann\n
 3,17:Bi‡imlendirmeden sadece unformat (mirror) verilerini kaydetmek i‡in /Z:mirror kullann\n
 3,18:Taze mirror verilerinin bulundu§u bir diski geri almak i‡in /Z:unformat kullann\n
+3,19:D˜SKETLER i‡in kipler: hzl gvenli bi‡imlendirmeyi dener. DŸk seviye bi‡imlendirme\n
+3,20:  sadece gerekti§inde kullanlr. Hzl gvenli bi‡imlendirme unformat i‡in mirror verilerini kaydeder.\n
+3,21:SAB˜T D˜SKLER i‡in kipler: hzl gvenli bi‡imlendirmeyi dener. Hzl tam\n
+3,22:  bi‡imlendirme sadece gerekti§inde kullanlr. Hzl tam bi‡imlendirme sadece dosya sistemini sfrlar\n
+3,23:DŸk seviye bi‡imlendirmeyi zorlamak istiyorsanz (disket) veya tm yzeyin taranmasn\n
+3,24:  ve tm i‡eri§in silinmesini (sabit disk) istiyorsanz, /U kullann.\n
+3,25:  FORMAT /Q /U hzl tam bi‡imlendirmedir (dŸk seviye bi‡imlendirme / tarama / silme yok!)\n
+3,26:  FORMAT /Q hzl gvenli bi‡imlendirmedir (mmknse mirror verilerini kaydet)\n
+3,27:    mirror verileri daima veri alann sonunu ezecektir!\n
+3,28:  FORMAT otomatik olarak bir kip se‡er (yukarya bakn), ne /Q ne de /U se‡mezseniz\n\n
+
+3,29:Desteklenen FAT trleri: FAT12, FAT16, FAT32, tm mirror / unformat ile.\n
+3,30:Desteklenen disket boyutlar: 160k 180k 320k 360k ve 1200k, 5.25 in‡ i‡in\n
+3,31:  ve 720k ile 1440k (2880k Ÿimdiye dek hi‡ denenmedi) 3.5 in‡ srcler i‡in.\n
+#3,32:DD srcler srasyla 360k/720k ile snrldr. 2880k, sadece ED srcler i‡indir.\n
+3,33:Desteklenenn aŸr bi‡imlendirmeler: 400k 800k 1680k (ve 3660k) daha fazla sekt”rle\n
+3,34:  ve 1494k (1200k yerine) ve 1743k (ve 3486k) daha fazla par‡ayla da.\n
+3,35:  Daha fazla par‡a tm srclerde ‡alŸmaz, riski siz stlenerek kullann.\n
+3,36:  ˜kaz: eski DOS srmleri aŸr bi‡imlendirmeyi sadece bir srcyle kullanabilir.\n
+3,37:  1440k'da 720k, 720k ortam gerektirir. 360k bi‡imlendirmek i‡in 360k src kullann.\n\n
+
+3,38:FAT32 bi‡imlendirmede, 4k hizalamay zorlamak i‡in /A se‡ene§ini kullanabilirsiniz.\n
+
+# main()
+4,0:Birim etiketinde ge‡ersiz karakter: %c\n
+4,1:˜zin verilen karakterler 0-9, A-Z, boŸluk, ”zel / lkeye-”zel karakterler 128-255\n
+4,2:ve Ÿunlarn tm:
+# the following is printed for valid label characters from ordinal(' ')+1 through 127
+4,3: %c
+4,4:\nfakat hi‡bir kontrol karakterine ve Ÿunlardan hi‡birine izin verilmez
+# and now for enumerating illegal characters from ordinal(' ')+1 through 127
+4,5: %c"
+# /F:size
+4,6:Standart: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n
+4,7:™zel:  400, 800, 1680, 3360,    1494, 1743, 3486.\n
+# /T tracks (cylinders)
+4,8:Tamam: 40, 80. ???: 83.\n
+# /N sectors per track
+4,9:Standart: 8, 9, 15, 18, 36.\n
+4,10:™zel:  10, 21, 42.\n
+# other options
+4,11:Tannmayan se‡enek: /%c\n
+4,12:Src harfi belirtilmeli.\n
+4,13:/T ve /N birleŸtirilemez.\n
+4,14:Boyut bi‡imlendirmeyle de§iŸecek - tam bi‡imlendirme zorlanyor\n
+4,15:Eski: par‡a baŸna %d sekt”r, %d kafa. Yeni: %d sekt. %d kafa\n
+4,16:Mevcut bi‡im bulunamad - tam bi‡imlendirme zorlanyor\n
+4,17:Mevcut bi‡im bulunamad - UNFORMAT verileri kaydedilmiyor.\n
+4,18:Sistem sekt”rlerinin bir kopyas src sonuna yazlyor:\n
+4,19:BaŸlatma sekt”r, bir FAT, k”k dizin. UNFORMAT i‡in kullanŸldr.\n
+4,20:BaŸlatma sekt”r, FAT ve k”k dizini Ÿununla eziliyor:\n
+4,21:”nceden kaydetti§iniz MIRROR/UNFORMAT verileri.\n
+# message 4,22 should never be reached/shown
+4,22:/Z:Ne???\n
+4, 23: Tam bi‡imlendirme (tm verileri siler)\n
+4, 24: Hzl bi‡imlendirme (sadece st veriler temizlenir)\n
+4, 25: ˜kaz: bozuk kme iŸaretleri varsa sfrlanr.\n
+4, 26: Gvenli hzl bi‡imlendirme (UnFormat verileri kaydedilmeye ‡alŸlr)\n
+# 4,27 through 4,32 display: <action> complete\n
+4,27:Bi‡imlendirme
+4,28:Hzl Bi‡imlendirme
+4,29:Gvenli Hzl Bi‡imlendirme
+4,30:Mirror
+4,31:UnFormat
+4,32: tamamland.\n
+# 4,33 thru 4,35 are to ask user to repeat previous action
+4,33:Bi‡imlendir
+4,34:˜Ÿle
+4,35: baŸka bir disket (e/h)?
+# 4,36 thru 4,38 tell user we are repeating action
+4,36:˜Ÿleniyor
+4,37:Bi‡imlendiriliyor
+4,38:%s sonraki disket...\n
+
+# the following are long option keywords /Z:keyword
+5,0:Ge‡ersiz /Z:kipi - ge‡erli: MIRROR, UNFORMAT, SERIOUSLY\n"));
+# take a new mirror data snapshot
+5,1:mirror
+# revert to mirrored state, dangerous!
+5,2:unformat
+# User MEANS to format harddisk
+5,3:seriously
+# display LONG (detailed) version of help
+5,4:longhelp
