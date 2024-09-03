@@ -6,6 +6,9 @@
 
 # common
 1,0:\n
+# these two options for Yes and No are only 1 character and must be upper case
+1,1:Y
+1,2:N
 
 # help screen
 2,0:Syntax (see documentation for more details background information):\n\n
@@ -60,3 +63,87 @@
 3,16:To suppress the harddisk format confirmation prompt, use    /Z:seriously\n
 3,17:To save only unformat (mirror) data without formatting, use /Z:mirror\n
 3,18:To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n
+3,19:Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n
+3,20:  only when needed. Quick safe format saves mirror data for unformat.\n
+3,21:Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n
+3,22:  format only when needed. Quick full format only resets the filesystem\n
+3,23:If you want to force lowlevel format (floppy) or want to have the whole\n
+3,24:  disk surface scanned and all contents wiped (harddisk), use /U.\n
+3,25:  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n
+3,26:  FORMAT /Q is quick save format (save mirror data if possible)\n
+3,27:    the mirror data will always overwrite the end of the data area!\n
+3,28:  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n\n
+
+3,29:Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n
+3,30:Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n
+3,31:  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n
+#3,32:DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n
+3,33:Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n
+3,34:  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n
+3,35:  More tracks will not work on all drives, use at your own risk.\n
+3,36:  Warning: older DOS versions can only use overformats with a driver.\n
+3,37:  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n\n
+
+3,38:For FAT32 formatting, you can use the /A switch to force 4k alignment.\n
+
+# main()
+4,0:Illegal character in volume label: %c\n
+4,1:Allowed chars are 0-9, A-Z, space, special / country-specific chars 128-255\n
+4,2:and all of
+# the following is printed for valid label characters from ordinal(' ')+1 through 127
+4,3: %c
+4,4:\nbut no control chars and none of
+# and now for enumerating illegal characters from ordinal(' ')+1 through 127
+4,5: %c"
+# /F:size
+4,6:Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n
+4,7:Special:  400, 800, 1680, 3360,    1494, 1743, 3486.\n
+# /T tracks (cylinders)
+4,8:Ok: 40, 80. ???: 83.\n
+# /N sectors per track
+4,9:Standard: 8, 9, 15, 18, 36.\n
+4,10:Special:  10, 21, 42.\n
+# other options
+4,11:Unrecognized option: /%c\n
+4,12:Must specify drive letter.\n
+4,13:You cannot combine /T and /N.\n
+4,14:Will change size by formatting - forcing full format\n
+4,15:Old: %d sectors per track, %d heads. New: %d sect. %d heads\n
+4,16:Cannot find existing format - forcing full format\n
+4,17:Cannot find existing format - not saving UNFORMAT data.\n
+4,18:Writing a copy of the system sectors to the end of the drive:\n
+4,19:Boot sector, one FAT, root directory. Useful for UNFORMAT.\n
+4,20:Overwriting boot sector, FATs and root directory with\n
+4,21:MIRROR/UNFORMAT data which you have saved earlier.\n
+# message 4,22 should never be reached/shown
+4,22:/Z:what???\n
+4, 23: Full Formatting (wiping all data)\n
+4, 24: QuickFormatting (only flushing metadata)\n
+4, 25: Warning: Resets bad cluster marks if any.\n
+4, 26: Safe QuickFormatting (trying to save UnFormat data)\n
+# 4,27 through 4,32 display: <action> complete\n
+4,27:Format
+4,28:QuickFormat
+4,29:Safe QuickFormat
+4,30:Mirror
+4,31:UnFormat
+4,32: complete.\n
+# 4,33 thru 4,35 are to ask user to repeat previous action
+4,33:Format
+4,34:Process
+4,35: another floppy (y/n)?
+# 4,36 thru 4,38 tell user we are repeating action
+4,36:Processing
+4,37:Formatting
+4,38:%s next floppy...\n
+
+# the following are long option keywords /Z:keyword
+5,0:Invalid /Z:mode - valid: MIRROR, UNFORMAT, SERIOUSLY\n"));
+# take a new mirror data snapshot
+5,1:mirror
+# revert to mirrored state, dangerous!
+5,2:unformat
+# User MEANS to format harddisk
+5,3:seriously
+# display LONG (detailed) version of help
+5,4:longhelp
