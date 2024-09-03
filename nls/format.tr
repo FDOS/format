@@ -159,8 +159,8 @@
 7,2:Geáersiz %sBPB (kod 0x%x). HenÅz biáimlendirilmemiü.\n
 
 # Write_System_Files()
-8,0:\nòKAZ: No SYS in PATH - could not install system files!\n
+8,0:\nòKAZ: PATH deßiükeninde SYS yok - sistem dosyalarç kurulamadç!\n
 8,1:\nSYS áalçütçrçlçyor: %s %s\n
 8,2:\nSYS bir kabukta áalçütçrçlçyor: %s\n
 8,3:\nSYS %d hata seviyesini geri gînderdi.\n
-8,4:\òKAZ: SYS áalçütçrçlmasç baüarçsçz oldu.\n
+8,4:\nòKAZ: SYS áalçütçrçlmasç baüarçsçz oldu.\n
