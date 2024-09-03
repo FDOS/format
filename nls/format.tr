@@ -1,0 +1,62 @@
+# FreeDOS FORMAT.EXE message set - version 0.92a and later
+# version (on help screen)
+0,0:FreeDOS %6s Srm %s\n
+0,1:Brian E. Reifsnyder, Eric Auer ve baŸkalar tarafndan yazlmŸtr.\n
+0,2:Telif hakk 1999 - 2024 GNU GPL, Srm 2+ kapsamnda.\n\n
+
+# common
+1,0:\n
+
+# help screen
+2,0:S”z dizimi (daha fazla ayrnt i‡in belgelendirmeye bakn):\n\n
+2,1:S”z dizimi (belgelendirmeye bakn veya /Z:longhelp kullann):\n\n
+# only shown if compiled with LEGACY_HELP
+2,3:FORMAT src: [/V[:etiket]] [/Q] [/U] [/F:boyut] [/B | /S] [/D]\n
+2,4:FORMAT src: [/V[:etiket]] [/Q] [/U] [/T:par‡a /N:sekt”r] [/B | /S] [/D]\n
+2,5:FORMAT src: [/V[:etiket]] [/Q] [/U] [/4] [/B | /S] [/D]\n
+2,6:FORMAT src: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n
+2,12: /B         Uyumluluk i‡in muhafaza edildi, eskiden baŸlatma dosyalar i‡in alan ayrrd.\n
+2,22: /1         Bir disketin tek tarafn bi‡imlendirir (160k / 180k).\n
+2,23: /8         5.25\" bir diski par‡a baŸ 8 sekt”rle bi‡imlendirir (160k / 320k).\n
+# only shown if compiled without LEGACY_HELP
+2,7:FORMAT src: [/V[:etiket]] [/Q] [/U] [/F:boyut] [/S] [/D]\n
+2,8:FORMAT src: [/V[:etiket]] [/Q] [/U] [/T:par‡a /N:sekt”r] [/S] [/D]\n
+#  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
+#  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
+2,9:FORMAT src: [/V[:etiket]] [/Q] [/U] [/4] [/S] [/D]\n\n
+# shown for all
+2,10: /V:etiket  Disk i‡in birim etiketi belirtir, saat ve tarihini kaydeder.\n
+2,11: /S         Diski baŸlatlabilir yapmak i‡in ve sistem dosyalarn eklemek i‡in SYS kullanr.\n
+2,13: /D         €ok ayrntl ol ve hata ayklama ‡kts g”ster. Hata raporlar i‡in.\n
+2,14: /Q         Diski hzl bi‡imlendirir. /U ile kullanlmazsa, UNFORMAT iŸe yarar\n
+2,15:            ve bozuk kme iŸaretlerini muhafaza eder (/Q /U etmez).\n
+2,16: /U         Diski koŸulsuz bi‡imlendirir. Disket ise dŸk seviye bi‡imlendirme.\n
+2,17: /F:boyut   Bi‡imlendirilecek disketin boyutunu belirtir. Normal boyutlar:\n
+2,18:            360, 720, 1200, 1440, veya 2880 (birim: kilobayt). /F:0 liste g”sterir.\n
+2,19: /4         1,2 MB disket srcsnde 360K disket bi‡imlendirir.\n
+2,20: /T:par‡a   Bir disketteki par‡a (yani track) saysn belirtir.\n
+2,21: /N:sekt”r  Bir disketteki sekt”r saysn belirtir.\n
+
+# detailed help screen
+3,0:Bu FORMAT http://www.freedos.org/ projesi i‡in yazlmŸtr.\n
+3,1:  GNU GPL lisansna dair bilgi i‡in  http://www.gnu.org/ sitesine bakn.\n
+3,2:1999-2003 senelerinde Brian E. Reifsnyder <reifsnyderb@mindspring.com> tarafndan yazlmŸtr.\n
+3,3:  0.90 / 0.91 2003-2006 i‡in bakmc: Eric Auer <eric@coli.uni-sb.de>\n
+3,4:Katkda bulunanlar: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
+3,5:  Bart Oldeman, Jim Hall ve baŸkalar. Deneyenleri de unutmayalm!\n\n
+
+3,6:Se‡enekler ve ilave iŸlevlerin a‡klamalar:\n
+3,7:/D (debug) ve /Y (teyit talebini atla) se‡eneklerine daima izin verilir.\n
+3,8:/B (sys i‡in alan ayr) boŸtur ve /S ile birleŸtirilemez (sys)\n
+3,9:/V:etiket 160k/320k diskleri i‡in de§ildir. Etiket bi‡imlendirme tarih/saatini kaydeder.\n\n
+
+3,10:Boyut belirtimi sadece disketler i‡in ‡alŸr. Ya /F:boyut (kilobayt\n
+3,11:olarak, 0 boyutu izin verilen boyutlarn listesini g”rntler), ya\n
+3,12:       /T:par‡a /N:par‡a_baŸ_sekt”r\n
+3,13:ya da Ÿunlarn herhangi bir birleŸimi /1 (tek tarafl, 160k/180k),\n
+3,14:                      /8 (par‡a baŸ 8 sekt”r, 160k/320k, DOS 1.x)\n
+3,15:                  ve  /4 (160-360k diskleri 1200k srcde bi‡imlendir)\n\n
+
+3,16:Sabit disk bi‡imlendirme teyit talebini susturmak i‡in /Z:seriously kullann\n
+3,17:Bi‡imlendirmeden sadece unformat (mirror) verilerini kaydetmek i‡in /Z:mirror kullann\n
+3,18:Taze mirror verilerinin bulundu§u bir diski geri almak i‡in /Z:unformat kullann\n
