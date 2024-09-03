@@ -488,80 +488,81 @@ void Key_For_Next_Page()
 /* 0.91n - if detailed is non-zero, display multi-page help screen. */
 void Display_Help_Screen(int detailed)
 {
-  printf("FreeDOS %6s Version %s\n",NAME,VERSION);
-  printf("Written by Brian E. Reifsnyder, Eric Auer and others.\n");
-  printf("Copyright 1999 - 2006 under the terms of the GNU GPL, Version 2.\n\n");
+  printf(catgets(catalog, 0, 0, "FreeDOS %6s Version %s\n"),NAME,VERSION);
+  printf(catgets(catalog, 0, 1, "Written by Brian E. Reifsnyder, Eric Auer and others.\n"));
+  printf(catgets(catalog, 0, 2, "Copyright 1999 - 2024 under the terms of the GNU GPL, Version 2+.\n\n"));
 
   if (detailed)
-    printf("Syntax (see documentation for more details background information):\n\n");
+    printf(catgets(catalog, 2, 0, "Syntax (see documentation for more details background information):\n\n"));
   else
-    printf("Syntax (see documentation or use /Z:longhelp for more options):\n\n");
+    printf(catgets(catalog, 2, 1, "Syntax (see documentation or use /Z:longhelp for more options):\n\n"));
 
 #if LEGACY_HELP /* with legacy stuff */
-  printf("FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n");
-  printf("FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n");
-  printf("FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n");
-  printf("FORMAT drive: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n");
+  printf(catgets(catalog, 2, 3, "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n"));
+  printf(catgets(catalog, 2, 4, "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n"));
+  printf(catgets(catalog, 2, 5, "FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n"));
+  printf(catgets(catalog, 2, 6, "FORMAT drive: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n"));
 #else /* new - without legacy stuff */
-  printf("FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/S] [/D]\n");
-  printf("FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/S] [/D]\n");
+  printf(catgets(catalog, 2, 7, "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/S] [/D]\n"));
+  printf(catgets(catalog, 2, 8, "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/S] [/D]\n"));
   /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
   /* (drive type detection and "double stepping" setting are automatic on ATs.) */
-  printf("FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n\n");
+  printf(catgets(catalog, 2, 9, "FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n\n"));
 #endif
 
-  printf(" /V:label   Specifies a volume label for the disk, stores date and time of it.\n");
-  printf(" /S         Calls SYS to make the disk bootable and to add system files.\n");
+  printf(catgets(catalog, 2, 10, " /V:label   Specifies a volume label for the disk, stores date and time of it.\n"));
+  printf(catgets(catalog, 2, 11, " /S         Calls SYS to make the disk bootable and to add system files.\n"));
 
 #if LEGACY_HELP /* legacy, DOS 1.x (/B cannot be combined with /S) */
-  printf(" /B         Kept for compatibility, formerly reserved space for the boot files.\n");
+  printf(catgets(catalog, 2, 12, " /B         Kept for compatibility, formerly reserved space for the boot files.\n"));
 #endif  
-  printf(" /D         Be very verbose and show debugging output. For bug reports.\n");
+  printf(catgets(catalog, 2, 13, " /D         Be very verbose and show debugging output. For bug reports.\n"));
 
-  printf(" /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n");
-  printf("            and preserves bad cluster marks (/Q /U does not).\n");
+  printf(catgets(catalog, 2, 14, " /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n"));
+  printf(catgets(catalog, 2, 15, "            and preserves bad cluster marks (/Q /U does not).\n"));
   /* preserving the bad cluster list is new in 0.91k */
-  printf(" /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n");
+  printf(catgets(catalog, 2, 16, " /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n"));
 
-  printf(" /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n");
-  printf("            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n");
-  printf(" /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n");
-  printf(" /T:tracks  Specifies the number of tracks on a floppy disk.\n");
-  printf(" /N:sectors Specifies the number of sectors on a floppy disk.\n");
+  printf(catgets(catalog, 2, 17, " /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n"));
+  printf(catgets(catalog, 2, 18, "            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n"));
+  printf(catgets(catalog, 2, 19, " /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n"));
+  printf(catgets(catalog, 2, 20, " /T:tracks  Specifies the number of tracks on a floppy disk.\n"));
+  printf(catgets(catalog, 2, 21, " /N:sectors Specifies the number of sectors on a floppy disk.\n"));
 
 #if LEGACY_HELP /* legacy, DOS 1.x */
-  printf(" /1         Formats a single side of a floppy disk (160k / 180k).\n");
-  printf(" /8         Formats a 5.25\" disk with 8 sectors per track (160k / 320k).\n");
+  printf(catgets(catalog, 2, 22, " /1         Formats a single side of a floppy disk (160k / 180k).\n"));
+  printf(catgets(catalog, 2, 23, " /8         Formats a 5.25\" disk with 8 sectors per track (160k / 320k).\n"));
 #endif  
 
   if (!detailed) return; /* stop here for normal, short, help screen */
 
-  printf("\n"); /* we got enough space for that */
+  printf(catgets(catalog, 1, 0, "\n")); /* we got enough space for that */
   Key_For_Next_Page();
 
-  printf("This FORMAT is made for the http://www.freedos.org/ project.\n");
-  printf("  See http://www.gnu.org/ for information about GNU GPL license.\n");
-  printf("Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n");
-  printf("  Maintainer for 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n");
-  printf("Contributors: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n");
-  printf("  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n\n");
+  printf(catgets(catalog, 3, 0, "This FORMAT is made for the http://www.freedos.org/ project.\n"));
+  printf(catgets(catalog, 3, 1, "  See http://www.gnu.org/ for information about GNU GPL license.\n"));
+  printf(catgets(catalog, 3, 2, "Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n"));
+  printf(catgets(catalog, 3, 3, "  Maintainer for 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n"));
+  printf(catgets(catalog, 3, 4, "Contributors: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n"));
+  printf(catgets(catalog, 3, 5, "  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n\n"));
 
-  printf("Switches and additional features explained:\n");
-  printf("/D (debug) and /Y (skip confirmation request) are always allowed.\n");
-  printf("/B (reserve space for sys) is dummy and cannot be combined with /S (sys)\n");
-  printf("/V:label is not for 160k/320k disks. The label stores the format date/time.\n\n");
+  printf(catgets(catalog, 3, 6, "Switches and additional features explained:\n"));
+  printf(catgets(catalog, 3, 7, "/D (debug) and /Y (skip confirmation request) are always allowed.\n"));
+  printf(catgets(catalog, 3, 8, "/B (reserve space for sys) is dummy and cannot be combined with /S (sys)\n"));
+  printf(catgets(catalog, 3, 9, "/V:label is not for 160k/320k disks. The label stores the format date/time.\n\n"));
 
-  printf("Size specifications only work for floppy disks. You can use\n");
-  printf("either /F:size (in kilobytes, size 0 displays a list of allowed sizes)\n");
-  printf("or     /T:tracks /N:sectors_per_track\n");
-  printf("or any combination of /1 (one-sided, 160k/180k),\n");
-  printf("                      /8 (8 sectors per track, 160k/320k, DOS 1.x)\n");
-  printf("                  and /4 (format 160-360k disk in 1200k drive)\n\n");
-  printf("To suppress the harddisk format confirmation prompt, use    /Z:seriously\n");
-  printf("To save only unformat (mirror) data without formatting, use /Z:mirror\n");
-  printf("To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n");
+  printf(catgets(catalog, 3, 10, "Size specifications only work for floppy disks. You can use\n"));
+  printf(catgets(catalog, 3, 11, "either /F:size (in kilobytes, size 0 displays a list of allowed sizes)\n"));
+  printf(catgets(catalog, 3, 12, "or     /T:tracks /N:sectors_per_track\n"));
+  printf(catgets(catalog, 3, 13, "or any combination of /1 (one-sided, 160k/180k),\n"));
+  printf(catgets(catalog, 3, 14, "                      /8 (8 sectors per track, 160k/320k, DOS 1.x)\n"));
+  printf(catgets(catalog, 3, 15, "                  and /4 (format 160-360k disk in 1200k drive)\n\n"));
+  
+  printf(catgets(catalog, 3, 16, "To suppress the harddisk format confirmation prompt, use    /Z:seriously\n"));
+  printf(catgets(catalog, 3, 17, "To save only unformat (mirror) data without formatting, use /Z:mirror\n"));
+  printf(catgets(catalog, 3, 18, "To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n"));
 
-  printf("\n"); /* we got enough space for that */
+  printf(catgets(catalog, 1, 0, "\n")); /* we got enough space for that */
   Key_For_Next_Page();
 
   printf("Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n");
