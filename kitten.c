@@ -161,7 +161,8 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	int32_t bufsize;
 	uint8_t *buffer = NULL;
 	struct message_end message_end;
-	static struct content content[MAX_LANGUAGES_ATTACHED];
+	//static struct content content[MAX_LANGUAGES_ATTACHED];
+	struct content content;
 	
 	/* try opening file */
 	dbgprintf(("catread(%s,%s)\n", catfile, lang));
@@ -181,7 +182,10 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	
 	/* check for our MAGIC value */
 	if (memcmp(message_end.id, "KITTENC", 8) != 0) 
+	{
+		dbgprintf(("MAGIC KITTENC not found.\n"));
 		goto cleanup; /* not found, so cleanup and return failure */
+	}
 
 	/* validate number of language sections within supported range */
 	/* Note: 100 is max value kittenc will attach / supports */
@@ -190,32 +194,63 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	
 	/* calculate seek adjustment to account for catalog data relocated in file */
 	seekadjustment = seekoffset - message_end.fileend_orig;
+	dbgprintf(("seek adjustment = %li bytes\n", seekadjustment));
 	
 	/* load language list */
 	if (lseek(fd, message_end.filepos + seekadjustment, SEEK_SET) != (message_end.filepos + seekadjustment)) 
+	{
+		dbgprintf(("Failed to seek to start of content section\n"));
 		goto cleanup;  /* failed to seek */
-	if (read(fd, &content, sizeof(struct content) * message_end.resource_count) != (off_t)(sizeof(struct content) * message_end.resource_count)) 
-		goto cleanup; /* error reading or data corrupted */
+	}
+	
+	/*
+	if (read(fd, &content, sizeof(struct content) * message_end.resource_count) != (off_t)(sizeof(struct content) * message_end.resource_count))
+	{	
+		dbgprintf(("Failed to read in %u bytes for content section\n", sizeof(struct content) * message_end.resource_count));
+		goto cleanup; / * error reading or data corrupted * /
+	}
+	*/
 	
 	/* cycle through available languages and see if match to requested language */
+	/* Note: to minimize memory usage, we read these 1 at a time instead of into a large block */
 	for (i = 0; i < message_end.resource_count; i++)
 	{
-		if ((lang[0] == toupper(content[i].language[0])) &&
-		    (lang[1] == toupper(content[i].language[1])))
+		/* Warning: we read sequentially through content array, but if match found file pointer will be moved! */
+		if (read(fd, &content, sizeof(struct content)) != (off_t)(sizeof(struct content)))
+		{	
+			dbgprintf(("Failed to read in %u bytes for content section\n", sizeof(struct content)));
+			goto cleanup; /* error reading or data corrupted */
+		}
+		
+		dbgprintf(("section[i=%i] language:=%c%c\n", i, toupper(content.language[0]), toupper(content.language[1])));
+		if ((lang[0] == toupper(content.language[0])) &&
+		    (lang[1] == toupper(content.language[1])))
 		{
 			/* we found a match! so allocate memory for strings, read them in and return pointer to buffer */
-			if (lseek(fd, content[i].filepos_start + seekadjustment, SEEK_SET) != (content[i].filepos_start + seekadjustment)) 
+			if (lseek(fd, content.filepos_start + seekadjustment, SEEK_SET) != (content.filepos_start + seekadjustment)) 
+			{
+				dbgprintf(("Error seeking to message section.\n"));
 				goto cleanup; /* error seeking */
-			bufsize = content[i].filepos_end - content[i].filepos_start;
+			}
+			bufsize = content.filepos_end - content.filepos_start;
+			dbgprintf(("Message set requires %lu bytes for buffer.\n", bufsize));
+			#ifdef __SMALL__
+			dbgprintf(("Largest block available is %u bytes.\n", _memmax()));
+			#endif
 			if ((buffer = (nl_catd)malloc(bufsize)) == NULL)
+			{
+				dbgprintf(("Error allocating memory buffer for messages.\n"));
 				goto cleanup; /* error allocating memory for messages */
+			}
 			if (read(fd, buffer, bufsize) != bufsize)
 			{
 				/* error reading */
+				dbgprintf(("Failed to read in messages.\n"));
 				free(buffer);
 				goto cleanup;
 			}
 			/* successfully loaded messages, buffer points to first message_header */
+			dbgprintf(("Successfully loaded messages into buffer.\n"));
 			goto cleanup;
 		}
 	}
@@ -377,6 +412,14 @@ nl_catd catopen(const char *name, int flag)
 			strcat(catfile,basename);
 			strcat(catfile,".");
 			strcat(catfile,catlang);
+			_kitten_catalog = catread(catfile, catlang);
+			if (_kitten_catalog != NULL)
+				continue;
+
+			/* Rule #3: %NLSPATH%\basename.MSG  -- for multiple languages in same file */
+			catfile[toklen] = '\0';  /* truncate catfile back to "%NLSPATH%\" portion */
+			strcat(catfile,basename);
+			strcat(catfile,".MSG");
 			_kitten_catalog = catread(catfile, catlang);
 			if (_kitten_catalog != NULL)
 				continue;

@@ -142,19 +142,21 @@ void ASCII_CD_Number(unsigned long number)
 
 void Ask_User_To_Insert_Disk()
 {
-  printf(" Insert new diskette for drive %c:\n",param.drive_letter[0]);
-  if (!isatty(1)) write(2, " Insert new disk please,\n",25);	/* 0.91v */
+  printf(catgets(catalog, 9, 0, " Insert new diskette for drive %c:\n"), param.drive_letter[0]);
+  if (!isatty(1)) 
+    write(2, catgets(catalog, 9, 1, " Insert new disk please,\n"), strlen(catgets(catalog, 9, 1, " Insert new disk please,\n")));
   write(isatty(1) ? 1 : 2,
-    " Press ENTER when the right disk is in drive...", 47);
+    catgets(catalog, 9, 2, " Press ENTER when the right disk is in drive..."), 
+	strlen(catgets(catalog, 9, 2, " Press ENTER when the right disk is in drive...")));
   /* write to STDERR for the case of STDOUT being redirected */
-  if (!isatty(1)) write(2, "\n", 1);
+  if (!isatty(1)) write(2, catgets(catalog, 1, 0, "\n"), 1);
 
   /* Wait for a key */
 
   regs.h.ah = 0x08;
   intdos(&regs, &regs);
 
-  printf("\n");
+  printf(catgets(catalog, 1, 0, "\n"));
 } /* Ask_User_To_Insert_Disk */
 
 
@@ -565,34 +567,34 @@ void Display_Help_Screen(int detailed)
   printf(catgets(catalog, 1, 0, "\n")); /* we got enough space for that */
   Key_For_Next_Page();
 
-  printf("Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n");
-  printf("  only when needed. Quick safe format saves mirror data for unformat.\n");
-  printf("Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n");
-  printf("  format only when needed. Quick full format only resets the filesystem\n");
-  printf("If you want to force lowlevel format (floppy) or want to have the whole\n");
-  printf("  disk surface scanned and all contents wiped (harddisk), use /U.\n");
-  printf("  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n");
-  printf("  FORMAT /Q is quick save format (save mirror data if possible)\n");
-  printf("    the mirror data will always overwrite the end of the data area!\n");
-  printf("  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n\n");
+  printf(catgets(catalog, 3, 19, "Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n"));
+  printf(catgets(catalog, 3, 20, "  only when needed. Quick safe format saves mirror data for unformat.\n"));
+  printf(catgets(catalog, 3, 21, "Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n"));
+  printf(catgets(catalog, 3, 22, "  format only when needed. Quick full format only resets the filesystem\n"));
+  printf(catgets(catalog, 3, 23, "If you want to force lowlevel format (floppy) or want to have the whole\n"));
+  printf(catgets(catalog, 3, 24, "  disk surface scanned and all contents wiped (harddisk), use /U.\n"));
+  printf(catgets(catalog, 3, 25, "  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n"));
+  printf(catgets(catalog, 3, 26, "  FORMAT /Q is quick save format (save mirror data if possible)\n"));
+  printf(catgets(catalog, 3, 27, "    the mirror data will always overwrite the end of the data area!\n"));
+  printf(catgets(catalog, 3, 28, "  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n\n"));
 
-  printf("Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n");
-  printf("Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n");
-  printf("  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n");
+  printf(catgets(catalog, 3, 29, "Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n"));
+  printf(catgets(catalog, 3, 30, "Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n"));
+  printf(catgets(catalog, 3, 31, "  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n"));
 #if 0 /* should be obvious */
-// printf("DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n");
+// printf(catgets(catalog, 3, 32, "DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n"));
 #endif
-  printf("Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n");
-  printf("  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n");
-  printf("  More tracks will not work on all drives, use at your own risk.\n");
-  printf("  Warning: older DOS versions can only use overformats with a driver.\n");
-  printf("  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n\n");
+  printf(catgets(catalog, 3, 33, "Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n"));
+  printf(catgets(catalog, 3, 34, "  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n"));
+  printf(catgets(catalog, 3, 35, "  More tracks will not work on all drives, use at your own risk.\n"));
+  printf(catgets(catalog, 3, 36, "  Warning: older DOS versions can only use overformats with a driver.\n"));
+  printf(catgets(catalog, 3, 37, "  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n\n"));
 
 /* formatting to 360k in 1200k drive gives weak format: 360k drive has broad tracks */
 /* and 1200k drive has narrow read / write heads. 1200k drive can read 360k disks   */
 /* formatted with 1200k drive, though, but you'll prefer to format to 1200k there.  */
 
-  printf("For FAT32 formatting, you can use the /A switch to force 4k alignment.\n");
+  printf(catgets(catalog, 3, 38, "For FAT32 formatting, you can use the /A switch to force 4k alignment.\n"));
 #if 0
 // printf("WARNING: Running FORMAT for FAT32 under Win98 seems to create broken format!\n");
 #endif

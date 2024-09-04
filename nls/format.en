@@ -164,3 +164,8 @@
 8,2:\nRunning SYS in a shell: %s\n
 8,3:\nSYS returned errorlevel %d.\n
 8,4:\nWARNING: Running SYS failed.\n
+
+# Ask_User_To_Insert_Disk()
+9,0: Insert new diskette for drive %c:\n
+9,1: Insert new disk please,\n
+9,2: Press ENTER when the right disk is in drive...

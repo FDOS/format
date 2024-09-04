@@ -13,7 +13,7 @@ CFLAGS=-wx -0 -ms -fpc -zp1
 
 # -wx  warnall
 # -0   8086 compat
-# -ms  small memory model
+# -ms  small memory model / -mc compact memory model for large data
 # -fpc floating point library calls (no FPU)
 # -zp1 byte-align structures
 
