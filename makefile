@@ -9,10 +9,11 @@ LDLIBS=
 UPX=upx
 UPXFLAGS=-qq --ultra-brute --8086
 
-CFLAGS=-wx -0 -ms -fpc -zp1
+CFLAGS=-wx -0 -mc -fpc -zp1
 
 # -wx  warnall
 # -0   8086 compat
+# due to size of message catalogs, large data is needed if compile with kitten
 # -ms  small memory model / -mc compact memory model for large data
 # -fpc floating point library calls (no FPU)
 # -zp1 byte-align structures
