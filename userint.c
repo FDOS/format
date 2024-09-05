@@ -162,46 +162,58 @@ void Ask_User_To_Insert_Disk()
 
 void Confirm_Hard_Drive_Formatting(int format) /* 0 unformat, 1 format */
 {
+  char const *yes = catgets(catalog, 1, 3, "YES");
+  char const *no = catgets(catalog, 1, 4, "NO");
+  char const *yes_response;
+  char yes_no_buffer[32];
+  /* ensure message fits in buffer, if not make sure what we say matches what we check */
+  if (strlen(yes)+strlen(no)+6 > sizeof(yes_no_buffer))
+  {
+    yes = "YES";
+	no = "NO";
+  }
+  sprintf(yes_no_buffer, " (%s/%s)?", yes, no);
+
   if (!format)
     {
-      printf("UNFORMAT will revert your root directory and FAT to a\n");
-      printf("previously recorded state. This can seriously mess up things!\n");
+      printf(catgets(catalog, 10, 0, "UNFORMAT will revert your root directory and FAT to a\n"));
+      printf(catgets(catalog, 10, 1, "previously recorded state. This can seriously mess up things!\n"));
     }
-  printf("\n WARNING: ALL DATA ON %s DISK\n",
-    (param.drive_type==HARD) ? "NON-REMOVABLE" : "FLOPPY");
-  printf(" DRIVE %c: %s LOST! PLEASE CONFIRM!\n",
-    param.drive_letter[0],
-    format ? "WILL BE" : "MIGHT GET" );
+  printf(catgets(catalog, 1, 0, "\n"));
+  printf(catgets(catalog, 10, 2, " WARNING: ALL DATA ON %s\n"),
+    (param.drive_type==HARD) ? catgets(catalog, 10, 3, "NON-REMOVABLE DISK") : catgets(catalog, 10, 4, "FLOPPY DISK"));
+  printf( (format) ? catgets(catalog, 10, 5, " DRIVE %c: WILL BE LOST!") : catgets(catalog, 10, 6, " DRIVE %c: MIGHT GET LOST!"),
+    param.drive_letter[0]);
+  printf(catgets(catalog, 10, 7, " PLEASE CONFIRM!\n"));
 
   /* printf(" Proceed with (Un)Format (YES/NO)? "); */
-  write(isatty(1) ? 1 : 2, " Proceed with ", 14);
-  if (!format) write(isatty(1) ? 1 : 2, "un", 2);
-  write(isatty(1) ? 1 : 2, "format (YES/NO)? ", 17);
   /* write to STDERR for the case of STDOUT being redirected */
+  if (format)
+  {
+    write(isatty(1) ? 1 : 2, catgets(catalog, 10, 8, "Proceed with Format"), 
+      strlen(catgets(catalog, 10, 8, "Proceed with Format")));
+  } else {
+    write(isatty(1) ? 1 : 2, catgets(catalog, 10, 9, "Proceed with unFormat"),
+      strlen(catgets(catalog, 10, 9, "Proceed with unFormat")));
+  }
+  write(isatty(1) ? 1 : 2, yes_no_buffer, strlen(yes_no_buffer));
 
-  KEYGET_ECHO;
-  if ( regs.h.al != 'Y' )
+  /* loop through and see if what user types matches */
+  for(yes_response = yes; *yes_response; yes_response++)
+  {
+    KEYGET_ECHO;
+	/* does character type match expected character? */
+    if ( regs.h.al != *yes_response )
     {
-    printf("\n");
-    Exit(5,10);	/* no Y confirm */
+      printf(catgets(catalog, 1, 0, "\n"));
+      /* assume if 1st letter not a match then they chose No otherwise elaborate on what to type */
+	  if ((yes_response - yes) != 0)
+        printf(catgets(catalog, 10, 10, "You have to type the whole word %s to confirm."), yes);
+      Exit(5,10);	/* extended error can be 10 through 12, 10 on Y, 11 on YE, 12 on YES mismatch */
     }
-
-  KEYGET_ECHO;
-  if ( regs.h.al != 'E' )
-    {
-    printf("\nYou have to type the whole word YES to confirm.");
-    Exit(5,11); /* no YE confirm */
-    }
-
-  KEYGET_ECHO;
-  if ( regs.h.al != 'S' )
-    {
-    printf("\nYou have to type the whole word YES to confirm.");
-    Exit(5,12); /* no YES confirm */
-    }
-
+  }
   KEYGET_ECHO;  /* (usually the ENTER after YES - accept anything here) */
-  printf("\n"); /* enter is only \r, so we still need the \n ... */
+  printf(catgets(catalog, 1, 0, "\n")); /* enter is only \r, so we still need the \n ... */
 } /* Confirm_Hard_Drive_Formatting */
 
 
@@ -223,7 +235,9 @@ int Ask_Label(char * str)
   int label_len;
 
   write(isatty(1) ? 1 : 2,
-    "Please enter volume label (max. 11 chars): ", 43);
+    catgets(catalog, 11, 0, "Please enter volume label (max. 11 chars):"), 
+	strlen(catgets(catalog, 11, 0, "Please enter volume label (max. 11 chars):")));
+  write(isatty(1) ? 1 : 2, " ", 1);
   /* write to STDERR for the case of STDOUT being redirected */
 
   label_len = 0;
@@ -261,7 +275,7 @@ int Ask_Label(char * str)
               break;
           case 13: printf("\n");		/* enter */
               if (label_len==0)
-                  printf("No label, disk will have no creation timestamp.\n");
+                  printf(catgets(catalog, 11, 1, "No label, disk will have no creation timestamp.\n"));
 	      return label_len;			/* length of user input */          
               /* break; */
           default:
@@ -282,7 +296,7 @@ void Critical_Error_Handler(int source, unsigned int error_code)
     error_code_high = error_code_low;
     error_code_low  = 0x00;
   }
-  printf("\n Critical error during %s disk access\n",
+  printf(catgets(catalog, 12, 0, "\n Critical error during %s disk access\n"),
     (source==BIOS) ? "INT 13" : "DOS");
 
   /* Display Status Message. */
@@ -376,7 +390,7 @@ void Critical_Error_Handler(int source, unsigned int error_code)
 
   /* *** We should probably allow an IGNORE or RETRY in *some* cases! *** */
 
-  printf("\n Program terminated.\n");
+  printf(catgets(catalog, 12, 1, "\n Program terminated.\n"));
 
   Exit(4, (128 | error_code_high) );	/* critical error handler */
 } /* Critical_Error_Handler */
@@ -447,14 +461,14 @@ void Display_Drive_Statistics()
       (param.fat_type == FAT32) ? "  " : "");
     }
 
-  printf("\n Volume Serial Number is %04X-%04X\n",
+  printf(catgets(catalog, 13, 0, "\n Volume Serial Number is %04X-%04X\n"),
    drive_statistics.serial_number_high, drive_statistics.serial_number_low);
 } /* Display_Drive_Statistics */
 
 
 void Display_Invalid_Combination()
 {
-  printf("\n Invalid combination of options... please read help. Aborting.\n");
+  printf(catgets(catalog, 14, 0, "\n Invalid combination of options... please read help. Aborting.\n"));
   Exit(4,2);
 } /* Display_Invalid_Combination */
 
@@ -468,14 +482,14 @@ void Key_For_Next_Page()
     /* interesting: redirection to MORESYS (>MORE$) still is a TTY   */
     /* redirection to a file is not a TTY, so waiting is avoided :-) */
 
-  printf("-- press enter to see the next page or ESC to abort  --");
+  printf(catgets(catalog, 14, 1, "-- press enter to see the next page or ESC to abort  --"));
 
   /* Get keypress */
   regs.h.ah = 0x07;
   intdos(&regs, &regs);
   if (regs.h.al == 27)
     {
-      printf("\nAborted at user request.\n");
+      printf(catgets(catalog, 14, 2, "\nAborted at user request.\n"));
       Exit(3,13);
     }
 
@@ -483,6 +497,84 @@ void Key_For_Next_Page()
 
 } /* Key_For_Next_Page */
 
+
+void Print_Messages_With_Pauses(nl_catd catalog, int setnum, char const *messages[])
+{
+  int msgnum = 0;
+  int use_cats = (catgets(catalog, setnum, 0, NULL) != NULL);
+  char const * msg;
+  
+  for (msg=(use_cats)?catgets(catalog, setnum, msgnum, NULL):messages[msgnum]; 
+       msg != NULL; 
+       msgnum++, msg=(use_cats)?catgets(catalog, setnum, msgnum, NULL):messages[msgnum])
+  {
+    printf("%s", msg);
+	if (msgnum && !(msgnum % 22)) /* every 23rd line after initial line */
+    {
+      if (memcmp(msg, "\n", 2) != 0) printf("\n");  /* add blank unless just printed a blank line */
+      Key_For_Next_Page();
+    }
+  }
+} /* Print_Messages_With_Pauses */
+
+
+/* detailed help screen messages */
+const char const * detailed_help[] = {
+  "This FORMAT is made for the http://www.freedos.org/ project.\n",
+  "  See http://www.gnu.org/ for information about GNU GPL license.\n",
+  "Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n",
+  "  Maintainer for 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n",
+  "Contributors: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n",
+  "  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n",
+  "\n",
+  "Switches and additional features explained:\n",
+  "/D (debug) and /Y (skip confirmation request) are always allowed.\n",
+  "/B (reserve space for sys) is dummy and cannot be combined with /S (sys)\n",
+  "/V:label is not for 160k/320k disks. The label stores the format date/time.\n",
+  "\n",
+  "Size specifications only work for floppy disks. You can use\n",
+  "either /F:size (in kilobytes, size 0 displays a list of allowed sizes)\n",
+  "or     /T:tracks /N:sectors_per_track\n",
+  "or any combination of /1 (one-sided, 160k/180k),\n",
+  "                      /8 (8 sectors per track, 160k/320k, DOS 1.x)\n",
+  "                  and /4 (format 160-360k disk in 1200k drive)\n",
+  "\n",
+  "To suppress the harddisk format confirmation prompt, use    /Z:seriously\n",
+  "To save only unformat (mirror) data without formatting, use /Z:mirror\n",
+  "To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n",
+  "\n",
+  "Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n",
+  "  only when needed. Quick safe format saves mirror data for unformat.\n",
+  "Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n",
+  "  format only when needed. Quick full format only resets the filesystem\n",
+  "If you want to force lowlevel format (floppy) or want to have the whole\n",
+  "  disk surface scanned and all contents wiped (harddisk), use /U.\n",
+  "  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n",
+  "  FORMAT /Q is quick save format (save mirror data if possible)\n",
+  "    the mirror data will always overwrite the end of the data area!\n",
+  "  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n",
+  "\n",
+  "Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n",
+  "Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n",
+  "  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n",
+#if 0 /* should be obvious */
+  "DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n",
+#endif
+  "Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n",
+  "  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n",
+  "  More tracks will not work on all drives, use at your own risk.\n",
+  "  Warning: older DOS versions can only use overformats with a driver.\n",
+  "  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n",
+  "\n",
+/* formatting to 360k in 1200k drive gives weak format: 360k drive has broad tracks */
+/* and 1200k drive has narrow read / write heads. 1200k drive can read 360k disks   */
+/* formatted with 1200k drive, though, but you'll prefer to format to 1200k there.  */
+  "For FAT32 formatting, you can use the /A switch to force 4k alignment.\n",
+#if 0
+// printf("WARNING: Running FORMAT for FAT32 under Win98 seems to create broken format!\n");
+#endif
+  NULL
+};
 
 /* Help Routine (removed legacy stuff in 0.91c, but it is still parsed) */
 /* There should be an help file which explains everything in detail,    */
@@ -538,67 +630,9 @@ void Display_Help_Screen(int detailed)
 
   if (!detailed) return; /* stop here for normal, short, help screen */
 
-  printf(catgets(catalog, 1, 0, "\n")); /* we got enough space for that */
-  Key_For_Next_Page();
-
-  printf(catgets(catalog, 3, 0, "This FORMAT is made for the http://www.freedos.org/ project.\n"));
-  printf(catgets(catalog, 3, 1, "  See http://www.gnu.org/ for information about GNU GPL license.\n"));
-  printf(catgets(catalog, 3, 2, "Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n"));
-  printf(catgets(catalog, 3, 3, "  Maintainer for 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n"));
-  printf(catgets(catalog, 3, 4, "Contributors: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n"));
-  printf(catgets(catalog, 3, 5, "  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n\n"));
-
-  printf(catgets(catalog, 3, 6, "Switches and additional features explained:\n"));
-  printf(catgets(catalog, 3, 7, "/D (debug) and /Y (skip confirmation request) are always allowed.\n"));
-  printf(catgets(catalog, 3, 8, "/B (reserve space for sys) is dummy and cannot be combined with /S (sys)\n"));
-  printf(catgets(catalog, 3, 9, "/V:label is not for 160k/320k disks. The label stores the format date/time.\n\n"));
-
-  printf(catgets(catalog, 3, 10, "Size specifications only work for floppy disks. You can use\n"));
-  printf(catgets(catalog, 3, 11, "either /F:size (in kilobytes, size 0 displays a list of allowed sizes)\n"));
-  printf(catgets(catalog, 3, 12, "or     /T:tracks /N:sectors_per_track\n"));
-  printf(catgets(catalog, 3, 13, "or any combination of /1 (one-sided, 160k/180k),\n"));
-  printf(catgets(catalog, 3, 14, "                      /8 (8 sectors per track, 160k/320k, DOS 1.x)\n"));
-  printf(catgets(catalog, 3, 15, "                  and /4 (format 160-360k disk in 1200k drive)\n\n"));
-  
-  printf(catgets(catalog, 3, 16, "To suppress the harddisk format confirmation prompt, use    /Z:seriously\n"));
-  printf(catgets(catalog, 3, 17, "To save only unformat (mirror) data without formatting, use /Z:mirror\n"));
-  printf(catgets(catalog, 3, 18, "To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n"));
-
-  printf(catgets(catalog, 1, 0, "\n")); /* we got enough space for that */
-  Key_For_Next_Page();
-
-  printf(catgets(catalog, 3, 19, "Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n"));
-  printf(catgets(catalog, 3, 20, "  only when needed. Quick safe format saves mirror data for unformat.\n"));
-  printf(catgets(catalog, 3, 21, "Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n"));
-  printf(catgets(catalog, 3, 22, "  format only when needed. Quick full format only resets the filesystem\n"));
-  printf(catgets(catalog, 3, 23, "If you want to force lowlevel format (floppy) or want to have the whole\n"));
-  printf(catgets(catalog, 3, 24, "  disk surface scanned and all contents wiped (harddisk), use /U.\n"));
-  printf(catgets(catalog, 3, 25, "  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n"));
-  printf(catgets(catalog, 3, 26, "  FORMAT /Q is quick save format (save mirror data if possible)\n"));
-  printf(catgets(catalog, 3, 27, "    the mirror data will always overwrite the end of the data area!\n"));
-  printf(catgets(catalog, 3, 28, "  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n\n"));
-
-  printf(catgets(catalog, 3, 29, "Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n"));
-  printf(catgets(catalog, 3, 30, "Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n"));
-  printf(catgets(catalog, 3, 31, "  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n"));
-#if 0 /* should be obvious */
-// printf(catgets(catalog, 3, 32, "DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n"));
-#endif
-  printf(catgets(catalog, 3, 33, "Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n"));
-  printf(catgets(catalog, 3, 34, "  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n"));
-  printf(catgets(catalog, 3, 35, "  More tracks will not work on all drives, use at your own risk.\n"));
-  printf(catgets(catalog, 3, 36, "  Warning: older DOS versions can only use overformats with a driver.\n"));
-  printf(catgets(catalog, 3, 37, "  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n\n"));
-
-/* formatting to 360k in 1200k drive gives weak format: 360k drive has broad tracks */
-/* and 1200k drive has narrow read / write heads. 1200k drive can read 360k disks   */
-/* formatted with 1200k drive, though, but you'll prefer to format to 1200k there.  */
-
-  printf(catgets(catalog, 3, 38, "For FAT32 formatting, you can use the /A switch to force 4k alignment.\n"));
-#if 0
-// printf("WARNING: Running FORMAT for FAT32 under Win98 seems to create broken format!\n");
-#endif
-
+  printf(catgets(catalog, 1, 0, "\n"));
+  Key_For_Next_Page();  
+  Print_Messages_With_Pauses(catalog, 3, detailed_help);
 } /* Display_Help_Screen */
 
 

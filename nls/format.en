@@ -1,6 +1,6 @@
 # FreeDOS FORMAT.EXE message set - version 0.92a and later
 # version (on help screen)
-0,0:FreeDOS %6s Version %s\n
+0,0:FreeDOS %6s - Version %s\n
 0,1:Written by Brian E. Reifsnyder, Eric Auer and others.\n
 0,2:Copyright 1999 - 2024 under the terms of the GNU GPL, Version 2+.\n\n
 
@@ -9,6 +9,9 @@
 # these two options for Yes and No are only 1 character and must be upper case
 1,1:Y
 1,2:N
+# user has to type full word matching this
+1,3:YES
+1,4:NO
 
 # help screen
 2,0:Syntax (see documentation for more details background information):\n\n
@@ -41,50 +44,55 @@
 2,21: /N:sectors Specifies the number of sectors on a floppy disk.\n
 
 # detailed help screen
+# Use as many messages as needed, 1 message per max 79 column line
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
 3,0:This FORMAT is made for the http://www.freedos.org/ project.\n
 3,1:  See http://www.gnu.org/ for information about GNU GPL license.\n
 3,2:Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n
 3,3:  Maintainer for 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n
 3,4:Contributors: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
-3,5:  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n\n
-
-3,6:Switches and additional features explained:\n
-3,7:/D (debug) and /Y (skip confirmation request) are always allowed.\n
-3,8:/B (reserve space for sys) is dummy and cannot be combined with /S (sys)\n
-3,9:/V:label is not for 160k/320k disks. The label stores the format date/time.\n\n
-
-3,10:Size specifications only work for floppy disks. You can use\n
-3,11:either /F:size (in kilobytes, size 0 displays a list of allowed sizes)\n
-3,12:or     /T:tracks /N:sectors_per_track\n
-3,13:or any combination of /1 (one-sided, 160k/180k),\n
-3,14:                      /8 (8 sectors per track, 160k/320k, DOS 1.x)\n
-3,15:                  and /4 (format 160-360k disk in 1200k drive)\n\n
-
-3,16:To suppress the harddisk format confirmation prompt, use    /Z:seriously\n
-3,17:To save only unformat (mirror) data without formatting, use /Z:mirror\n
-3,18:To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n
-3,19:Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n
-3,20:  only when needed. Quick safe format saves mirror data for unformat.\n
-3,21:Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n
-3,22:  format only when needed. Quick full format only resets the filesystem\n
-3,23:If you want to force lowlevel format (floppy) or want to have the whole\n
-3,24:  disk surface scanned and all contents wiped (harddisk), use /U.\n
-3,25:  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n
-3,26:  FORMAT /Q is quick save format (save mirror data if possible)\n
-3,27:    the mirror data will always overwrite the end of the data area!\n
-3,28:  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n\n
-
-3,29:Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n
-3,30:Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n
-3,31:  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n
-#3,32:DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n
-3,33:Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n
-3,34:  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n
-3,35:  More tracks will not work on all drives, use at your own risk.\n
-3,36:  Warning: older DOS versions can only use overformats with a driver.\n
-3,37:  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n\n
-
-3,38:For FAT32 formatting, you can use the /A switch to force 4k alignment.\n
+3,5:  Bart Oldeman, Jim Hall and others. Not to forget all the testers!\n
+3,6:\n
+3,7:Switches and additional features explained:\n
+3,8:/D (debug) and /Y (skip confirmation request) are always allowed.\n
+3,9:/B (reserve space for sys) is dummy and cannot be combined with /S (sys)\n
+3,10:/V:label is not for 160k/320k disks. The label stores the format date/time.\n
+3,11:\n
+3,12:Size specifications only work for floppy disks. You can use\n
+3,13:either /F:size (in kilobytes, size 0 displays a list of allowed sizes)\n
+3,14:or     /T:tracks /N:sectors_per_track\n
+3,15:or any combination of /1 (one-sided, 160k/180k),\n
+3,16:                      /8 (8 sectors per track, 160k/320k, DOS 1.x)\n
+3,17:                  and /4 (format 160-360k disk in 1200k drive)\n
+3,18:\n
+3,19:To suppress the harddisk format confirmation prompt, use    /Z:seriously\n
+3,20:To save only unformat (mirror) data without formatting, use /Z:mirror\n
+3,21:To UNFORMAT a disk for which fresh mirror data exists, use  /Z:unformat\n
+3,22:\n
+3,23:Modes for FLOPPY are: Tries to use quick safe format. Use lowlevel format\n
+3,24:  only when needed. Quick safe format saves mirror data for unformat.\n
+3,25:Modes for HARDDISK are: Tries to use quick safe format. Use quick full\n
+3,26:  format only when needed. Quick full format only resets the filesystem\n
+3,27:If you want to force lowlevel format (floppy) or want to have the whole\n
+3,28:  disk surface scanned and all contents wiped (harddisk), use /U.\n
+3,29:  FORMAT /Q /U is quick full format (no lowlevel format / scan / wipe!)\n
+3,30:  FORMAT /Q is quick save format (save mirror data if possible)\n
+3,31:    the mirror data will always overwrite the end of the data area!\n
+3,32:  FORMAT autoselects a mode (see above) if you select neither /Q nor /U\n
+3,33:\n
+3,34:Supported FAT types are: FAT12, FAT16, FAT32, all with mirror / unformat.\n
+3,35:Supported floppy sizes are: 160k 180k 320k 360k and 1200k for 5.25inch\n
+3,36:  and 720k and 1440k (2880k never tested so far) for 3.5inch drives.\n
+#3,?:DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n
+3,37:Supported overformats are: 400k 800k 1680k (and 3660k) with more sectors\n
+3,38:  and 1494k (instead of 1200k) and 1743k (and 3486k) with more tracks, too.\n
+3,39:  More tracks will not work on all drives, use at your own risk.\n
+3,40:  Warning: older DOS versions can only use overformats with a driver.\n
+3,41:  720k in 1440k needs 720k media. Use 360k drive to format 360k.\n
+3,42:\n
+3,43:For FAT32 formatting, you can use the /A switch to force 4k alignment.\n
 
 # main()
 4,0:Illegal character in volume label: %c\n
@@ -169,3 +177,36 @@
 9,0: Insert new diskette for drive %c:\n
 9,1: Insert new disk please,\n
 9,2: Press ENTER when the right disk is in drive...
+
+# Confirm_Hard_Drive_Formatting()
+10,0:UNFORMAT will revert your root directory and FAT to a\n
+10,1:previously recorded state. This can seriously mess up things!\n
+10,2: WARNING: ALL DATA ON %s\n
+10,3:NON-REMOVABLE DISK
+10,4:FLOPPY DISK
+10,5: DRIVE %c: WILL BE LOST!
+10,6: DRIVE %c: MIGHT GET LOST!
+10,7: PLEASE CONFIRM!\n
+# note: will be followed by " (YES/NO)? " from msg 1.3 & 1.4
+10,8: Proceed with Format
+10,9: Proceed with Unformat
+# %s will be replaced with msg from 1.3
+10,10:You have to type the whole word %s to confirm.
+
+# Ask_Label()
+11,0:Please enter volume label (max. 11 chars):
+11,1:No label, disk will have no creation timestamp.\n
+
+# Critical_Error_Handler()
+12,0:\n Critical error during %s disk access\n
+12,1:\n Program terminated.\n
+
+# Display_Drive_Statistics()
+13,0:\n Volume Serial Number is %04X-%04X\n
+# TODO ...
+
+# misc messages
+14,0:\n Invalid combination of options... please read help. Aborting.\n
+14,1:-- press enter to see the next page or ESC to abort  --
+14,2:\nAborted at user request.\n
+
