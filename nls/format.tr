@@ -1,95 +1,143 @@
 # FreeDOS FORMAT.EXE message set - version 0.92a and later
 # version (on help screen)
-0,0:FreeDOS %6s Srm %s\n
+0,0:FreeDOS - %6s Srm %s\n
 0,1:Brian E. Reifsnyder, Eric Auer ve baŸkalar tarafndan yazlmŸtr.\n
 0,2:Telif hakk 1999 - 2024 GNU GPL, Srm 2+ kapsamnda.\n\n
+# 0.3 or 0.4 shown depending on if /Z:longhelp option used or not
+0,3:S”z dizimi (daha fazla ayrnt i‡in belgelendirmeye bakn):\n\n
+0,4:S”z dizimi (belgelendirmeye bakn veya /Z:longhelp kullann):\n\n
 
 # common
 1,0:\n
 # these two options for Yes and No are only 1 character and must be upper case
 1,1:E
 1,2:H
+# user has to type full word matching this
+1,3:EVET
+1,4:HAYIR
 
-# help screen
-2,0:S”z dizimi (daha fazla ayrnt i‡in belgelendirmeye bakn):\n\n
-2,1:S”z dizimi (belgelendirmeye bakn veya /Z:longhelp kullann):\n\n
-# only shown if compiled with LEGACY_HELP
-2,3:FORMAT src: [/V[:etiket]] [/Q] [/U] [/F:boyut] [/B | /S] [/D]\n
-2,4:FORMAT src: [/V[:etiket]] [/Q] [/U] [/T:par‡a /N:sekt”r] [/B | /S] [/D]\n
-2,5:FORMAT src: [/V[:etiket]] [/Q] [/U] [/4] [/B | /S] [/D]\n
-2,6:FORMAT src: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n
-2,12: /B         Uyumluluk i‡in muhafaza edildi, eskiden baŸlatma dosyalar i‡in alan ayrrd.\n
-2,22: /1         Bir disketin tek tarafn bi‡imlendirir (160k / 180k).\n
-2,23: /8         5.25\" bir diski par‡a baŸ 8 sekt”rle bi‡imlendirir (160k / 320k).\n
-# only shown if compiled without LEGACY_HELP
-2,7:FORMAT src: [/V[:etiket]] [/Q] [/U] [/F:boyut] [/S] [/D]\n
-2,8:FORMAT src: [/V[:etiket]] [/Q] [/U] [/T:par‡a /N:sekt”r] [/S] [/D]\n
+# short help screen (shown if compiled without LEGACY_HELP)
+# Use as many messages as needed, 1 message per max 79 column line
+# but if possible keep to less than 23 lines
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+2,0:FORMAT src: [/V[:etiket]] [/Q] [/U] [/F:boyut] [/S] [/D]\n
+2,1:FORMAT src: [/V[:etiket]] [/Q] [/U] [/T:par‡a /N:sekt”r] [/S] [/D]\n
 #  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
 #  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
-2,9:FORMAT src: [/V[:etiket]] [/Q] [/U] [/4] [/S] [/D]\n\n
-# shown for all
-2,10: /V:etiket  Disk i‡in birim etiketi belirtir, saat ve tarihini kaydeder.\n
-2,11: /S         Diski baŸlatlabilir yapmak i‡in ve sistem dosyalarn eklemek i‡in SYS kullanr.\n
-2,13: /D         €ok ayrntl ol ve hata ayklama ‡kts g”ster. Hata raporlar i‡in.\n
-2,14: /Q         Diski hzl bi‡imlendirir. /U ile kullanlmazsa, UNFORMAT iŸe yarar\n
-2,15:            ve bozuk kme iŸaretlerini muhafaza eder (/Q /U etmez).\n
-2,16: /U         Diski koŸulsuz bi‡imlendirir. Disket ise dŸk seviye bi‡imlendirme.\n
-2,17: /F:boyut   Bi‡imlendirilecek disketin boyutunu belirtir. Normal boyutlar:\n
-2,18:            360, 720, 1200, 1440, veya 2880 (birim: kilobayt). /F:0 liste g”sterir.\n
-2,19: /4         1,2 MB disket srcsnde 360K disket bi‡imlendirir.\n
-2,20: /T:par‡a   Bir disketteki par‡a (yani track) saysn belirtir.\n
-2,21: /N:sekt”r  Bir disketteki sekt”r saysn belirtir.\n
+2,2:FORMAT src: [/V[:etiket]] [/Q] [/U] [/4] [/S] [/D]\n
+2,3:\n
+2,4: /V:etiket  Disk i‡in birim etiketi belirtir, saat ve tarihini kaydeder.\n
+2,5: /S          Diski baŸlatlabilir yapmak ve sistem dosyalarn eklemek\n
+2,6:               i‡in SYS kullanr.\n
+2,7: /D          €ok ayrntl hata ayklama ‡kts g”ster. Hata raporlar i‡in.\n
+2,8: /Q          Diski hzl bi‡imlendirir. /U ile kullanlmazsa, UNFORMAT iŸe\n
+2,9:             yarar ve bozuk kme iŸaretlerini muhafaza eder (/Q /U etmez).\n
+2,10: /U         Diski koŸulsuz bi‡imlendirir. Disketse dŸk seviye bi‡imlendirme.\n
+2,11: /F:boyut   Bi‡imlendirilecek disketin boyutunu belirtir. Normal boyutlar:\n
+2,12:               360, 720, 1200, 1440, veya 2880 (birim: kilobayt). /F:0\n
+2,13:               liste g”sterir.\n
+2,14: /4         1,2 MB disket srcsnde 360K disket bi‡imlendirir.\n
+2,15: /T:par‡a   Bir disketteki par‡a (yani track) saysn belirtir.\n
+2,16: /N:sekt”r  Bir disketteki sekt”r saysn belirtir.\n
+
+# short help screen (shown if compiled _with_ LEGACY_HELP)
+# Use as many messages as needed, 1 message per max 79 column line
+# but if possible keep to less than 23 lines
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+20,0:FORMAT src: [/V[:etiket]] [/Q] [/U] [/F:boyut] [/B | /S] [/D]\n
+20,1:FORMAT src: [/V[:etiket]] [/Q] [/U] [/T:par‡a /N:sekt”r] [/B | /S] [/D]\n
+20,2:FORMAT src: [/V[:etiket]] [/Q] [/U] [/4] [/B | /S] [/D]\n
+20,3:FORMAT src: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n
+20,4:\n
+20,5: /V:etiket  Disk i‡in birim etiketi belirtir, saat ve tarihini kaydeder.\n\n
+20,6: /S         Diski baŸlatlabilir yapmak ve sistem dosyalarn eklemek\n
+20,7:             i‡in SYS kullanr.\n
+20,8: /B         Uyumluluk i‡in muhafaza edildi, eskiden baŸlatma dosyalar\n
+20,9:             i‡in alan ayrrd.\n
+20,10: /D        Hata ayklama ‡kts g”ster. Hata raporlar i‡in.\n
+20,11: /Q        Diski hzl bi‡imlendirir. /U ile kullanlmazsa, UNFORMAT iŸe\n
+20,12:            yarar ve bozuk kme iŸaretlerini muhafaza eder (/Q /U etmez).\n
+20,13: /U        Diski koŸulsuz bi‡imlendirir. Disketse dŸk seviye bi‡imlendirir.\n
+20,14: /F:boyut  Bi‡imlendirilecek disketin boyutunu belirtir. Normal boyutlar:\n
+20,15:            360, 720, 1200, 1440, veya 2880 (birim: kilobayt).\n
+20,16:            /F:0 liste g”sterir.\n
+20,17: /4         1,2 MB disket srcsnde 360K disket bi‡imlendirir.\n
+20,18: /T:par‡a   Bir disketteki par‡a (yani track) saysn belirtir.\n
+20,19: /N:sekt”r  Bir disketteki sekt”r saysn belirtir.\n
+20,20: /1         Bir disketin tek tarafn bi‡imlendirir (160k / 180k).\n
+20,21: /8         5.25\" bir diski par‡a baŸ 8 sekt”rle bi‡imlendirir\n
+20,22:             (160k / 320k).\n
 
 # detailed help screen
+# Use as many messages as needed, 1 message per max 79 column line
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
 3,0:Bu FORMAT http://www.freedos.org/ projesi i‡in yazlmŸtr.\n
 3,1:  GNU GPL lisansna dair bilgi i‡in  http://www.gnu.org/ sitesine bakn.\n
-3,2:1999-2003 senelerinde Brian E. Reifsnyder <reifsnyderb@mindspring.com> tarafndan yazlmŸtr.\n
-3,3:  0.90 / 0.91 2003-2006 i‡in bakmc: Eric Auer <eric@coli.uni-sb.de>\n
-3,4:Katkda bulunanlar: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
-3,5:  Bart Oldeman, Jim Hall ve baŸkalar. Deneyenleri de unutmayalm!\n\n
-
-3,6:Se‡enekler ve ilave iŸlevlerin a‡klamalar:\n
-3,7:/D (debug) ve /Y (teyit talebini atla) se‡eneklerine daima izin verilir.\n
-3,8:/B (sys i‡in alan ayr) boŸtur ve /S ile birleŸtirilemez (sys)\n
-3,9:/V:etiket 160k/320k diskleri i‡in de§ildir. Etiket bi‡imlendirme tarih/saatini kaydeder.\n\n
-
-3,10:Boyut belirtimi sadece disketler i‡in ‡alŸr. Ya /F:boyut (kilobayt\n
-3,11:olarak, 0 boyutu izin verilen boyutlarn listesini g”rntler), ya\n
-3,12:       /T:par‡a /N:par‡a_baŸ_sekt”r\n
-3,13:ya da Ÿunlarn herhangi bir birleŸimi /1 (tek tarafl, 160k/180k),\n
-3,14:                      /8 (par‡a baŸ 8 sekt”r, 160k/320k, DOS 1.x)\n
-3,15:                  ve  /4 (160-360k diskleri 1200k srcde bi‡imlendir)\n\n
-
-3,16:Sabit disk bi‡imlendirme teyit talebini susturmak i‡in /Z:seriously kullann\n
-3,17:Bi‡imlendirmeden sadece unformat (mirror) verilerini kaydetmek i‡in /Z:mirror kullann\n
-3,18:Taze mirror verilerinin bulundu§u bir diski geri almak i‡in /Z:unformat kullann\n
-3,19:D˜SKETLER i‡in kipler: hzl gvenli bi‡imlendirmeyi dener. DŸk seviye bi‡imlendirme\n
-3,20:  sadece gerekti§inde kullanlr. Hzl gvenli bi‡imlendirme unformat i‡in mirror verilerini kaydeder.\n
-3,21:SAB˜T D˜SKLER i‡in kipler: hzl gvenli bi‡imlendirmeyi dener. Hzl tam\n
-3,22:  bi‡imlendirme sadece gerekti§inde kullanlr. Hzl tam bi‡imlendirme sadece dosya sistemini sfrlar\n
-3,23:DŸk seviye bi‡imlendirmeyi zorlamak istiyorsanz (disket) veya tm yzeyin taranmasn\n
-3,24:  ve tm i‡eri§in silinmesini (sabit disk) istiyorsanz, /U kullann.\n
-3,25:  FORMAT /Q /U hzl tam bi‡imlendirmedir (dŸk seviye bi‡imlendirme / tarama / silme yok!)\n
-3,26:  FORMAT /Q hzl gvenli bi‡imlendirmedir (mmknse mirror verilerini kaydet)\n
-3,27:    mirror verileri daima veri alann sonunu ezecektir!\n
-3,28:  FORMAT otomatik olarak bir kip se‡er (yukarya bakn), ne /Q ne de /U se‡mezseniz\n\n
-
-3,29:Desteklenen FAT trleri: FAT12, FAT16, FAT32, tm mirror / unformat ile.\n
-3,30:Desteklenen disket boyutlar: 160k 180k 320k 360k ve 1200k, 5.25 in‡ i‡in\n
-3,31:  ve 720k ile 1440k (2880k Ÿimdiye dek hi‡ denenmedi) 3.5 in‡ srcler i‡in.\n
-#3,32:DD srcler srasyla 360k/720k ile snrldr. 2880k, sadece ED srcler i‡indir.\n
-3,33:Desteklenenn aŸr bi‡imlendirmeler: 400k 800k 1680k (ve 3660k) daha fazla sekt”rle\n
-3,34:  ve 1494k (1200k yerine) ve 1743k (ve 3486k) daha fazla par‡ayla da.\n
-3,35:  Daha fazla par‡a tm srclerde ‡alŸmaz, riski siz stlenerek kullann.\n
-3,36:  ˜kaz: eski DOS srmleri aŸr bi‡imlendirmeyi sadece bir srcyle kullanabilir.\n
-3,37:  1440k'da 720k, 720k ortam gerektirir. 360k bi‡imlendirmek i‡in 360k src kullann.\n\n
-
-3,38:FAT32 bi‡imlendirmede, 4k hizalamay zorlamak i‡in /A se‡ene§ini kullanabilirsiniz.\n
+3,2:1999-2003 senelerinde Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n
+3,3:  tarafndan yazlmŸtr.\n
+3,4:  0.90 / 0.91 2003-2006 i‡in bakmc: Eric Auer <eric@coli.uni-sb.de>\n
+3,5:Katkda bulunanlar: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
+3,6:  Bart Oldeman, Jim Hall ve baŸkalar. Deneyenleri de unutmayalm!\n\n
+3,7:\n
+3,8:Se‡enekler ve ilave iŸlevlerin a‡klamalar:\n
+3,9:/D (debug) ve /Y (teyit talebini atla) se‡eneklerine daima izin verilir.\n
+3,10:/B (sys i‡in alan ayr) boŸtur ve /S ile birleŸtirilemez (sys)\n
+3,11:/V:etiket 160k/320k diskleri i‡in de§ildir. Etiket bi‡imlendirme\n
+3,12:   tarih/saatini kaydeder.\n
+3,13:\n
+3,14:Boyut belirtimi sadece disketler i‡in ‡alŸr. Ya /F:boyut (kilobayt\n
+3,15:olarak, 0 boyutu izin verilen boyutlarn listesini g”rntler), ya\n
+3,16:       /T:par‡a /N:par‡a_baŸ_sekt”r\n
+3,17:ya da Ÿunlarn herhangi bir birleŸimi /1 (tek tarafl, 160k/180k),\n
+3,18:                      /8 (par‡a baŸ 8 sekt”r, 160k/320k, DOS 1.x)\n
+3,19:                  ve  /4 (160-360k diskleri 1200k srcde bi‡imlendir)\n
+3,20:\n
+3,21:Sabit disk bi‡imlendirme teyit talebini susturmak i‡in /Z:seriously kullann\n
+3,22:Bi‡imlendirmeden sadece unformat (mirror) verilerini kaydetmek i‡in\n
+3,23: /Z:mirror kullann\n
+3,24:Taze mirror verilerinin bulundu§u bir diski geri almak i‡in /Z:unformat\n
+3,25: kullann\n
+3,26:D˜SKETLER i‡in kipler: hzl gvenli bi‡imlendirmeyi dener. DŸk seviye\n
+3,27:  bi‡imlendirme sadece gerekti§inde kullanlr. Hzl gvenli bi‡imlendirme\n
+3,28:  unformat i‡in mirror verilerini kaydeder.\n
+3,29:SAB˜T D˜SKLER i‡in kipler: hzl gvenli bi‡imlendirmeyi dener. Hzl tam\n
+3,30:bi‡imlendirme sadece gerekti§inde kullanlr. Hzl tam bi‡imlendirme sadece\n
+3,31:   dosya sistemini sfrlar\n
+3,32:DŸk seviye bi‡imlendirmeyi zorlamak istiyorsanz (disket) veya tm yzeyin\n
+3,33:   taranmasn ve tm i‡eri§in silinmesini (sabit disk) istiyorsanz,\n
+3,34:   /U kullann.\n
+3,35:  FORMAT /Q /U hzl tam bi‡imlendirmedir (dŸk seviye bi‡imlendirme /\n
+3,36:   tarama / silme yok!)\n
+3,37:  FORMAT /Q hzl gvenli bi‡imlendirmedir (mmknse mirror verilerini kaydet)\n
+3,38:   mirror verileri daima veri alann sonunu ezecektir!\n
+3,39:  FORMAT otomatik olarak bir kip se‡er (yukarya bakn), ne /Q ne de /U\n
+3,40:  se‡mezseniz\n
+3,41:\n
+3,42:Desteklenen FAT trleri: FAT12, FAT16, FAT32, tm mirror / unformat ile.\n
+3,43:Desteklenen disket boyutlar: 160k 180k 320k 360k ve 1200k, 5.25 in‡ i‡in\n
+3,44:  ve 720k ile 1440k (2880k Ÿimdiye dek hi‡ denenmedi) 3.5 in‡ srcler i‡in.\n
+#3,?:DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n
+3,45:Desteklenen aŸr bi‡imlendirmeler: 400k 800k 1680k (ve 3660k) daha fazla\n
+3,46: sekt”rle ve 1494k (1200k yerine) ve 1743k (ve 3486k) daha fazla par‡ayla da.\n
+3,47:  Daha fazla par‡a tm srclerde ‡alŸmaz, riski siz stlenerek kullann.\n
+3,48:  ˜kaz: eski DOS srmleri aŸr bi‡imlendirmeyi sadece bir srcyle\n
+3,49:  kullanabilir.\n
+3,50:  1440k'da 720k, 720k ortam gerektirir. 360k bi‡imlendirmek i‡in 360k\n
+3,51:  src kullann.\n
+3,52:\n
+3,53:FAT32 bi‡imlendirmede, 4k hizalamay zorlamak i‡in /A se‡ene§ini\n
+3,54:  kullanabilirsiniz.\n
 
 # main()
 4,0:Birim etiketinde ge‡ersiz karakter: %c\n
-4,1:˜zin verilen karakterler 0-9, A-Z, boŸluk, ”zel / lkeye-”zel karakterler 128-255\n
-4,2:ve Ÿunlarn tm:
+4,1:˜zin verilen karakterler 0-9, A-Z, boŸluk, ”zel / lkeye-”zel karakterler\n
+4,2:128-255 ve Ÿunlarn tm:
 # the following is printed for valid label characters from ordinal(' ')+1 through 127
 4,3: %c
 4,4:\nfakat hi‡bir kontrol karakterine ve Ÿunlardan hi‡birine izin verilmez
@@ -164,3 +212,41 @@
 8,2:\nSYS bir kabukta ‡alŸtrlyor: %s\n
 8,3:\nSYS %d hata seviyesini geri g”nderdi.\n
 8,4:\n˜KAZ: SYS ‡alŸtrlmas baŸarsz oldu.\n
+
+# Ask_User_To_Insert_Disk()
+9,0: %c srcs i‡in yeni disket takn:\n
+9,1: Ltfen yeni bir disk takn,\n
+9,2: Do§ru disk srcde oldu§unda ENTER'a basn...
+
+# Confirm_Hard_Drive_Formatting()
+10,0:UNFORMAT k”k dizininiz ile FAT'i daha ”nce kaydedilen bir duruma geri\n
+10,1:getirecektir.  Bu, iŸleri ciddi Ÿekilde karŸtrabilir!\n
+10,2: UYARI: %S šZER˜NDEK˜ TšM VER˜LER\n
+10,3:SAB˜T D˜SK
+10,4:D˜SKET
+10,5: SšRšCš %c: KAYBOLACAKTIR!
+10,6: SšRšCš %c: KAYBOLAB˜L˜R!
+10,7: LšTFEN TEY˜T ED˜N!\n
+# note: will be followed by " (YES/NO)? " from msg 1.3 & 1.4
+10,8: Format komutuyla bi‡imlendirmeye devam edilsin
+10,9: Unformat ile geri getirmeye devam edilsin
+# %s will be replaced with msg from 1.3
+10,10:Teyit etmek i‡in %s kelimesinin tamamn yazmanz gerekmektedir.
+
+# Ask_Label()
+11,0:Ltfen birim etiketini girin (azami 11 karakter):
+11,1:Etiket yok, diskin oluŸturma tarih damgas olmayacak.\n
+
+# Critical_Error_Handler()
+12,0:\n %s disk eriŸimi esnasnda kritik hata\n
+12,1:\n Program sonlandrld.\n
+
+# Display_Drive_Statistics()
+13,0:\n Birimin seri numaras Ÿudur: %04X-%04X\n
+# TODO ...
+
+# misc messages
+14,0:\n Ge‡ersiz se‡enek birleŸimi... ltfen yardm okuyun. ˜ptal ediliyor.\n
+14,1:-- sonraki sayfay g”rmek i‡in Enter'a veya ‡kmak i‡in ESC'e basn  --
+14,2:\nKullanc iste§i zerine iptal edildi.\n
+
