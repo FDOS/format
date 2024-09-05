@@ -1,4 +1,9 @@
-# FreeDOS FORMAT.EXE message set - version 0.92a and later
+# program: FreeDOS FORMAT.EXE message set - version 0.92a and later
+# language:English
+# display codepage:ASCII
+# catalog codepage:UTF8
+# translators:none
+
 # version (on help screen)
 0,0:FreeDOS %6s - Version %s\n
 0,1:Written by Brian E. Reifsnyder, Eric Auer and others.\n
