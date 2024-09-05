@@ -518,6 +518,43 @@ void Print_Messages_With_Pauses(nl_catd catalog, int setnum, char const *message
 } /* Print_Messages_With_Pauses */
 
 
+/* short help screen */
+const char const * short_help[] = {
+#if LEGACY_HELP /* with legacy stuff */
+  "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n",
+  "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n",
+  "FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n",
+  "FORMAT drive: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n",
+#else /* new - without legacy stuff */
+  "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/S] [/D]\n",
+  "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/S] [/D]\n",
+  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
+  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
+  "FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n",
+#endif
+  "\n",
+  " /V:label   Specifies a volume label for the disk, stores date and time of it.\n",
+  " /S         Calls SYS to make the disk bootable and to add system files.\n",
+#if LEGACY_HELP /* legacy, DOS 1.x (/B cannot be combined with /S) */
+  " /B         Kept for compatibility, formerly reserved space for the boot files.\n",
+#endif  
+  " /D         Be very verbose and show debugging output. For bug reports.\n",
+  " /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n",
+  "            and preserves bad cluster marks (/Q /U does not).\n",
+  /* preserving the bad cluster list is new in 0.91k */
+  " /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n",
+  " /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n",
+  "            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n",
+  " /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n",
+  " /T:tracks  Specifies the number of tracks on a floppy disk.\n",
+  " /N:sectors Specifies the number of sectors on a floppy disk.\n",
+#if LEGACY_HELP /* legacy, DOS 1.x */
+  " /1         Formats a single side of a floppy disk (160k / 180k).\n",
+  " /8         Formats a 5.25\" disk with 8 sectors per track (160k / 320k).\n",
+#endif  
+  NULL
+};
+
 /* detailed help screen messages */
 const char const * detailed_help[] = {
   "This FORMAT is made for the http://www.freedos.org/ project.\n",
@@ -582,51 +619,22 @@ const char const * detailed_help[] = {
 /* 0.91n - if detailed is non-zero, display multi-page help screen. */
 void Display_Help_Screen(int detailed)
 {
+#if LEGACY_HELP
+  const int help_set = 20;
+#else
+  const int help_set = 2;
+#endif
+
   printf(catgets(catalog, 0, 0, "FreeDOS %6s Version %s\n"),NAME,VERSION);
   printf(catgets(catalog, 0, 1, "Written by Brian E. Reifsnyder, Eric Auer and others.\n"));
   printf(catgets(catalog, 0, 2, "Copyright 1999 - 2024 under the terms of the GNU GPL, Version 2+.\n\n"));
 
   if (detailed)
-    printf(catgets(catalog, 2, 0, "Syntax (see documentation for more details background information):\n\n"));
+    printf(catgets(catalog, 0, 3, "Syntax (see documentation for more details background information):\n\n"));
   else
-    printf(catgets(catalog, 2, 1, "Syntax (see documentation or use /Z:longhelp for more options):\n\n"));
+    printf(catgets(catalog, 0, 4, "Syntax (see documentation or use /Z:longhelp for more options):\n\n"));
 
-#if LEGACY_HELP /* with legacy stuff */
-  printf(catgets(catalog, 2, 3, "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n"));
-  printf(catgets(catalog, 2, 4, "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n"));
-  printf(catgets(catalog, 2, 5, "FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n"));
-  printf(catgets(catalog, 2, 6, "FORMAT drive: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n"));
-#else /* new - without legacy stuff */
-  printf(catgets(catalog, 2, 7, "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/S] [/D]\n"));
-  printf(catgets(catalog, 2, 8, "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/S] [/D]\n"));
-  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
-  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
-  printf(catgets(catalog, 2, 9, "FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n\n"));
-#endif
-
-  printf(catgets(catalog, 2, 10, " /V:label   Specifies a volume label for the disk, stores date and time of it.\n"));
-  printf(catgets(catalog, 2, 11, " /S         Calls SYS to make the disk bootable and to add system files.\n"));
-
-#if LEGACY_HELP /* legacy, DOS 1.x (/B cannot be combined with /S) */
-  printf(catgets(catalog, 2, 12, " /B         Kept for compatibility, formerly reserved space for the boot files.\n"));
-#endif  
-  printf(catgets(catalog, 2, 13, " /D         Be very verbose and show debugging output. For bug reports.\n"));
-
-  printf(catgets(catalog, 2, 14, " /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n"));
-  printf(catgets(catalog, 2, 15, "            and preserves bad cluster marks (/Q /U does not).\n"));
-  /* preserving the bad cluster list is new in 0.91k */
-  printf(catgets(catalog, 2, 16, " /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n"));
-
-  printf(catgets(catalog, 2, 17, " /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n"));
-  printf(catgets(catalog, 2, 18, "            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n"));
-  printf(catgets(catalog, 2, 19, " /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n"));
-  printf(catgets(catalog, 2, 20, " /T:tracks  Specifies the number of tracks on a floppy disk.\n"));
-  printf(catgets(catalog, 2, 21, " /N:sectors Specifies the number of sectors on a floppy disk.\n"));
-
-#if LEGACY_HELP /* legacy, DOS 1.x */
-  printf(catgets(catalog, 2, 22, " /1         Formats a single side of a floppy disk (160k / 180k).\n"));
-  printf(catgets(catalog, 2, 23, " /8         Formats a 5.25\" disk with 8 sectors per track (160k / 320k).\n"));
-#endif  
+  Print_Messages_With_Pauses(catalog, help_set, short_help);
 
   if (!detailed) return; /* stop here for normal, short, help screen */
 

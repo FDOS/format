@@ -3,6 +3,9 @@
 0,0:FreeDOS %6s - Version %s\n
 0,1:Written by Brian E. Reifsnyder, Eric Auer and others.\n
 0,2:Copyright 1999 - 2024 under the terms of the GNU GPL, Version 2+.\n\n
+# 0.3 or 0.4 shown depending on if /Z:longhelp option used or not
+0,3:Syntax (see documentation for more details background information):\n\n
+0,4:Syntax (see documentation or use /Z:longhelp for more options):\n\n
 
 # common
 1,0:\n
@@ -13,35 +16,55 @@
 1,3:YES
 1,4:NO
 
-# help screen
-2,0:Syntax (see documentation for more details background information):\n\n
-2,1:Syntax (see documentation or use /Z:longhelp for more options):\n\n
-# only shown if compiled with LEGACY_HELP
-2,3:FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n
-2,4:FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n
-2,5:FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n
-2,6:FORMAT drive: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n\n
-2,12: /B         Kept for compatibility, formerly reserved space for the boot files.\n
-2,22: /1         Formats a single side of a floppy disk (160k / 180k).\n
-2,23: /8         Formats a 5.25\" disk with 8 sectors per track (160k / 320k).\n
-# only shown if compiled without LEGACY_HELP
-2,7:FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/S] [/D]\n
-2,8:FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/S] [/D]\n
+# short help screen (shown if compiled without LEGACY_HELP)
+# Use as many messages as needed, 1 message per max 79 column line
+# but if possible keep to less than 23 lines
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+2,0:FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/S] [/D]\n
+2,1:FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/S] [/D]\n
 #  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
 #  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
-2,9:FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n\n
-# shown for all
-2,10: /V:label   Specifies a volume label for the disk, stores date and time of it.\n
-2,11: /S         Calls SYS to make the disk bootable and to add system files.\n
-2,13: /D         Be very verbose and show debugging output. For bug reports.\n
-2,14: /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n
-2,15:            and preserves bad cluster marks (/Q /U does not).\n
-2,16: /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n
-2,17: /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n
-2,18:            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n
-2,19: /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n
-2,20: /T:tracks  Specifies the number of tracks on a floppy disk.\n
-2,21: /N:sectors Specifies the number of sectors on a floppy disk.\n
+2,2:FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n
+2,3:\n
+2,4: /V:label   Specifies a volume label for the disk, stores date and time of it.\n
+2,5: /S         Calls SYS to make the disk bootable and to add system files.\n
+2,6: /D         Be very verbose and show debugging output. For bug reports.\n
+2,7: /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n
+2,8:            and preserves bad cluster marks (/Q /U does not).\n
+2,9: /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n
+2,10: /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n
+2,11:            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n
+2,12: /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n
+2,13: /T:tracks  Specifies the number of tracks on a floppy disk.\n
+2,14: /N:sectors Specifies the number of sectors on a floppy disk.\n
+
+# short help screen (shown if compiled _with_ LEGACY_HELP)
+# Use as many messages as needed, 1 message per max 79 column line
+# but if possible keep to less than 23 lines
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+20,0:FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n
+20,1:FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n
+20,2:FORMAT drive: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n
+20,3:FORMAT drive: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n
+20,4:\n
+20,5: /V:label   Specifies a volume label for the disk, stores date and time of it.\n
+20,6: /S         Calls SYS to make the disk bootable and to add system files.\n
+20,7: /B         Kept for compatibility, formerly reserved space for the boot files.\n
+20,8: /D         Be very verbose and show debugging output. For bug reports.\n
+20,9: /Q         Quick formats the disk. If not combined with /U, can be UNFORMATed\n
+20,10:            and preserves bad cluster marks (/Q /U does not).\n
+20,11: /U         Unconditionally formats the disk. Lowlevel format if floppy disk.\n
+20,12: /F:size    Specifies the size of the floppy disk to format. Normal sizes are:\n
+20,13:            360, 720, 1200, 1440, or 2880 (unit: kiloBytes). /F:0 shows a list.\n
+20,14: /4         Formats a 360k floppy disk in a 1.2 MB floppy drive.\n
+20,15: /T:tracks  Specifies the number of tracks on a floppy disk.\n
+20,16: /N:sectors Specifies the number of sectors on a floppy disk.\n
+20,17: /1         Formats a single side of a floppy disk (160k / 180k).\n
+20,18: /8         Formats a 5.25\" disk with 8 sectors per track (160k / 320k).\n
 
 # detailed help screen
 # Use as many messages as needed, 1 message per max 79 column line
