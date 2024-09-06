@@ -1,4 +1,9 @@
-# FreeDOS FORMAT.EXE message set - version 0.92a and later
+# program: FreeDOS FORMAT.EXE message set - version 0.92a and later
+# language:Turkish
+# display codepage:CP857
+# catalog codepage:CP857
+# translators:Berki Yenign
+
 # version (on help screen)
 0,0:FreeDOS - %6s Srm %s\n
 0,1:Brian E. Reifsnyder, Eric Auer ve baŸkalar tarafndan yazlmŸtr.\n
@@ -221,15 +226,15 @@
 # Confirm_Hard_Drive_Formatting()
 10,0:UNFORMAT k”k dizininiz ile FAT'i daha ”nce kaydedilen bir duruma geri\n
 10,1:getirecektir.  Bu, iŸleri ciddi Ÿekilde karŸtrabilir!\n
-10,2: UYARI: %S šZER˜NDEK˜ TšM VER˜LER\n
+10,2: UYARI: %s\n
 10,3:SAB˜T D˜SK
 10,4:D˜SKET
-10,5: SšRšCš %c: KAYBOLACAKTIR!
-10,6: SšRšCš %c: KAYBOLAB˜L˜R!
+10,5: SšRšCš %c: šZER˜NDEK˜ TšM VER˜LER KAYBOLACAKTIR!
+10,6: SšRšCš %c: šZER˜NDEK˜ TšM VER˜LER KAYBOLAB˜L˜R!
 10,7: LšTFEN TEY˜T ED˜N!\n
 # note: will be followed by " (YES/NO)? " from msg 1.3 & 1.4
-10,8: Format komutuyla bi‡imlendirmeye devam edilsin
-10,9: Unformat ile geri getirmeye devam edilsin
+10,8: Format komutuyla bi‡imlendirmeye devam edilsin mi?
+10,9: Unformat ile geri getirmeye devam edilsin mi?
 # %s will be replaced with msg from 1.3
 10,10:Teyit etmek i‡in %s kelimesinin tamamn yazmanz gerekmektedir.
 
@@ -243,10 +248,27 @@
 
 # Display_Drive_Statistics()
 13,0:\n Birimin seri numaras Ÿudur: %04X-%04X\n
-# TODO ...
+13,1:bayt
+13,2:kbayt
+13,3:mbayt
+13,4:Sekt”r baŸna 512 bayt de§il - istatistikler yanlŸ olacak.\n
+# %13s%c%s %s becomes <number><decimal separator>[0|5] [kbytes|bytes]
+13,5 :%13s%c%s %s toplam disk alan (disk boyutu)\n
+13,6 :%13s%c%s %s bozuk sekt”rlerde\n
+13,7 :%13s%c%s %s bozuk sekt”r i‡eren kmelerde\n
+13,8 :%13s%c%s %s disk zerinde mevcut (boŸ kme)\n
+13,9 :%13s%c%s %s her atama biriminde.\n
+# second %s replaced with "  " for FAT32 or "" otherwise
+13,10:Disk zerinde %13s%s atama birimi.\n
+13,11:Atama birimlerinden %13s%s unsur bozuk olarak iŸaretlendi\n
+# FAT32, 2 spaces, see 13.10 & 13.11
+13,12:
+# FAT12/FAT16, no spaces, see 13.10 & 13.11
+13,13:
 
 # misc messages
-14,0:\n Ge‡ersiz se‡enek birleŸimi... ltfen yardm okuyun. ˜ptal ediliyor.\n
+14,0:\n Ge‡ersiz se‡enek birleŸimi... Ltfen yardm okuyun. ˜ptal ediliyor.\n
 14,1:-- sonraki sayfay g”rmek i‡in Enter'a veya ‡kmak i‡in ESC'e basn  --
 14,2:\nKullanc iste§i zerine iptal edildi.\n
-
+14,3:Parametre de§erine izin verilmez - %s%s\n
+14,4:Yzde %3d tamamland.

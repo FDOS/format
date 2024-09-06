@@ -1,10 +1,15 @@
-# FreeDOS FORMAT.EXE message set - version 0.92a and later
+# program: FreeDOS FORMAT.EXE message set - version 0.92a and later
+# language:French
+# display codepage:CP850
+# catalog codepage:CP850
+# translators:Berki YenigÅn
+
 # version (on help screen)
 0,0:FreeDOS %6s - version %s\n
 0,1:êcrit par Brian E. Reifsnyder, Eric Auer et d'autres.\n
 0,2:Copyright 1999 - 2024 sous les termes de GNU GPL, Version 2+.\n\n
 # 0.3 or 0.4 shown depending on if /Z:longhelp option used or not
-0,3:Syntaxe (cf. documentation pour plus des informations dÇtaillÇes):\n\n
+0,3:Syntaxe (cf. documentation pour plus d'informations dÇtaillÇes):\n\n
 0,4:Syntaxe (cf. documentation ou utiliser /Z:longhelp pour plus d'options):\n\n
 
 # common
@@ -28,13 +33,13 @@
 #  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
 2,2:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/4] [/S] [/D]\n
 2,3:\n
-2,4: /V:label   SpÇcifie une Çtiquette de volume pour le disque, enregistre\n
+2,4: /V:Çtiquette SpÇcifie une Çtiquette de volume pour le disque, enregistre\n
 2,5:            son horodatage.\n
 2,6: /S         Appelle SYS  pour rendre le disque amoráable et ajouter\n
 2,7:            des fichiers systäme.\n
 2,8: /D         Affiche la sortie de dÇbogage. Pour les rapports de bug.\n
 2,9: /Q         Formate rapidement le disque. Si non combinÇ avec /U peut àtre\n
-2,10:            UNFORMATÇ et prÇserve les informations de mauvais clusters\n
+2,10:            dÇFORMATÇ et prÇserve les informations de mauvais clusters\n
 2,11:            (/Q /U ne le fait pas).\n
 2,12: /U         Formate le disque sans condition. Si disquette, formatage de\n
 2,13:            bas niveau.\n
@@ -64,7 +69,7 @@
 20,10:            pour les fichiers d'amoráage.\n
 20,11: /D         Affiche la sortie de dÇbogage. Pour les rapports de bug.\n
 20,12: /Q         Formate rapidement le disque. Si non combinÇ avec /U peut àtre\n
-20,13:            UNFORMATÇ et prÇserve les informations de mauvais clusters\n
+20,13:            dÇFORMATÇ et prÇserve les informations de mauvais clusters\n
 20,14: /U         Formate le disque sans condition. Si disquette, formatage de\n
 20,15:            bas niveau.\n
 20,16: /F:taille  SpÇcifie la taille de disquette Ö formater. Tailles \n
@@ -88,7 +93,7 @@
 3,3:  Mainteneur pour 0.90 / 0.91 2003-2006 : Eric Auer <eric@coli.uni-sb.de>\n
 3,4:Contributeurs: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
 3,5: Bart Oldeman, Jim Hall et d'autres. N'oublions pas tous les testeurs !\n\n
-3,6:
+3,6:\n
 3,7:Options et fonctionnalitÇs additionnelles expliquÇes :\n
 3,8:/D (dÇbogage) et /Y (sauter la confirmation) sont toujours autorisÇes.\n
 3,9:/B (rÇserver de l'espace pour sys) est vide et ne peut àtre combinÇe\n
@@ -108,8 +113,8 @@
 3,22: utilisez    /Z:seriously\n
 3,23:Pour sauvegarder seulement les informations unformat (mirror) sans\n
 3,24:formater, utilisez /Z:mirror\n
-3,25:Pour UNFORMATer un disque pour laquelle des donnÇes miroir fraåches
-3,26:existent, utilisez  /Z:unformat\n
+3,25:Pour dÇFORMATer un disque pour laquelle des donnÇes miroir fraåches
+3,26:existent, utilisez /Z:unformat\n
 3,27:\n
 3,28:Les modes pour les DISQUETTES sont : tente d'utiliser le formatage\n
 3,29:  rapide. N'utilise le formatage de bas niveau que si nÇcessaire.\n
@@ -234,7 +239,7 @@
 
 # Confirm_Hard_Drive_Formatting()
 10,0:UNFORMAT ramänera votre rÇpertoire racine et votre FAT Ö un Çtat\n
-10,1:prÇcedemment sauvegardÇ. Cela peut sÇrieusement perturber les choses !\n
+10,1:prÇcÇdemment sauvegardÇ. Cela peut sÇrieusement perturber les choses !\n
 10,2: AVERTISSEMENT : TOUTES LES DONNêES SUR LE %s\n
 10,3:DISQUE DUR
 10,4:DISQUETTE
@@ -242,8 +247,8 @@
 10,6: LECTEUR %c: POURRAIENT “TRE PERDUES !
 10,7: VEUILLEZ CONFIRMER !\n
 # note: will be followed by " (YES/NO)? " from msg 1.3 & 1.4
-10,8: Continuer avec Format
-10,9: Continuer avec Unformat
+10,8: Continuer avec Format ?
+10,9: Continuer avec Unformat ?
 # %s will be replaced with msg from 1.3
 10,10:Vous devez taper le mot entier %s pour confirmer.
 
@@ -252,15 +257,32 @@
 11,1:Pas d'Çtiquette, le disque n'aura pas d'horodatage de crÇation.\n
 
 # Critical_Error_Handler()
-12,0:\n Erreur critique pendant l'accäs au disque %s\n
+12,0:\n Erreur critique pendant l'accäs %s au disque\n
 12,1:\n Programme terminÇ.\n
 
 # Display_Drive_Statistics()
 13,0:\n Le numÇro de sÇrie du volume est %04X-%04X\n
-# TODO ...
+13,1:octets
+13,2:koctets
+13,3:moctets
+13,4:Pas 512 octets/secteur - les statistiques seront erronÇes.\n
+# %13s%c%s %s becomes <number><decimal separator>[0|5] [kbytes|bytes]
+13,5 :%13s%c%s %s d'espace disque total (taille de disque)\n
+13,6 :%13s%c%s %s dans les secteurs dÇfectueux\n
+13,7 :%13s%c%s %s dans les clusters avec des secteurs dÇfectueux\n
+13,8 :%13s%c%s %s disponibles sur le disque (clusters libres)\n
+13,9 :%13s%c%s %s dans chaque unitÇ d'allocation.\n
+# second %s replaced with "  " for FAT32 or "" otherwise
+13,10:%13s%s unitÇs d'allocation sur le disque.\n
+13,11:%13s%s des unitÇs d'allocation marquÇes comme dÇfectueuses\n
+# FAT32, 2 spaces, see 13.10 & 13.11
+13,12:
+# FAT12/FAT16, no spaces, see 13.10 & 13.11
+13,13:
 
 # misc messages
 14,0:\n Combinaison invalide d'options... Veuillez lire l'aide. Annulation.\n
-14,1:-- appuyez sur EntrÇe pour voir la page suivante ou êchapp pour annuler  --
+14,1:-- appuyez sur EntrÇe pour voir la page suivante ou êchap pour annuler  --
 14,2:\nAbondonnÇ Ö la demande de l'utilisateur.\n
-
+14,3:Valeur de paramätre non autorisÇe - %s%s\n
+14,4:%3d pourcent terminÇ.
