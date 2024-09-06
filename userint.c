@@ -399,16 +399,19 @@ void Critical_Error_Handler(int source, unsigned int error_code)
 /* 0.91k - avoid overflow if FAT32 */
 void Display_Drive_Statistics()
 {
-
-#define DDS_unitstring ((param.fat_type == FAT32) ? "kbytes" : "bytes")
+  char const * const bytes = catgets(catalog, 13, 1, "bytes"); 
+  char const * const kbytes = catgets(catalog, 13, 2, "kbytes"); 
+#define DDS_unitstring ((param.fat_type == FAT32) ? kbytes : bytes)
 #define DDS_factor(x) ((param.fat_type == FAT32) ? ((x)>>1) : ((x) * \
   drive_statistics.bytes_per_sector))
 /* a cheat: ASCII_CD_Number puts the decimal point at index 15... */
 #define DDS_dp ((param.fat_type == FAT32) ? ascii_cd_number[15] : ' ')
 #define DDS_half(x) ((param.fat_type == FAT32) ? (((x) & 1) ? "5" : "0") : "")
 
+  printf(catgets(catalog, 1, 0, "\n"));
+
   if ((drive_statistics.bytes_per_sector != 512) && (param.fat_type == FAT32))
-    printf("Not 512 bytes/sector - stats will be wrong.\n");
+    printf(catgets(catalog, 13, 4, "Not 512 bytes/sector - stats will be wrong.\n"));
 
   /* changed in 0.91h */
   /* avail = data area size (w/o root dir), total = "diskimage" size */
@@ -421,44 +424,44 @@ void Display_Drive_Statistics()
       * drive_statistics.sect_in_each_allocation_unit );
 
   ASCII_CD_Number(DDS_factor(drive_statistics.sect_total_disk_space));
-  printf("\n%13s%c%s %s total disk space (disk size)\n",
+  printf(catgets(catalog, 13, 5, "%13s%c%s %s total disk space (disk size)\n"),
     ascii_cd_number, DDS_dp, DDS_half(drive_statistics.sect_total_disk_space),
     DDS_unitstring);
 
   if (drive_statistics.bad_sectors > 0) /* changed 0.91c */
     {
     ASCII_CD_Number(DDS_factor(drive_statistics.bad_sectors));
-    printf("%13s%c%s %s in bad sectors\n",
+    printf(catgets(catalog, 13, 6, "%13s%c%s %s in bad sectors\n"),
       ascii_cd_number, DDS_dp, DDS_half(drive_statistics.bad_sectors),
       DDS_unitstring);
     ASCII_CD_Number(DDS_factor(drive_statistics.sect_total_disk_space -
       drive_statistics.sect_available_on_disk));
-    printf("%13s%c%s %s in clusters with bad sectors\n",
+    printf(catgets(catalog, 13, 7, "%13s%c%s %s in clusters with bad sectors\n"),
       ascii_cd_number, DDS_dp, DDS_half(drive_statistics.sect_total_disk_space -
         drive_statistics.sect_available_on_disk), DDS_unitstring);
     }
 
   ASCII_CD_Number(DDS_factor(drive_statistics.sect_available_on_disk));
-  printf("%13s%c%s %s available on disk (free clusters)\n",
+  printf(catgets(catalog, 13, 8, "%13s%c%s %s available on disk (free clusters)\n"),
     ascii_cd_number, DDS_dp, DDS_half(drive_statistics.sect_available_on_disk),
     DDS_unitstring);
 
-  printf("\n");
+  printf(catgets(catalog, 1, 0, "\n"));
 
   ASCII_CD_Number(DDS_factor(drive_statistics.sect_in_each_allocation_unit));
-  printf("%13s%c%s %s in each allocation unit.\n",
+  printf(catgets(catalog, 13, 9, "%13s%c%s %s in each allocation unit.\n"),
     ascii_cd_number, DDS_dp, DDS_half(drive_statistics.sect_in_each_allocation_unit),
     DDS_unitstring);
 
   ASCII_CD_Number(drive_statistics.allocation_units_available_on_disk);
-  printf("%13s%s allocation units on disk.\n", ascii_cd_number,
-    (param.fat_type == FAT32) ? "  " : "");
+  printf(catgets(catalog, 13, 10, "%13s%s allocation units on disk.\n"), ascii_cd_number,
+    (param.fat_type == FAT32) ? catgets(catalog, 13, 12, "  ") : catgets(catalog, 13, 13, ""));
 
   if (drive_statistics.allocation_units_with_bad_sectors > 0) /* 0.91c */
     {
     ASCII_CD_Number(drive_statistics.allocation_units_with_bad_sectors);
-    printf("%13s%s of the allocation units marked as bad\n", ascii_cd_number,
-      (param.fat_type == FAT32) ? "  " : "");
+    printf(catgets(catalog, 13, 11, "%13s%s of the allocation units marked as bad\n"), ascii_cd_number,
+      (param.fat_type == FAT32) ? catgets(catalog, 13, 12, "  ") : catgets(catalog, 13, 13, ""));
     }
 
   printf(catgets(catalog, 13, 0, "\n Volume Serial Number is %04X-%04X\n"),
@@ -658,10 +661,11 @@ void Display_Percentage_Formatted(unsigned long percentage)
     }
   else
     {
+      printf(catgets(catalog, 14, 4, "%3d percent completed."), percentage);
     if (isatty(1 /* stdout */))
-      printf("%3d percent completed.\r", percentage); /* on screen */
+      printf("\r"); /* on screen */
     else
-      printf("%3d percent completed.\n", percentage); /* for redirect */
+      printf("\n"); /* for redirect */
     /* \r re-positions cursor back to the beginning of the line */
     }
 } /* Display_Percentage_Formatted */
@@ -669,7 +673,7 @@ void Display_Percentage_Formatted(unsigned long percentage)
 
 void IllegalArg(char *option, char *argptr)
 {
-    printf("Parameter value not allowed - %s%s\n", option, argptr);
+    printf(catgets(catalog, 14, 3, "Parameter value not allowed - %s%s\n"), option, argptr);
     Exit(4,14);
 } /* IllegalArg */
 

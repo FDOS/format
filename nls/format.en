@@ -231,10 +231,27 @@
 
 # Display_Drive_Statistics()
 13,0:\n Volume Serial Number is %04X-%04X\n
-# TODO ...
+13,1:bytes
+13,2:kbytes
+13,3:mbytes
+13,4:Not 512 bytes/sector - stats will be wrong.\n
+# %13s%c%s %s becomes <number><decimal separator>[0|5] [kbytes|bytes]
+13,5 :%13s%c%s %s total disk space (disk size)\n
+13,6 :%13s%c%s %s in bad sectors\n
+13,7 :%13s%c%s %s in clusters with bad sectors\n
+13,8 :%13s%c%s %s available on disk (free clusters)\n
+13,9 :%13s%c%s %s in each allocation unit.\n
+# second %s replaced with "  " for FAT32 or "" otherwise
+13,10:%13s%s allocation units on disk.\n
+13,11:%13s%s of the allocation units marked as bad\n
+# FAT32, 2 spaces, see 13.10 & 13.11
+13,12:
+# FAT12/FAT16, no spaces, see 13.10 & 13.11
+13,13:
 
 # misc messages
 14,0:\n Invalid combination of options... please read help. Aborting.\n
 14,1:-- press enter to see the next page or ESC to abort  --
 14,2:\nAborted at user request.\n
-
+14,3:Parameter value not allowed - %s%s\n
+14,4:%3d percent completed.
