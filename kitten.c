@@ -263,6 +263,46 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	return (nl_catd)buffer;
 }
 
+/**
+ * tries various combinations to open catalog file
+ * expects catfile to contain basepath to try, lang=2 character code, basename is catalog name
+ * tries basepath\lang\basename; basepath\basename.lang; and basepath\basename.msg
+ * Note: catfile must be a buffer large enough to append lang\catfilename and
+ *       be previously initialized to the basepath with terminating "\\" and "\0"
+ */
+nl_catd cattryread(char * const catfile, char const * const catlang, char const * const basename)
+{
+	char * filename = catfile + strlen(catfile);  /* points to \0 after \\ */
+	nl_catd _kitten_catalog;
+	
+	/* Rule #1: %NLSPATH%\%LANG%\basename */
+	strcat(catfile,catlang);
+	strcat(catfile,"\\");
+	strcat(catfile,basename);
+	_kitten_catalog = catread(catfile, catlang);
+	if (_kitten_catalog != NULL) 
+		return _kitten_catalog;
+
+	/* Rule #2: %NLSPATH%\basename.%LANG% */
+	*filename = '\0';  /* truncate catfile back to basepath e.g. "%NLSPATH%\" portion */
+	strcat(catfile,basename);
+	strcat(catfile,".");
+	strcat(catfile,catlang);
+	_kitten_catalog = catread(catfile, catlang);
+	if (_kitten_catalog != NULL)
+		return _kitten_catalog;
+
+	/* Rule #3: %NLSPATH%\basename.MSG  -- for multiple languages in same file */
+	*filename = '\0';  /* truncate catfile back to basepath e.g. "%NLSPATH%\" portion */
+	strcat(catfile,basename);
+	strcat(catfile,".MSG");
+	_kitten_catalog = catread(catfile, catlang);
+	if (_kitten_catalog != NULL)
+		return _kitten_catalog;
+	
+	return NULL;
+}
+
 
 /**
  * close/cleanup message catalog 
@@ -277,7 +317,7 @@ void catclose(nl_catd catalog)
 /**
  * Initialize kitten for program (name).
  */
-nl_catd catopen(const char *name, int flag)
+nl_catd catopen(char const * const name, int flag)
 {
 	char basename[16];			/* 8 character base filename */
 	char catlang[4];			/* from LANG environment var. */
@@ -342,95 +382,84 @@ nl_catd catopen(const char *name, int flag)
 			/* if explicit path given, then don't try variations */
 			/* return NULL; */
 			
-			/* strip path to get base filename */
-			name = strrchr(name, '\\');
-			if (name == NULL) return NULL;  /* this should never happen! */
-			name = name + 1; /* skip past the final '\\' in name provided */
+			/* get base path & base filename*/
+			strcpy(catfile, name);
+			s_ptr = strrchr(catfile, '\\');
+			if (s_ptr == NULL) return NULL;  /* this should never happen! */
+			s_ptr = s_ptr + 1; /* skip past the final '\\' in name provided */
+			memcpy(basename, s_ptr, 8); /* copy over just name portion */
+			*s_ptr = '\0';  /* truncate catfile to just path */
+		} else {	
+			catfile[0] = '\0';
+			memcpy(basename, name, 8);
 		}
 		
-		memcpy(basename, name, 8);
-		basename[8] = '\0';
+		basename[8] = '\0';		
 		/* strip extension if given */
 		if ((s_ptr=strchr(basename, '.')) != NULL)
 		{
 			*s_ptr = '\0';
 		}
 		dbgprintf(("basename is %s\n", basename));
-
-		/* try to locate the message _kitten_catalog using LANG & NLSPATH */
-
-		/* step through NLSPATH */
-		nlsptr = getenv ("NLSPATH");
-
-		/* was NLSPATH found? */
-		if (nlsptr == NULL) 
+		
+		/* try and see if catalog in separate file in same directory as program */
+		/*if (*catfile)  /* try variations only if explicit path given */
+		_kitten_catalog = cattryread(catfile, catlang, basename);
+		if (_kitten_catalog == NULL)
 		{
-			/* no, so default to current directory */
-			nlsptr = ".";
-		}
+			/* try to locate the message _kitten_catalog using LANG & NLSPATH */
 
-		catfile[0] = '\0';
+			/* step through NLSPATH */
+			nlsptr = getenv ("NLSPATH");
 
-		/* cycle through paths found in NLSPATH looking for catalog file */
-		while ((nlsptr != NULL) && (_kitten_catalog == NULL)) 
-		{
-			char *tok = strchr(nlsptr, ';');
-			int toklen;
-
-			if (tok == NULL)
-				toklen = strlen(nlsptr); /* last segment */
-			else
-				toklen = (int)(tok - nlsptr); /* segment terminated by ';' */
-      
-			/* catfile = malloc(toklen+1+strlen(name)+1+strlen(lang)+1); */
-			/* Try to find the _kitten_catalog file in each path from NLSPATH */
-
-			/* check for potential overflow in NLSPATH, and skip this segment */
-			if ((toklen+6+strlen(name)) > sizeof(catfile)) 
-				continue;
-
-			memcpy(catfile, nlsptr, toklen);
-			if ((toklen > 0) && (catfile[toklen-1] == '\\'))
+			/* was NLSPATH found? */
+			if (nlsptr == NULL) 
 			{
-				/* nlspath segment ends in directory separator */
-				catfile[toklen] = '\0';
-			} else {
-				/* we need to append directory separator */
-				strcpy(catfile+toklen,"\\");
-				toklen++;
+				/* no, so default to current directory */
+				nlsptr = ".";
 			}
 
-			/* Rule #1: %NLSPATH%\%LANG%\basename */
-			strcat(catfile,catlang);
-			strcat(catfile,"\\");
-			strcat(catfile,basename);
-			_kitten_catalog = catread(catfile, catlang);
-			if (_kitten_catalog != NULL) 
-				continue;
+			catfile[0] = '\0';
 
-			/* Rule #2: %NLSPATH%\basename.%LANG% */
-			catfile[toklen] = '\0';  /* truncate catfile back to "%NLSPATH%\" portion */
-			strcat(catfile,basename);
-			strcat(catfile,".");
-			strcat(catfile,catlang);
-			_kitten_catalog = catread(catfile, catlang);
-			if (_kitten_catalog != NULL)
-				continue;
+			/* cycle through paths found in NLSPATH looking for catalog file */
+			while ((nlsptr != NULL) && (_kitten_catalog == NULL)) 
+			{
+				char *tok = strchr(nlsptr, ';');
+				int toklen;
 
-			/* Rule #3: %NLSPATH%\basename.MSG  -- for multiple languages in same file */
-			catfile[toklen] = '\0';  /* truncate catfile back to "%NLSPATH%\" portion */
-			strcat(catfile,basename);
-			strcat(catfile,".MSG");
-			_kitten_catalog = catread(catfile, catlang);
-			if (_kitten_catalog != NULL)
-				continue;
-
-
-			/* Grab next tok for the next while iteration */
-			nlsptr = tok;
-			if (nlsptr != NULL) nlsptr++;
+				if (tok == NULL)
+					toklen = strlen(nlsptr); /* last segment */
+				else
+					toklen = (int)(tok - nlsptr); /* segment terminated by ';' */
       
-		} /* while tok */
+				/* catfile = malloc(toklen+1+strlen(name)+1+strlen(lang)+1); */
+				/* Try to find the _kitten_catalog file in each path from NLSPATH */
+
+				/* check for potential overflow in NLSPATH, and skip this segment */
+				if ((toklen+6+strlen(name)) > sizeof(catfile)) 
+					continue;
+
+				memcpy(catfile, nlsptr, toklen);
+				if ((toklen > 0) && (catfile[toklen-1] == '\\'))
+				{
+					/* nlspath segment ends in directory separator */
+					catfile[toklen] = '\0';
+				} else {
+					/* we need to append directory separator */
+					strcpy(catfile+toklen,"\\");
+					toklen++;
+				}
+
+				_kitten_catalog = cattryread(catfile, catlang, basename);
+				if (_kitten_catalog != NULL) 
+					continue;
+
+				/* Grab next tok for the next while iteration */
+				nlsptr = tok;
+				if (nlsptr != NULL) nlsptr++;
+      
+			} /* while tok */
+		} /* try NLSPATH */
 
 		if (_kitten_catalog == NULL)
 		{
