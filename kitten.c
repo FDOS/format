@@ -247,6 +247,7 @@ nl_catd catread(const char * const catfile, const char * const lang)
 				/* error reading */
 				dbgprintf(("Failed to read in messages.\n"));
 				free(buffer);
+				buffer = NULL;
 				goto cleanup;
 			}
 			/* successfully loaded messages, buffer points to first message_header */
