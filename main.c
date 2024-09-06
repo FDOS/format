@@ -251,6 +251,7 @@ void main(int argc, char *argv[])
   int drive_letter_found = FALSE;
   
   catalog = catopen(argv[0], 0); /* init support for translated messages */
+  if (catalog == NULL) catalog = catopen(NAME, 0); /* in case program renamed */
 
   Initialization();
 
