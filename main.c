@@ -206,7 +206,7 @@ void Write_System_Files(void)
   }
 
   sysarg0[0] = param.drive_letter[0];
-  printf(catgets(catalog, 8, 1, "\nRunning SYS: %s %s\n", syspath, sysarg0));
+  printf(catgets(catalog, 8, 1, "\nRunning SYS: %s %s\n"), syspath, sysarg0);
   retval = spawnl(P_WAIT, syspath, syspath, sysarg0, NULL);
 #else
   /* use less efficient / less safe style with a new shell: */

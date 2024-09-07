@@ -37,6 +37,11 @@
 #define dbgprintf(x)
 #endif
 
+#if defined(__TURBOC__)
+typedef long off_t;
+#define _lseek lseek
+#endif
+
 /*
  * internal structure, must match between kitten.c and kittenc.c
  * Current definition matches kittenc version 2021-08-01

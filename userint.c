@@ -50,7 +50,7 @@ void ASCII_CD_Number(unsigned long number)
   unsigned char dsep, ksep; /* decimal- and kilo-separator */
 
 #if defined(__TURBOC__)
-  struct country mycountry; /* NLS stuff added 0.91k */
+  struct COUNTRY mycountry; /* NLS stuff added 0.91k */
   /* we assume that this is DOS 2.11+: offset 7 1000s-sep 9 decsep    */
   /* also in this buffer: date format, 12<->24 clock, currency stuff, */
   /* date sep (. or / or -), time sep (:) and lots of other things    */
