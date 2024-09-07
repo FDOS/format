@@ -20,6 +20,8 @@
 # user has to type full word matching this
 1,3:YES
 1,4:NO
+# other possibly common bits
+1,5:Failed!\n
 
 # short help screen (shown if compiled without LEGACY_HELP)
 # Use as many messages as needed, 1 message per max 79 column line
@@ -255,3 +257,30 @@
 14,2:\nAborted at user request.\n
 14,3:Parameter value not allowed - %s%s\n
 14,4:%3d percent completed.
+
+# Create_File_System()
+15,0:FAT32 flags 0x%04x fixed to 0.\n
+15,1:FAT32 version 0x%04x forced to 0.\n
+15,2:Backup Boot / FS Info Sector 
+15,3:forced on.\n
+15,4:default position invalid.\n
+15,5: Using sector 6 and 1.\n
+15,6:disabled (no space).\n
+
+# Get_FS_Info()
+16,0:Rounded root dir size to %u entries, multiple of %u.\n
+16,1:Not 512 bytes per sector. Aborting!\n
+16,2:Invalid FAT count. Aborting!\n
+
+# Write_Boot_Sectors()
+17,0:No Backup Boot Sector.\n
+17,1:Invalid Backup Boot Sector position %u??\n
+17,2:No FS Info Sector.\n
+17,3:Invalid FS Info Sector position %u??\n
+
+# Write_FAT_Tables()
+18,0:Invalid FAT count. Aborting!\n
+18,1:WARNING: Each FAT is %lu sectors, > 16MB-64k, Win9x incompatible!\n
+18,2: Preparing FAT area...\n
+18,3: Optimized initial Root Directory size: %lu clusters.\n
+18,4:Root Directory clipped to 125 clusters!\n

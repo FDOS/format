@@ -101,13 +101,13 @@ void Create_File_System()
       if ((parameter_block.xbpb.ext_flags & 0x7e) != 0) { /* 0.91u */
         /* MSB set if only 1 FAT in use, then LSB are 0-based FAT */
         /* number 00-0f. If MSB is 0, all (both) FATs are used... */
-        printf("FAT32 flags 0x%04x fixed to 0.\n",
+        printf(catgets(catalog, 15, 0, "FAT32 flags 0x%04x fixed to 0.\n"),
           parameter_block.xbpb.ext_flags); /* would mean 3rd/higher FAT in use */
         parameter_block.xbpb.ext_flags = 0;
       }
       if ((parameter_block.xbpb.file_system_version & 0xfefe) != 0) { /* 0.91u */
         /* 0.0 is the normal version, everything above 1.1 is fishy */
-        printf("FAT32 version 0x%04x forced to 0.\n",
+        printf(catgets(catalog, 15, 1, "FAT32 version 0x%04x forced to 0.\n"),
           parameter_block.xbpb.file_system_version);
         parameter_block.xbpb.file_system_version = 0;
       }
@@ -116,24 +116,24 @@ void Create_File_System()
            (parameter_block.xbpb.info_sector_number == 0xffff) || /* new 0.91p */
            (parameter_block.xbpb.backup_boot_sector == 0xffff) ) /* new 0.91p */
         {
-          printf("Backup Boot / FS Info Sector ");
+          printf(catgets(catalog, 15, 2, "Backup Boot / FS Info Sector "));
           if (parameter_block.bpb.reserved_sectors >= 16 /* 32 */)
             {
               if ( (parameter_block.xbpb.info_sector_number == 0xffff) || /* new 0.91p */
                    (parameter_block.xbpb.backup_boot_sector == 0xffff) )
                 { /* new 0.91p, shorter in 0.91q */
-                  printf("forced on.\n");
+                  printf(catgets(catalog, 15, 3, "forced on.\n"));
                 } else {
-                  printf("default position invalid.\n");
+                  printf(catgets(catalog, 15, 4, "default position invalid.\n"));
                 }
               parameter_block.xbpb.info_sector_number = 1; /* common value */
               parameter_block.xbpb.backup_boot_sector = 6; /* FreeDOS default */
-              printf(" Using sector 6 and 1.\n");
+              printf(catgets(catalog, 15, 5, " Using sector 6 and 1.\n"));
               /* boot, fs info, 2nd boot, -, -, -, boot, fs info, 2nd boot */
             }
           else	/* if less than 16 reserved sectors, accept "disable" state */
             {
-              printf("disabled (no space).\n");
+              printf(catgets(catalog, 15, 6, "disabled (no space).\n"));
               parameter_block.xbpb.info_sector_number = 0xffff;
               parameter_block.xbpb.backup_boot_sector = 0xffff;
             }
@@ -365,7 +365,7 @@ void Get_FS_Info()
         {
         parameter_block.bpb.root_directory_entries |= entries_per_sector - 1; /* round up to... */
         parameter_block.bpb.root_directory_entries++;	/* ...next multiple */
-        printf("Rounded root dir size to %u entries, multiple of %u.\n",
+        printf(catgets(catalog, 16, 0, "Rounded root dir size to %u entries, multiple of %u.\n"),
         parameter_block.bpb.root_directory_entries, entries_per_sector);
         } /* not multiple of (512/32) (bug before 0.91i: used multiple of 32) */
 
@@ -399,13 +399,13 @@ void Get_FS_Info()
 
   if (parameter_block.bpb.bytes_per_sector != 512)
    {
-   printf("Not 512 bytes per sector. Aborting!\n");
+   printf(catgets(catalog, 16, 1, "Not 512 bytes per sector. Aborting!\n"));
    Exit(4,21);
    }
   if (  (parameter_block.bpb.number_of_fats<1)
      || (parameter_block.bpb.number_of_fats>2) )
    {
-   printf("Invalid FAT count. Aborting!\n");
+   printf(catgets(catalog, 16, 2, "Invalid FAT count. Aborting!\n"));
    Exit(4,21);
    }
 
@@ -537,11 +537,11 @@ void Write_Boot_Sectors()
       {
         if (parameter_block.xbpb.backup_boot_sector==0xffff)
           {
-            printf("No Backup Boot Sector.\n");
+            printf(catgets(catalog, 17, 0, "No Backup Boot Sector.\n"));
           }
         else
           {		/* simplified message 0.91q */
-            printf("Invalid Backup Boot Sector position %u??\n",
+            printf(catgets(catalog, 17, 1, "Invalid Backup Boot Sector position %u??\n"),
               parameter_block.xbpb.backup_boot_sector);
           }
       }
@@ -552,7 +552,7 @@ void Write_Boot_Sectors()
           printf("[DEBUG]  Backup Boot Sector -> %u\n",
             use_backups);
 
-        if (Drive_IO(WRITE, use_backups, -1) != 0) printf("Failed!\n");
+        if (Drive_IO(WRITE, use_backups, -1) != 0) printf(catgets(catalog, 1, 5, "Failed!\n"));
       }
 
     /* This sector only contains a bit of statistics if enabled. */
@@ -565,11 +565,11 @@ void Write_Boot_Sectors()
       {
         if (parameter_block.xbpb.info_sector_number == 0xffff)
           {
-            printf("No FS Info Sector.\n");
+            printf(catgets(catalog, 17, 2, "No FS Info Sector.\n"));
           }
         else
           {		/* simplified message 0.91q */
-              printf("Invalid FS Info Sector position %u??\n",
+              printf(catgets(catalog, 17, 3, "Invalid FS Info Sector position %u??\n"),
                 parameter_block.xbpb.info_sector_number);
           }
       }
@@ -595,7 +595,7 @@ void Write_Boot_Sectors()
             sector_buffer[491] = 0xff;
 
             if (Drive_IO(WRITE, use_backups + parameter_block.xbpb.info_sector_number,
-              -1) != 0) printf("Failed!\n");
+              -1) != 0) printf(catgets(catalog, 1, 5, "Failed!\n"));
           }
       } /* Info Sector feature */
 
@@ -640,13 +640,13 @@ void Write_FAT_Tables()
   if ( (parameter_block.bpb.number_of_fats != 1) &&  /* should have been checked */
        (parameter_block.bpb.number_of_fats != 2) )   /* before anyway... */
     {
-    printf("Invalid FAT count. Aborting!\n");
+    printf(catgets(catalog, 18, 0, "Invalid FAT count. Aborting!\n"));
     Exit(4,22);
     }
 
   if ( file_sys_info.number_fat_sectors > 0x7F80L )  /* (16MB-64k)/512 */
     { /* equivalent to 0x3FC000-2 clusters. 128 GB at 32k cluster size */
-    printf("WARNING: Each FAT is %lu sectors, > 16MB-64k, Win9x incompatible!\n",
+    printf(catgets(catalog, 18, 1, "WARNING: Each FAT is %lu sectors, > 16MB-64k, Win9x incompatible!\n"),
       file_sys_info.number_fat_sectors); /* Bad for Win9x/ME, okay for others */
     /* WinXP can have > 128 GB LBA48 partitions and 64k cluster size...    */
     /* FreeDOS and Win2000 and WinNT(FAT16) support 64k cluster size, too. */
@@ -658,7 +658,7 @@ void Write_FAT_Tables()
       file_sys_info.start_fat_sector,
       last_fatn_sector);
   else
-    printf(" Preparing FAT area...\n");
+    printf(catgets(catalog, 18, 2, " Preparing FAT area...\n"));
 
   do
     {
@@ -717,7 +717,7 @@ void Write_FAT_Tables()
     sbp = 8;
     nclust = file_sys_info.number_root_dir_sect;
     nclust /= BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
-    printf(" Optimized initial Root Directory size: %lu clusters.\n",
+    printf(catgets(catalog, 18, 3, " Optimized initial Root Directory size: %lu clusters.\n"),
       nclust);
     cnum = 2; /* first data cluster has number 2, not 0...: 2 based counting */
 
@@ -740,7 +740,7 @@ void Write_FAT_Tables()
       sbp += 4;
       cnum++;
       if (sbp >= 508)
-        printf("Root Directory clipped to 125 clusters!\n");
+        printf(catgets(catalog, 18, 4, "Root Directory clipped to 125 clusters!\n"));
       } /* for loop for chain creation */
     } /* FAT32 */
 

@@ -32,10 +32,10 @@ void Initialization(void)
     where = FP_SEG(sector_buffer);
     where <<= 4;
     where += FP_OFF(sector_buffer);
-    printf("DMA tuning: using alternative sector_buffer\n");
+    if (debug_prog==TRUE) printf("DMA tuning: using alternative sector_buffer\n");
   }
   if ((where & 0xffff) > (0xffff - 512)) {
-    printf("DMA tuning: CANNOT move sector buffer away from boundary!?\n");
+    if (debug_prog==TRUE) printf("DMA tuning: CANNOT move sector buffer away from boundary!?\n");
   }
 
   huge_sector_buffer = &huge_sector_buffer_0[0];
@@ -47,7 +47,7 @@ void Initialization(void)
     where = FP_SEG(sector_buffer);
     where <<= 4;
     where += FP_OFF(sector_buffer);
-    printf("DMA tuning: using alternative huge_sector_buffer\n");
+    if (debug_prog==TRUE) printf("DMA tuning: using alternative huge_sector_buffer\n");
   }
 
   param.drive_letter[0]='\0';
