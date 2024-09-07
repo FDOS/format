@@ -161,7 +161,7 @@ int sprintf(char * buff, const char * fmt, ...)
   charp = buff;
   do_printf(fmt, arg);
   handle_char(0);
-  return charp - buff - 1;
+  return (int)(charp - buff - 1);
 }
 
 int do_printf(const char * fmt, va_list arg)

@@ -501,7 +501,7 @@ void Key_For_Next_Page()
 } /* Key_For_Next_Page */
 
 
-void Print_Messages_With_Pauses(nl_catd catalog, int setnum, char const *messages[])
+void Print_Messages_With_Pauses(nl_catd catalog, int setnum, char const * const messages[])
 {
   int msgnum = 0;
   int use_cats = (catgets(catalog, setnum, 0, NULL) != NULL);
@@ -522,7 +522,7 @@ void Print_Messages_With_Pauses(nl_catd catalog, int setnum, char const *message
 
 
 /* short help screen */
-const char const * short_help[] = {
+char const * const short_help[] = {
 #if LEGACY_HELP /* with legacy stuff */
   "FORMAT drive: [/V[:label]] [/Q] [/U] [/F:size] [/B | /S] [/D]\n",
   "FORMAT drive: [/V[:label]] [/Q] [/U] [/T:tracks /N:sectors] [/B | /S] [/D]\n",
@@ -559,7 +559,7 @@ const char const * short_help[] = {
 };
 
 /* detailed help screen messages */
-const char const * detailed_help[] = {
+char const * const detailed_help[] = {
   "This FORMAT is made for the http://www.freedos.org/ project.\n",
   "  See http://www.gnu.org/ for information about GNU GPL license.\n",
   "Made in 1999-2003 by Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n",

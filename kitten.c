@@ -127,7 +127,7 @@ struct message_end {
 const char * catgets(nl_catd catalog, int setnum, int msgnum, const char *message)
 {
 	int16_t msg_id;
-	struct message_header * p_message_header;
+	struct message_header const * p_message_header;
 	
 	/* validate catalog is open and initialized */
 	if (catalog == NULL) return message;
@@ -139,12 +139,12 @@ const char * catgets(nl_catd catalog, int setnum, int msgnum, const char *messag
 	dbgprintf(("msg_id=%x (%x,%x)\n", msg_id, setnum, msgnum));
 	
 	/* cycle through all messages to find matching message */
-	for ( ; p_message_header->len != 0; p_message_header = (struct message_header *)((char *)p_message_header + p_message_header->len))
+	for ( ; p_message_header->len != 0; p_message_header = (struct message_header const *)((char const *)p_message_header + p_message_header->len))
 	{
 		if (p_message_header->id == msg_id)
 		{
 			/* on match, return string immediately after message_header; p_message_header->message */
-			return (const char *)p_message_header + sizeof(struct message_header);
+			return (char const *)p_message_header + sizeof(struct message_header);
 		}
 	}
 	
@@ -157,7 +157,7 @@ const char * catgets(nl_catd catalog, int setnum, int msgnum, const char *messag
  * Attempt to open message file and validate contents,
  * then load all messages for given language into memory.
  */
-nl_catd catread(const char * const catfile, const char * const lang)
+static nl_catd catread(const char * const catfile, const char * const lang)
 {
 	int fd = -1;	/* file descriptor, aka file handle */
 	int i;
@@ -171,22 +171,22 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	
 	/* try opening file */
 	dbgprintf(("catread(%s,%s)\n", catfile, lang));
-	if ((fd = open(catfile, O_RDONLY | O_BINARY)) < 0)
+	if ((fd = _open(catfile, O_RDONLY | O_BINARY)) < 0)
 	{
 		dbgprintf(("Unable to open file\n"));
 		return NULL;  /* some error attempting to open file */
 	}
 	
 	/* check end of file for our magic value */
-	if ((seekoffset = lseek(fd, 0, SEEK_END)) < 0) 
+	if ((seekoffset = _lseek(fd, 0, SEEK_END)) < 0) 
 		goto cleanup; /* error seeking */
-	if (lseek(fd, - (int)sizeof(struct message_end), SEEK_END) < 0) 
+	if (_lseek(fd, - (int)sizeof(struct message_end), SEEK_END) < 0) 
 		goto cleanup;  /* error seeking */
-	if (read(fd, &message_end, sizeof(struct message_end)) != sizeof(struct message_end)) 
+	if (_read(fd, &message_end, sizeof(struct message_end)) != sizeof(struct message_end)) 
 		goto cleanup; /* error reading */
 	
 	/* check for our MAGIC value */
-	if (memcmp(message_end.id, "KITTENC", 8) != 0) 
+	if (memcmp(message_end.id, KITTEN_MAGIC, KITTEN_MAGIC_LEN) != 0) 
 	{
 		dbgprintf(("MAGIC KITTENC not found.\n"));
 		goto cleanup; /* not found, so cleanup and return failure */
@@ -202,7 +202,7 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	dbgprintf(("seek adjustment = %li bytes\n", seekadjustment));
 	
 	/* load language list */
-	if (lseek(fd, message_end.filepos + seekadjustment, SEEK_SET) != (message_end.filepos + seekadjustment)) 
+	if (_lseek(fd, message_end.filepos + seekadjustment, SEEK_SET) != (message_end.filepos + seekadjustment)) 
 	{
 		dbgprintf(("Failed to seek to start of content section\n"));
 		goto cleanup;  /* failed to seek */
@@ -221,7 +221,7 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	for (i = 0; i < message_end.resource_count; i++)
 	{
 		/* Warning: we read sequentially through content array, but if match found file pointer will be moved! */
-		if (read(fd, &content, sizeof(struct content)) != (off_t)(sizeof(struct content)))
+		if (_read(fd, &content, sizeof(struct content)) != (off_t)(sizeof(struct content)))
 		{	
 			dbgprintf(("Failed to read in %u bytes for content section\n", sizeof(struct content)));
 			goto cleanup; /* error reading or data corrupted */
@@ -232,7 +232,7 @@ nl_catd catread(const char * const catfile, const char * const lang)
 		    (lang[1] == toupper(content.language[1])))
 		{
 			/* we found a match! so allocate memory for strings, read them in and return pointer to buffer */
-			if (lseek(fd, content.filepos_start + seekadjustment, SEEK_SET) != (content.filepos_start + seekadjustment)) 
+			if (_lseek(fd, content.filepos_start + seekadjustment, SEEK_SET) != (content.filepos_start + seekadjustment)) 
 			{
 				dbgprintf(("Error seeking to message section.\n"));
 				goto cleanup; /* error seeking */
@@ -242,12 +242,12 @@ nl_catd catread(const char * const catfile, const char * const lang)
 			#ifdef __SMALL__
 			dbgprintf(("Largest block available is %u bytes.\n", _memmax()));
 			#endif
-			if ((buffer = (nl_catd)malloc(bufsize)) == NULL)
+			if ((buffer = (nl_catd)malloc((size_t)bufsize)) == NULL)
 			{
 				dbgprintf(("Error allocating memory buffer for messages.\n"));
 				goto cleanup; /* error allocating memory for messages */
 			}
-			if (read(fd, buffer, bufsize) != bufsize)
+			if (_read(fd, buffer, (unsigned)bufsize) != bufsize)
 			{
 				/* error reading */
 				dbgprintf(("Failed to read in messages.\n"));
@@ -264,7 +264,7 @@ nl_catd catread(const char * const catfile, const char * const lang)
 	
 	cleanup:
 	dbgprintf(("catread() -- cleanup\n"));
-	if (fd >= 0) close(fd);
+	if (fd >= 0) _close(fd);
 	return (nl_catd)buffer;
 }
 
@@ -275,7 +275,7 @@ nl_catd catread(const char * const catfile, const char * const lang)
  * Note: catfile must be a buffer large enough to append lang\catfilename and
  *       be previously initialized to the basepath with terminating "\\" and "\0"
  */
-nl_catd cattryread(char * const catfile, char const * const catlang, char const * const basename)
+static nl_catd cattryread(char * const catfile, char const * const catlang, char const * const basename)
 {
 	char * filename = catfile + strlen(catfile);  /* points to \0 after \\ */
 	nl_catd _kitten_catalog;
@@ -408,7 +408,7 @@ nl_catd catopen(char const * const name, int flag)
 		dbgprintf(("basename is %s\n", basename));
 		
 		/* try and see if catalog in separate file in same directory as program */
-		/*if (*catfile)  /* try variations only if explicit path given */
+		/*if (*catfile)  /-* try variations only if explicit path given */
 		_kitten_catalog = cattryread(catfile, catlang, basename);
 		if (_kitten_catalog == NULL)
 		{
@@ -430,12 +430,12 @@ nl_catd catopen(char const * const name, int flag)
 			while ((nlsptr != NULL) && (_kitten_catalog == NULL)) 
 			{
 				char *tok = strchr(nlsptr, ';');
-				int toklen;
+				size_t toklen;
 
 				if (tok == NULL)
 					toklen = strlen(nlsptr); /* last segment */
 				else
-					toklen = (int)(tok - nlsptr); /* segment terminated by ';' */
+					toklen = (size_t)(tok - nlsptr); /* segment terminated by ';' */
       
 				/* catfile = malloc(toklen+1+strlen(name)+1+strlen(lang)+1); */
 				/* Try to find the _kitten_catalog file in each path from NLSPATH */
