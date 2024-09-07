@@ -1,0 +1,37 @@
+* text eol=auto
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cfg text eol-crlf
+.github/workflows/*.yml text eol=lf
+*.com -text
+*.COM -text
+*.exe -text
+*.EXE -text
+*.prj -text
+*.PRJ -text
+*.zip -text
+*.ZIP -text
+*.prj -text
+*.PRJ -text
+*.dsk -text
+*.DSK -text
+*.tc -text diff
+*.TC -text diff
+
+nls/*.en working-tree-encoding=CP437 text eol=auto
+nls/*.lv working-tree-encoding=CP775 text eol=auto
+nls/*.nl working-tree-encoding=CP850 text eol=auto
+nls/*.fi working-tree-encoding=CP850 text eol=auto
+nls/*.fr working-tree-encoding=CP850 text eol=auto
+nls/*.de working-tree-encoding=CP850 text eol=auto
+nls/*.dk working-tree-encoding=CP850 text eol=auto
+nls/*.it working-tree-encoding=CP850 text eol=auto
+nls/*.pt working-tree-encoding=CP850 text eol=auto
+nls/*.es working-tree-encoding=CP850 text eol=auto
+nls/*.sv working-tree-encoding=CP850 text eol=auto
+nls/*.hu working-tree-encoding=CP852 text eol=auto
+nls/*.rs working-tree-encoding=CP852 text eol=auto
+nls/*.sl working-tree-encoding=CP852 text eol=auto
+nls/*.tr working-tree-encoding=CP857 text eol=auto
+nls/*.ru working-tree-encoding=CP866 text eol=auto
+nls/*.ua working-tree-encoding=CP866 text eol=auto
