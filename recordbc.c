@@ -26,7 +26,7 @@ void Record_Bad_Clusters_FAT32(void);
 void unusable_wimp(void);
 void unusable_wimp(void) /* give up format attempt, broken metadata sector */
 {
-    printf("Unusable disk: Bad sector in system data. Format terminated.\n");
+    printf(catgets(catalog, 25, 0, "Unusable disk: Bad sector in system data. Format terminated.\n"));
     Exit(4,30);
 } /* unusable_wimp */
 
@@ -75,14 +75,14 @@ void Record_Bad_Clusters_FAT12(void)
 
     if (bad_sector_map[0] < parameter_block.bpb.reserved_sectors)
       {
-      printf("\nBoot sector broken.\n");
+      printf(catgets(catalog, 25, 1, "\nBoot sector broken.\n"));
       }
     else
       {
       if (bad_sector_map[0] < first_root_sector)
-        printf("\nFAT sector broken.\n");
+        printf(catgets(catalog, 25, 2, "\nFAT sector broken.\n"));
       else
-        printf("\nRoot directory sector broken.\n");
+        printf(catgets(catalog, 25, 3, "\nRoot directory sector broken.\n"));
       }
 
     unusable_wimp();	/* can happen for all FAT types - common code (0.91p) */
@@ -199,14 +199,14 @@ void Record_Bad_Clusters_FAT16(void)
 
     if (bad_sector_map[0] < parameter_block.bpb.reserved_sectors)
       {
-      printf("\nBoot sector broken.\n");
+      printf(catgets(catalog, 25, 4, "\nBoot sector broken.\n"));
       }
     else
       {
       if (bad_sector_map[0] < first_root_sector)
-        printf("\nFAT sector broken.\n");
+        printf(catgets(catalog, 25, 5, "\nFAT sector broken.\n"));
       else
-        printf("\nRoot directory sector broken.\n");
+        printf(catgets(catalog, 25, 6, "\nRoot directory sector broken.\n"));
       }
 
     unusable_wimp();	/* can happen for all FAT types - common code (0.91p) */
@@ -313,9 +313,9 @@ void Record_Bad_Clusters_FAT32(void) /* added actual FAT writing in 0.91j */
     /* Terminate the program... the disk is not usable. */
 
     if (bad_sector_map[0] < parameter_block.bpb.reserved_sectors)
-      printf("\nReserved sector (boot, info, backup of either...) broken.\n");
+      printf(catgets(catalog, 25, 7, "\nReserved sector (boot, info, backup of either...) broken.\n"));
     else
-      printf("\nFAT sector broken.\n");
+      printf(catgets(catalog, 25, 8, "\nFAT sector broken.\n"));
 
     unusable_wimp();	/* can happen for all FAT types - common code (0.91p) */
 
@@ -351,13 +351,13 @@ void Record_Bad_Clusters_FAT32(void) /* added actual FAT writing in 0.91j */
     fat_value |= sector_buffer[fat_index+0];
 
     if (fat_value == 0)
-      printf("*** Bad sector %lu, cluster %lu marked bad in FAT! ***\n",
+      printf(catgets(catalog, 25, 9, "*** Bad sector %lu, cluster %lu marked bad in FAT! ***\n"),
         bad_sector_map[bad_sector_map_index], bad_cluster);
 
     if ( (fat_value < 0x0ffffff0UL) || (fat_value > 0x0ffffff7UL) ) /* not yet marked? */
       {
       if (fat_value != 0)
-        printf("WARNING: Have to mark USED cluster %lu as bad!\n", bad_cluster);
+        printf(catgets(catalog, 25, 10, "WARNING: Have to mark USED cluster %lu as bad!\n"), bad_cluster);
 
       drive_statistics.allocation_units_with_bad_sectors++;
 
@@ -375,7 +375,7 @@ void Record_Bad_Clusters_FAT32(void) /* added actual FAT writing in 0.91j */
     bad_sector_map_index++;
     } /* loop over bad sector list */
 
-  printf("*** Found %u bad sectors. Marked %lu clusters as bad. ***\n",
+  printf(catgets(catalog, 25, 11, "*** Found %u bad sectors. Marked %lu clusters as bad. ***\n"),
     bad_sector_map_index, drive_statistics.allocation_units_with_bad_sectors);
   
 }

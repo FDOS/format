@@ -24,7 +24,7 @@ int check_too_bad(unsigned int bad_count); /* new 0.91p */
 int check_too_bad(unsigned int bad_count) /* return 1 if too many bad clusters */
 {
 	if (bad_count == MAX_BAD_SECTORS) {
-          printf("\n *** Too many bad clusters! Do a surface scan after FORMAT! ***\n");
+          printf(catgets(catalog, 26, 0, "\n *** Too many bad clusters! Do a surface scan after FORMAT! ***\n"));
           return 1;
         }
         return 0;
@@ -41,7 +41,7 @@ int check_too_bad(unsigned int bad_count) /* return 1 if too many bad clusters *
 unsigned long BadClustPreserve(void)
 {
   if (parameter_block.bpb.bytes_per_sector != 512) {
-    printf("BadClustPreserve aborted: not 512 bytes/sector!\n");
+    printf(catgets(catalog, 26, 1, "BadClustPreserve aborted: not 512 bytes/sector!\n"));
     return 0xffffffffUL;
   }
   if (param.fat_type == FAT32) {
@@ -77,10 +77,10 @@ unsigned long BadClustPreserve32(void) /* should use multisector read here */
   cluststart += (fatsize * parameter_block.bpb.number_of_fats);
 
   if (debug_prog == TRUE)
-    printf(" Scanning FAT Sectors %lu to %lu...\n",
+    printf(catgets(catalog, 26, 2, " Scanning FAT Sectors %lu to %lu...\n"),
       fatstart, fatstart+fatsize);
   else
-    printf(" Scanning existing FAT...\n");
+    printf(catgets(catalog, 26, 3, " Scanning existing FAT...\n"));
 
   j = 0;
   for (sect = fatstart; sect < (fatstart+fatsize); sect += chunksize) {
@@ -142,7 +142,7 @@ unsigned long BadClustPreserve32(void) /* should use multisector read here */
       if (percentage != 100) Display_Percentage_Formatted(100);
     }
 
-  printf("\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n",
+  printf(catgets(catalog, 26, 4, "\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n"),
     countused, countbad, countitems, last_used);
   return ( cluststart +
     ( (1+last_used-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ) - 1 );
@@ -213,7 +213,7 @@ unsigned long BadClustPreserve16(void)
   } /* for all FAT sectors */
   if (debug_prog == TRUE) printf("\n");
 
-  printf("\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n",
+  printf(catgets(catalog, 26, 5, "\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n"),
     countused, countbad, countitems, last_used);
   return ( cluststart +
     ( (1+last_used-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ) - 1 );
@@ -239,7 +239,7 @@ unsigned long BadClustPreserve12(void) /* FAT12 is max 12 sectors / FAT, simple 
 
   if (fatsize > 1) buf = (unsigned char *)(&huge_sector_buffer[0]);
   if (fatsize > (sizeof(huge_sector_buffer_0) >> 9)) {
-    printf(" Cannot process existing FAT12, too big!\n");
+    printf(catgets(catalog, 26, 6, " Cannot process existing FAT12, too big!\n"));
     return 0xffffffffUL;
   }
   /* no scan announcement: just show the results. FAT12 is tiny. */
@@ -294,7 +294,7 @@ unsigned long BadClustPreserve12(void) /* FAT12 is max 12 sectors / FAT, simple 
     index += 3;
   }
 
-  printf("\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n",
+  printf(catgets(catalog, 26, 7, "\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n"),
     countused, countbad, countitems, last_used);
   return ( cluststart +
     ( (1+last_used-2) * BPB_SECTORS_PER_CLUSTER(parameter_block.bpb) ) - 1 );

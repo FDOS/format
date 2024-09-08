@@ -22,6 +22,8 @@
 1,4:NO
 # other possibly common bits
 1,5:Failed!\n
+1,6:Failed.\n
+1,7:Aborting.\n
 
 # short help screen (shown if compiled without LEGACY_HELP)
 # Use as many messages as needed, 1 message per max 79 column line
@@ -402,6 +404,29 @@
 23,14: Drive looks unformatted, UNFORMAT information NOT saved.\n
 23,15:Number of reserved sectors differs: FOUND %lu / PLANNED %u.\n
 23,16:Number of FATs differs: FOUND %lu / PLANNED %hu\n
+23,17:Cluster size differs: FOUND %lu / PLANNED %hu (sectors)\n
+#  FOUND # FAT?? / PLANNED # FAT??
+23,18:FAT size differs: FOUND %lu %s / PLANNED %lu %s\n
+23,19:MIRROR data would overwrite used clusters. Aborting.
+23,20:SafeFormat: have to trash %lu used data sectors!\n
+23,21:Mirror map pointer write error - UNFORMAT will fail for you!\n
+23,22:Skipping UNFORMAT / mirror data backup step.\n
+23,23:Read error at sector %lu - UNFORMAT data damaged\n
+23,24:Write error at sector %lu - UNFORMAT data damaged\n
+23,25: Mirror map is %lu bytes long, 
+23,26: %lu sectors mirrored.\n
+23,27:No MIRROR / UNDELETE data: Wrong magic.\n
+23,28:\n End of mirror map. UNFORMAT done.\n
+23,29: Cloning boot sector into backup.\n
+23,30: Invalidating filesystem info sector data.\n
+23,31:*** Could not copy backup sector %lu to sector %lu ***\n
+23,32:Boot sector would be overwritten by nonsense, 0 or > 7 FATs.\n
+23,33:*** Could not restore sector %lu ***\n
+23,34:*** Could not clone FAT sector %lu into sector %lu ***\n
+23,35:WARNING: %hu FAT copies requested, using %hu instead.\n
+23,36:WARNING: UNFORMAT turns FAT1x drive into FAT32.\n
+23,37:WARNING: UNFORMAT turns FAT32 drive into FAT1x!?\n
+23,38:\n Boot sector data: %hu FAT copies (offset %lu), %lu sectors per FAT\n
 
 # savefs.c unable to save filesystem properties error message
 # Use as many messages as needed, 1 message per max 79 column line
@@ -411,3 +436,27 @@
 24,0:Filesystem properties will change, cannot preserve the\n
 24,1:(possibly empty) old bad cluster list. Use a surface scan\n
 24,2:tool or FORMAT /U if you want to update the bad cluster list.\n
+
+# recordbc.c
+25,0:Unusable disk: Bad sector in system data. Format terminated.\n
+25,1:\nBoot sector broken.\n
+25,2:\nFAT sector broken.\n
+25,3:\nRoot directory sector broken.\n
+25,4:\nBoot sector broken.\n
+25,5:\nFAT sector broken.\n
+25,6:\nRoot directory sector broken.\n
+25,7:\nReserved sector (boot, info, backup of either...) broken.\n
+25,8:\nFAT sector broken.\n
+25,9:*** Bad sector %lu, cluster %lu marked bad in FAT! ***\n
+25,10:WARNING: Have to mark USED cluster %lu as bad!\n
+25,11:*** Found %u bad sectors. Marked %lu clusters as bad. ***\n
+
+# bcread.c (bad clusters)
+26,0:\n *** Too many bad clusters! Do a surface scan after FORMAT! ***\n
+26,1:BadClustPreserve aborted: not 512 bytes/sector!\n
+26,2: Scanning FAT Sectors %lu to %lu...\n
+26,3: Scanning existing FAT...\n
+26,4:\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n
+26,5:\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n
+26,6: Cannot process existing FAT12, too big!\n
+26,7:\n Cluster stats: %lu used, %lu bad, %lu items, %lu last.\n

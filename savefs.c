@@ -40,7 +40,7 @@ void MMapWrite(unsigned long mmapsec, unsigned long * mmapbuf)
       mmapsec);
 }
 
-/* detailed help screen messages */
+
 char const * const properties_not_preserved[] = {
   "Filesystem properties will change, cannot preserve the\n",
   "(possibly empty) old bad cluster list. Use a surface scan\n",
@@ -301,14 +301,14 @@ void Save_File_System(int overwrite)
         printf(catgets(catalog, 23, 16, "Number of FATs differs: FOUND %lu / PLANNED %hu\n"),
           number_of_fats, parameter_block.bpb.number_of_fats);
       if (sectors_per_cluster != BPB_SECTORS_PER_CLUSTER(parameter_block.bpb))
-        printf("Cluster size differs: FOUND %lu / PLANNED %hu (sectors)\n",
+        printf(catgets(catalog, 23, 17, "Cluster size differs: FOUND %lu / PLANNED %hu (sectors)\n"),
           sectors_per_cluster, BPB_SECTORS_PER_CLUSTER(parameter_block.bpb));
       scratch = parameter_block.xbpb.fat_size_high;
       scratch <<= 16;
       scratch |= parameter_block.xbpb.fat_size_low;
       if (param.fat_type != FAT32)
         scratch = parameter_block.bpb.sectors_per_fat;
-      printf("FAT size differs: FOUND %lu %s / PLANNED %lu %s\n",
+      printf(catgets(catalog, 23, 18, "FAT size differs: FOUND %lu %s / PLANNED %lu %s\n"),
         (BSWord(0x16)) ? BSWord(0x16) : BSLong(0x24),
         (BSWord(0x16)) ? "FAT1x" : "FAT32",
         scratch,
@@ -346,12 +346,12 @@ void Save_File_System(int overwrite)
     {
       if (!overwrite)
         {
-          printf("MIRROR data would overwrite used clusters. Aborting.");
+          printf(catgets(catalog, 23, 19, "MIRROR data would overwrite used clusters. Aborting."));
           Exit(4,38);	/* no space for MIRROR */
         }
       else
         {
-          printf("SafeFormat: have to trash %lu used data sectors!\n",
+          printf(catgets(catalog, 23, 20, "SafeFormat: have to trash %lu used data sectors!\n"),
               1L + last_used_sector - mirror_map_beginning);
         }
     } /* SafeFormat may overwrite used clusters, but MIRROR may not */
@@ -377,8 +377,8 @@ void Save_File_System(int overwrite)
     Drive_IO(WRITE, ((number_of_logical_sectors_on_drive-1) - offset_from_end),
       -1) != 0) /* -1 correct??? */
     {
-      printf("Mirror map pointer write error - UNFORMAT will fail for you!\n");
-      printf("Skipping UNFORMAT / mirror data backup step.\n");
+      printf(catgets(catalog, 23, 21, "Mirror map pointer write error - UNFORMAT will fail for you!\n"));
+      printf(catgets(catalog, 23, 22, "Skipping UNFORMAT / mirror data backup step.\n"));
       Clear_Sector_Buffer(); /* just to be sure... */
       return; /* abort this SAVEFS attempt. Continue with CREATEFS. - 0.91n */
     }
@@ -489,11 +489,11 @@ void Save_File_System(int overwrite)
 
       /* Copy mirror image one sector at a time */
       if (Drive_IO(READ, source_sector, -(int)chunksize) != 0)
-        printf("Read error at sector %lu - UNFORMAT data damaged\n",
+        printf(catgets(catalog, 23, 23, "Read error at sector %lu - UNFORMAT data damaged\n"),
           source_sector);
 
       if (Drive_IO(WRITE, destination_sector, -(int)chunksize) != 0)
-        printf("Write error at sector %lu - UNFORMAT data damaged\n",
+        printf(catgets(catalog, 23, 24, "Write error at sector %lu - UNFORMAT data damaged\n"),
           destination_sector);
 
       source_sector += chunksize;
@@ -514,8 +514,8 @@ void Save_File_System(int overwrite)
 
   number_of_bytes_in_mirror_map += 4; /* add trailer - 0.91d */
 
-  printf(" Mirror map is %lu bytes long, ", number_of_bytes_in_mirror_map);
-  printf(" %lu sectors mirrored.\n", (number_of_bytes_in_mirror_map - 88) / 8);
+  printf(catgets(catalog, 23, 25, " Mirror map is %lu bytes long, "), number_of_bytes_in_mirror_map);
+  printf(catgets(catalog, 23, 26, " %lu sectors mirrored.\n"), (number_of_bytes_in_mirror_map - 88) / 8);
 
   return;
 
@@ -563,7 +563,7 @@ void Restore_File_System(void)
 
   if (strncmp((void *)&sector_buffer[4], "AMSESLIFVASRORIMESAEP", 21))
     {
-      printf("No MIRROR / UNDELETE data: Wrong magic.\n");
+      printf(catgets(catalog, 23, 27, "No MIRROR / UNDELETE data: Wrong magic.\n"));
       return;
     }
   mirror_map_sector = BSLong(0); /* read sector number of mirror map */
@@ -607,15 +607,15 @@ void Restore_File_System(void)
       if ((number_of_fats > 0) &&
           ( (original_sector == 0UL) || (backup_sector == 0UL) ))
         {
-          printf("\n End of mirror map. UNFORMAT done.\n");
+          printf(catgets(catalog, 23, 28, "\n End of mirror map. UNFORMAT done.\n"));
           if (param.fat_type == FAT32)
             {
               Drive_IO(READ, 0, 1);
               backup_sector = BSWord(0x32);
               if (backup_sector && (backup_sector < beginning_of_fat))
                 {
-                  printf(" Cloning boot sector into backup.\n");
-                  if (Drive_IO(WRITE, backup_sector, -1)) printf("Failed.\n");
+                  printf(catgets(catalog, 23, 29, " Cloning boot sector into backup.\n"));
+                  if (Drive_IO(WRITE, backup_sector, -1)) printf(catgets(catalog, 1, 6, "Failed.\n"));
                 }
               else
                 backup_sector = 0; /* no backups */
@@ -623,14 +623,14 @@ void Restore_File_System(void)
               if (original_sector && (original_sector < beginning_of_fat)
                 && ((original_sector+backup_sector) < beginning_of_fat) )
                 {
-                  printf(" Invalidating filesystem info sector data.\n");
+                  printf(catgets(catalog, 23, 30, " Invalidating filesystem info sector data.\n"));
                   Drive_IO(READ, original_sector, 1);
                   memset((void *)&sector_buffer[488], 0xff, 8);
                     /* set free_count and next_free long int values to -1 */
                     /* the OS will then re-initialize them on next reboot */
-                  if (Drive_IO(WRITE, original_sector, -1)) printf("Failed.\n");
+                  if (Drive_IO(WRITE, original_sector, -1)) printf(catgets(catalog, 1, 6, "Failed.\n"));
                   if (Drive_IO(WRITE, original_sector+backup_sector, -1))
-                    printf("Failed.\n");
+                    printf(catgets(catalog, 1, 6, "Failed.\n"));
                 }
             } /* FAT32 postprocessing */
 
@@ -639,7 +639,7 @@ void Restore_File_System(void)
 
       if (Drive_IO(READ, backup_sector, -1))
         {
-          printf("*** Could not copy backup sector %lu to sector %lu ***\n",
+          printf(catgets(catalog, 23, 31, "*** Could not copy backup sector %lu to sector %lu ***\n"),
             backup_sector, original_sector);
         }
       else
@@ -647,13 +647,13 @@ void Restore_File_System(void)
           if ( (original_sector == 0) &&
                ( (sector_buffer[0x10] > 7) || (sector_buffer[0x10] < 1) ) )
             {
-              printf("Boot sector would be overwritten by nonsense, 0 or > 7 FATs.\n");
-              printf("Aborting.\n");
+              printf(catgets(catalog, 23, 32, "Boot sector would be overwritten by nonsense, 0 or > 7 FATs.\n"));
+              printf(catgets(catalog, 1, 7, "Aborting.\n"));
               Exit(4,39); /* restore filesystem aborted: boot sector odd */
             } /* nonsense boot protection */
 
           if (Drive_IO(WRITE, original_sector, -1))
-            printf("*** Could not restore sector %lu ***\n", original_sector);
+            printf(catgets(catalog, 23, 33, "*** Could not restore sector %lu ***\n"), original_sector);
           if (debug_prog==TRUE) printf(".");
 
           if ( (number_of_fats > 1) &&	/* recreate 2nd FAT copy if needed */
@@ -674,7 +674,7 @@ void Restore_File_System(void)
                 }
 
               if (Drive_IO(WRITE, cloned_sector, -1))
-                printf("*** Could not clone FAT sector %lu into sector %lu ***\n",
+                printf(catgets(catalog, 23, 34, "*** Could not clone FAT sector %lu into sector %lu ***\n"),
                   original_sector, cloned_sector);
 
             } /* FAT cloning */
@@ -686,7 +686,7 @@ void Restore_File_System(void)
                 {
                   if (!number_of_fats) number_of_fats++;
                   if (number_of_fats > 2) number_of_fats = 2;
-                  printf("WARNING: %hu FAT copies requested, using %hu instead.\n",
+                  printf(catgets(catalog, 23, 35, "WARNING: %hu FAT copies requested, using %hu instead.\n"),
                     sector_buffer[0x10], number_of_fats);
                 }
               beginning_of_fat = BSWord(0x0e);	/* FAT begins after reserved sectors */
@@ -695,21 +695,21 @@ void Restore_File_System(void)
                 {
                   sectors_per_fat = BSLong(0x24);	/* FAT32 style */
                   if (param.fat_type != FAT32)
-                    printf("WARNING: UNFORMAT turns FAT1x drive into FAT32.\n");
+                    printf(catgets(catalog, 23, 36, "WARNING: UNFORMAT turns FAT1x drive into FAT32.\n"));
                     /* according to recorded boot sector */
                   param.fat_type = FAT32;	/* 0 FAT1x size: FAT32 I/O style needed in Restore_File_System */
                 }
               else
                 {
                   if (param.fat_type == FAT32)
-                    printf("WARNING: UNFORMAT turns FAT32 drive into FAT1x!?\n");
+                    printf(catgets(catalog, 23, 37, "WARNING: UNFORMAT turns FAT32 drive into FAT1x!?\n"));
                 }
 
 #if 0			/* delay recheck because of locking - 0.91q */
 //	      Force_Drive_Recheck(); /* if we have just written the boot sector */
 #endif
 
-              printf("\n Boot sector data: %hu FAT copies (offset %lu), %lu sectors per FAT\n",
+              printf(catgets(catalog, 23, 38, "\n Boot sector data: %hu FAT copies (offset %lu), %lu sectors per FAT\n"),
                 number_of_fats, beginning_of_fat, sectors_per_fat);
             } /* boot sector updated */
 
