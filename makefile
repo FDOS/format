@@ -21,7 +21,7 @@ CFLAGS=-wx -0 -mc -fpc -zp1
 OBJS=createfs.obj floppy.obj hdisk.obj main.obj   &
      savefs.obj bcread.obj prf.obj userint.obj    &
      driveio.obj getopt.obj init.obj recordbc.obj &
-     uformat.obj kitten.obj
+     uformat.obj msghlpr.obj kitten.obj
 
 pack: format.exe .SYMBOLIC
   $(UPX) $(UPXFLAGS) $<
@@ -29,7 +29,7 @@ pack: format.exe .SYMBOLIC
 format.exe: $(OBJS)
   $(CLINK) $(CFLAGS) $(LDFLAGS) $< $(LDLIBS) -fe=$@
 
-.c.obj:
+.c.obj: kitten.h
   $(CC) $(CFLAGS) $*.c
 
 # rm is built-in to wmake

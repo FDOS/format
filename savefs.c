@@ -15,6 +15,7 @@
 // Module Description:  Save File System Function
 */
 
+#include <string.h>	/* strncmp */
 
 #include "format.h"
 #include "floppy.h"
@@ -23,8 +24,8 @@
 #include "savefs.h"
 #include "hdisk.h"	/* Force_Drive_Recheck */
 #include "userint.h"	/* Display_Percentage_Formatted */
+#include "msghlpr.h"
 
-#include <string.h>	/* strncmp */
 
 
 
@@ -35,9 +36,18 @@ void MMapWrite(unsigned long mmapsec, unsigned long * mmapbuf)
   memcpy((void *)&sector_buffer[0], (void *)mmapbuf, 512);
   if (debug_prog==TRUE) printf(" [map %lu] ", mmapsec);
   if (Drive_IO(WRITE, mmapsec, -1) != 0)
-    printf("Cannot write MIRROR MAP sector %lu - UNFORMAT spoiled!\n",
+    printf(catgets(catalog, 23, 0, "Cannot write MIRROR MAP sector %lu - UNFORMAT spoiled!\n"),
       mmapsec);
 }
+
+/* detailed help screen messages */
+char const * const properties_not_preserved[] = {
+  "Filesystem properties will change, cannot preserve the\n",
+  "(possibly empty) old bad cluster list. Use a surface scan\n",
+  "tool or FORMAT /U if you want to update the bad cluster list.\n",
+  NULL
+};
+
 
 /* Save the old file system for possible recovery with unformat */
 /* Used for SafeFormat and MIRROR, as you might have guessed... */
@@ -113,21 +123,21 @@ void Save_File_System(int overwrite)
 
     if ( BSWord(0x0b) != 512 )
       {
-      printf("Not 512 bytes / sector. Cannot save UNFORMAT data.\n");
+      printf(catgets(catalog, 23, 1, "Not 512 bytes / sector. Cannot save UNFORMAT data.\n"));
       bad_boot_sector = TRUE;
       }
 
     number_of_fats = sector_buffer[0x10];
     if ( (number_of_fats < 1) || (number_of_fats > 2) )
       {
-      printf("Not 1 or 2 FAT copies. Cannot save UNFORMAT data.\n");
+      printf(catgets(catalog, 23, 2, "Not 1 or 2 FAT copies. Cannot save UNFORMAT data.\n"));
       bad_boot_sector = TRUE;
       }
 
     reserved_sectors = BSWord(0x0e);
     if ((param.fat_type != FAT32) && (reserved_sectors != 1))
       {
-        printf("WARNING: Number of reserved / boot sectors is %u, not 1.\n",
+        printf(catgets(catalog, 23, 3, "WARNING: Number of reserved / boot sectors is %u, not 1.\n"),
           reserved_sectors);
         if ((reserved_sectors < 1) || (reserved_sectors > 64))
           bad_boot_sector = TRUE;
@@ -135,7 +145,7 @@ void Save_File_System(int overwrite)
     if ((param.fat_type == FAT32) &&
         (reserved_sectors != parameter_block.bpb.reserved_sectors))
       {
-        printf("WARNING: Reserved sectors are %u but will be %u after format.\n",
+        printf(catgets(catalog, 23, 4, "WARNING: Reserved sectors are %u but will be %u after format.\n"),
           reserved_sectors, parameter_block.bpb.reserved_sectors);
         if ((reserved_sectors < 1) || (reserved_sectors > 64)) /* no ; */
           bad_boot_sector = TRUE;        
@@ -146,18 +156,18 @@ void Save_File_System(int overwrite)
            (BSWord(0x16) == 0) ) /* FAT1x size zero? */
          && (fat_type != FAT32))
       {
-        printf(" Must be FAT32, not %s!\n",
+        printf(catgets(catalog, 23, 5, " Must be FAT32, not %s!\n"),
           (fat_type == FAT12) ? "FAT12" : "FAT16");
         /* 0 root dir entries or FAT1x size in Save_File_System */
 
         nomirror_wimp: /* common bailout point avoids duplicated code (0.91p) */
 
-        printf(" NOT saving unformat info, not preserving bad cluster list.\n");
+        printf(catgets(catalog, 23, 6, " NOT saving unformat info, not preserving bad cluster list.\n"));
         return;
       }
     if ( (number_of_root_directory_entries != 0) && (fat_type == FAT32) )
       {
-        printf("WARNING: FAT32 with FAT1x style extra Root Directory???\n");
+        printf(catgets(catalog, 23, 7, "WARNING: FAT32 with FAT1x style extra Root Directory???\n"));
         goto nomirror_wimp;	/* 0.91p */
       }
 
@@ -172,7 +182,7 @@ void Save_File_System(int overwrite)
         sectors_per_fat = BSLong(0x24);
         if (fat_type != FAT32)
           {
-            printf(" Must be FAT32, not FAT1x!\n");
+            printf(catgets(catalog, 23, 8, " Must be FAT32, not FAT1x!\n"));
             goto nomirror_wimp;	/* 0.91p */
           }
       }
@@ -180,12 +190,12 @@ void Save_File_System(int overwrite)
       { /* FAT1x case: 16bit sectors per fat value nonzero */
         if (number_of_root_directory_entries == 0)
           {
-            printf(" FAT32 Root Directory but FAT1x FAT!\n");
+            printf(catgets(catalog, 23, 9, " FAT32 Root Directory but FAT1x FAT!\n"));
             goto nomirror_wimp;	/* 0.91p */
           }
         if (fat_type != ( (sectors_per_fat <= 12) ? FAT12 : FAT16 ))
           {
-            printf(" %s size but supposed to be FAT32!\n",
+            printf(catgets(catalog, 23, 10, " %s size but supposed to be FAT32!\n"),
               (sectors_per_fat <= 12) ? "FAT12" : "FAT16");
             goto nomirror_wimp;	/* 0.91p */
           }
@@ -203,13 +213,13 @@ void Save_File_System(int overwrite)
          (sectors_per_fat < 1) ||
          (number_of_logical_sectors_on_drive < 200) )
       { /* not plausible root directory or FAT or drive size */
-        printf(" Implausible Root Directory, FAT or drive size! Bad boot sector?\n");
+        printf(catgets(catalog, 23, 11, " Implausible Root Directory, FAT or drive size! Bad boot sector?\n"));
         bad_boot_sector = TRUE; /* -ea */
       } else {
         if ( ( 1 + sectors_per_fat + (number_of_root_directory_entries >> 4) +
           5 ) > ( number_of_logical_sectors_on_drive >> 1 ) ) /* estimate only */
           {
-          printf(" Big FAT for little data? Bad boot sector?\n");
+          printf(catgets(catalog, 23, 12, " Big FAT for little data? Bad boot sector?\n"));
           bad_boot_sector = TRUE;
           }
       } /* root directory an FAT and drive size was plausible */
@@ -236,7 +246,7 @@ void Save_File_System(int overwrite)
             }
 
           if (BSLong(0x2c) != 2)
-            printf("Root Directory NOT in 1st cluster, NOT saving it!\n");
+            printf(catgets(catalog, 23, 13, "Root Directory NOT in 1st cluster, NOT saving it!\n"));
           /* would have to change some code below to save it properly... */
         }
       else
@@ -261,7 +271,7 @@ void Save_File_System(int overwrite)
   /* If the boot sector is not any good, don't save the file system. */
   if (bad_boot_sector==TRUE)
     {
-    printf(" Drive looks unformatted, UNFORMAT information NOT saved.\n");
+    printf(catgets(catalog, 23, 14, " Drive looks unformatted, UNFORMAT information NOT saved.\n"));
     /* not preserving "existing" bad cluster list either, of course! */
     return;
     }
@@ -282,15 +292,13 @@ void Save_File_System(int overwrite)
   else
     {
       unsigned long scratch;
-      printf("Filesystem properties will change, cannot preserve the\n");
-      printf("(possibly empty) old bad cluster list. Use a surface scan\n");
-      printf("tool or FORMAT /U if you want to update the bad cluster list.\n");
+	  Print_Messages_With_Pauses(catalog, 24, properties_not_preserved);
 
       if (reserved_sectors != parameter_block.bpb.reserved_sectors)
-        printf("Number of reserved sectors differs: FOUND %lu / PLANNED %u.\n",
+        printf(catgets(catalog, 23, 15, "Number of reserved sectors differs: FOUND %lu / PLANNED %u.\n"),
           reserved_sectors, parameter_block.bpb.reserved_sectors);
       if (number_of_fats != parameter_block.bpb.number_of_fats)
-        printf("Number of FATs differs: FOUND %lu / PLANNED %hu\n",
+        printf(catgets(catalog, 23, 16, "Number of FATs differs: FOUND %lu / PLANNED %hu\n"),
           number_of_fats, parameter_block.bpb.number_of_fats);
       if (sectors_per_cluster != BPB_SECTORS_PER_CLUSTER(parameter_block.bpb))
         printf("Cluster size differs: FOUND %lu / PLANNED %hu (sectors)\n",

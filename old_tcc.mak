@@ -26,7 +26,7 @@ LDLIBS=
 RM=command /c del
 OBJS1=createfs.obj floppy.obj hdisk.obj main.obj savefs.obj bcread.obj prf.obj
 OBJS2=userint.obj driveio.obj getopt.obj init.obj recordbc.obj uformat.obj
-OBJS3=kitten.obj
+OBJS3=msghlpr.obj kitten.obj
 
 # build targets:
 
@@ -41,40 +41,40 @@ format.exe: $(OBJS1) $(OBJS2) $(OBJS3)
 # .c.obj:
 #	$(CC) $(CFLAGS) -c $*.c
 
-createfs.obj:
+createfs.obj: kitten.h
 	$(CC) $(CFLAGS) createfs.c
 
-floppy.obj:
+floppy.obj: kitten.h
 	$(CC) $(CFLAGS) floppy.c
 
-hdisk.obj:
+hdisk.obj: kitten.h
 	$(CC) $(CFLAGS) hdisk.c
 
 main.obj: kitten.h
 	$(CC) $(CFLAGS) main.c
 
-savefs.obj:
+savefs.obj: kitten.h
 	$(CC) $(CFLAGS) savefs.c
 
 userint.obj: kitten.h
 	$(CC) $(CFLAGS) userint.c
 
-driveio.obj:
+driveio.obj: kitten.h
 	$(CC) $(CFLAGS) driveio.c
 
 getopt.obj:
 	$(CC) $(CFLAGS) getopt.c
 
-init.obj:
+init.obj: kitten.h
 	$(CC) $(CFLAGS) init.c
 
-recordbc.obj:
+recordbc.obj: kitten.h
 	$(CC) $(CFLAGS) recordbc.c
 
-uformat.obj:
+uformat.obj: kitten.h
 	$(CC) $(CFLAGS) uformat.c
 
-bcread.obj:
+bcread.obj: kitten.h
 	$(CC) $(CFLAGS) bcread.c
 
 prf.obj:
@@ -82,6 +82,9 @@ prf.obj:
 
 kitten.obj: kitten.h
 	$(CC) $(CFLAGS) kitten.c
+
+msghlpr.obj: kitten.h
+	$(CC) $(CFLAGS) msghlpr.c
 
 
 # clean up:

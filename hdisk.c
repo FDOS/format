@@ -430,7 +430,7 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
   /* 0.91k - already tell the user what she has to expect size-wise */
   if (drive_statistics.bytes_per_sector == 512) {
     unsigned long roughsize;
-    char* sizeunit = catgets(catalog, 13, 2, "kbytes");
+    char const * sizeunit = catgets(catalog, 13, 2, "kbytes");
     roughsize = drive_statistics.sect_available_on_disk >> 1;
     if (roughsize > 9999) {
       roughsize += 512;
