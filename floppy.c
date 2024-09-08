@@ -1062,7 +1062,7 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
       switch (control)
         {
           case 0:  printf(catgets(catalog, 22, 36, " 500 kbps (HD 1xx0k)\n")); break;
-          case 1:  printf(catgets(catalog, 22, 37, " 300 kbps (DD  360k)\n"); break;
+          case 1:  printf(catgets(catalog, 22, 37, " 300 kbps (DD  360k)\n")); break;
           case 2:  printf(catgets(catalog, 22, 38, " 250 kbps (DD  720k)\n")); break;
           default: printf(catgets(catalog, 22, 39, "1000 kbps (ED 2880k)\n")); break;
         }
