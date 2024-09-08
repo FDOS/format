@@ -52,7 +52,7 @@ void Exit(int mserror, int fderror)
   if (debug_prog)
     exit(fderror);	/* use the "verbose errorlevel" */
   if (mserror==4)	/* "fatal error"? */
-    printf(" [Error %d]\n", fderror);
+    printf(catgets(catalog, 19, 0, " [Error %d]\n"), fderror);
   exit(mserror);	/* use the "normal errorlevel" */
 } /* Exit */
 
@@ -136,17 +136,18 @@ void Lock_Unlock_Drive(int lock)
           if (lockerrno == 0x0f) /* invalid drive */
             {
               /* locking_invalid_drive: */
-              printf(" Invalid drive! Aborting.\n");
+              printf(catgets(catalog, 19, 1, " Invalid drive! Aborting.\n"));
               Exit(4,29);
             }
 
           regs.x.ax = 0x3000; /* get full DOS version and OEM ID */
           intdos(&regs, &regs);
           if (regs.h.bh == 0xfd)
-              printf(" FreeDOS l. lock error 0x%x ignored.\n",lockerrno);
+              printf(catgets(catalog, 19, 2, " FreeDOS l. lock error 0x%x ignored.\n"),
+                lockerrno);
           else
             {
-              printf(" Could not lock logical drive (error 0x%x)! Aborting.\n",
+              printf(catgets(catalog, 19, 3, " Could not lock logical drive (error 0x%x)! Aborting.\n"),
                 lockerrno);
               Exit(4,25);
             }
@@ -171,9 +172,9 @@ void Lock_Unlock_Drive(int lock)
               if (debug_prog==TRUE)	/* error 5, "access denied", is "normal", */
                 {			/* so limit warning to /d mode - 0.91v    */
                   if (regs.h.bh == 0xfd)
-                      printf(" FreeDOS p. lock error 0x%x ignored.\n", lockerrno);
+                      printf(catgets(catalog, 19, 4, " FreeDOS p. lock error 0x%x ignored.\n"), lockerrno);
                   else
-                      printf(" Could not lock physical floppy drive (error 0x%x)!?\n",
+                      printf(catgets(catalog, 19, 5, " Could not lock physical floppy drive (error 0x%x)!?\n"),
                         lockerrno);
                 }
                   /* could { ... exit(1); } here, but MSDN does not even */
@@ -195,7 +196,7 @@ int Drive_IO(int command,unsigned long sector_number,int number_of_sectors)
   if (allowfail) number_of_sectors =  -number_of_sectors;
   if (!number_of_sectors)
     {
-      printf("Drive_IO(x,y,0)?\n");
+      printf(catgets(catalog, 19, 6, "Drive_IO(x,y,0)?\n"));
       return -1;
     }
 
@@ -253,16 +254,16 @@ int Drive_IO(int command,unsigned long sector_number,int number_of_sectors)
       if (allowfail)
         {
         if (debug_prog==TRUE)
-          printf("* bad sector(s): %ld (code 0x%x) on %s *\n",
-            sector_number, return_code, (command==WRITE) ? "WRITE" : "READ");
+          printf(catgets(catalog, 19, 7, "* bad sector(s): %ld (code 0x%x) on %s *\n"),
+            sector_number, return_code, (command==WRITE) ? catgets(catalog, 19, 9, "WRITE") : catgets(catalog, 19, 10, "READ"));
         else
           printf("#");
         }
       else
         {
         /* Added more details -ea */
-        printf("Drive_IO(%s %ld, count %d ) [%s] [drive %c%c]\n",
-          (command==WRITE) ? "WRITE" : "READ", sector_number, number_of_sectors,
+        printf(catgets(catalog, 19, 8, "Drive_IO(%s %ld, count %d ) [%s] [drive %c%c]\n"),
+          (command==WRITE) ? catgets(catalog, 19, 9, "WRITE") : catgets(catalog, 19, 10, "READ"), sector_number, number_of_sectors,
           (param.fat_type==FAT32) ? "FAT32" : "FAT12/16",
           'A' + (param.drive_number & 0x7f),
           (param.drive_number & 0x80) ? '*' : ':' );
@@ -319,7 +320,7 @@ void Enable_Disk_Access(void) /* DOS 4.0+ drive access flag / locking */
       }
 
     /* Add error trapping here */
-    printf("\nCannot get access flags (error %02x). Aborting.\n",
+    printf(catgets(catalog, 19, 11, "\nCannot get access flags (error %02x). Aborting.\n"),
       error_code);
     Exit(4,26);
     }
@@ -343,7 +344,7 @@ void Enable_Disk_Access(void) /* DOS 4.0+ drive access flag / locking */
     if (regs.x.cflag)
 	{
       /* Add error trapping here */
-	printf("\nCannot enable access flags (error %02x). Aborting.\n",
+	printf(catgets(catalog, 19, 12, "\nCannot enable access flags (error %02x). Aborting.\n"),
           error_code);
 	Exit(4,27);
 	}

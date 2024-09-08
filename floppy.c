@@ -222,7 +222,7 @@ int Format_Floppy_Cylinder(int cylinder,int head)
       if (debug_prog==TRUE) printf("[DEBUG]  New disk found...\n");
       goto track0again;
     }
-    printf("Format_Floppy_Cylinder( head=%d cylinder=%d ) sectors=%d [int 13.5]\n",
+    printf(catgets(catalog, 22, 0, "Format_Floppy_Cylinder( head=%d cylinder=%d ) sectors=%d [int 13.5]\n"),
       head, cylinder, secPerTrack );
     Critical_Error_Handler(BIOS, result); /* this would abort, no? */
   }
@@ -243,7 +243,7 @@ int Format_Floppy_Cylinder(int cylinder,int head)
     if ( regs.h.al > (sizeof(huge_sector_buffer_0)>>9) )
       {
         regs.h.al = sizeof(huge_sector_buffer_0) >> 9;
-        printf("Only checking first %d sectors per track\n", regs.h.al);
+        printf(catgets(catalog, 22, 1, "Only checking first %d sectors per track\n"), regs.h.al);
         /* could read 2 half-tracks or use pinpointing below here     */
         /* instead... however, only 2.88MB disks have > 18 sect/track */
       }
@@ -322,7 +322,7 @@ fakebad:
             if ((cylinder == 0) && (head == 0) && (sector_index <= 7))
               {
               /* 7: boot sect + 2 fat sect + 4 root dir sect on 160k disk */
-              printf("\nFormat failed, error in first 7 sectors!\n");
+              printf(catgets(catalog, 22, 2, "\nFormat failed, error in first 7 sectors!\n"));
               return secPerTrack; /* pretend whole track bad - 0.91n */
               }
 
@@ -334,7 +334,7 @@ fakebad:
 	      }
 	    else
 	      {
-	      printf("Sector %4ld CHS=[%2d:%d:%2d] bad\n",
+	      printf(catgets(catalog, 22, 3, "Sector %4ld CHS=[%2d:%d:%2d] bad\n"),
 	        bad_sector_map[(bad_sector_map_pointer-1)],
 	        cylinder, head, sector_index);
 	      }
@@ -429,7 +429,7 @@ void Set_Floppy_Media_Type()
 
   if ((drive_number & 0x80) != 0)
     {
-    printf("Harddisk drive number! Aborting.\n");
+    printf(catgets(catalog, 22, 4, "Harddisk drive number! Aborting.\n"));
     Exit(4,40);
     }
 
@@ -513,7 +513,7 @@ void Set_Floppy_Media_Type()
           param.sides     = drive_specs[index].number_of_heads;
           }
 
-        printf("Formatting to %ldk (Cyl=%ld Head=%ld Sec=%2ld)\n",
+        printf(catgets(catalog, 22, 5, "Formatting to %ldk (Cyl=%ld Head=%ld Sec=%2ld)\n"),
           param.size, param.cylinders, param.sides, param.sectors);
 	index = -10; /* break out of the loop */
         } /* end "if match" */
@@ -530,12 +530,12 @@ void Set_Floppy_Media_Type()
       {
       if (param.f==TRUE) /* only size given */
         {
-        printf("No media type known for %ldk format\n", param.size);
+        printf(catgets(catalog, 22, 6, "No media type known for %ldk format\n"), param.size);
         }
       else /* geometry given */
         {
         param.size = (param.cylinders * param.sides * param.sectors) >> 1;
-        printf("No media type known for %ldk format (Cyl=%ld Head=%ld Sec=%2ld)\n",
+        printf(catgets(catalog, 22, 7, "No media type known for %ldk format (Cyl=%ld Head=%ld Sec=%2ld)\n"),
         param.size, param.cylinders, param.sides, param.sectors);
         }
       Exit(4,41); /* cannot continue anyway, media type needed later! */
@@ -581,7 +581,7 @@ void Set_Floppy_Media_Type()
       case 6: preferredsize = 2880;
         break;
       default: preferredsize = 1440;	/* USB floppy is type 0x10, atapi!? */
-        printf("Treating int 13.8 drive type 0x%x as 1440k.\n",	/* 0.91t */
+        printf(catgets(catalog, 22, 8, "Treating int 13.8 drive type 0x%x as 1440k.\n"),	/* 0.91t */
           drive_type);
         /* Type 5 is originally for floppy tape drives */
       /* int 21.440d.860 would use: 0 360k, 1 1200k, 2 720k, 7 1440k, 5 harddisk */
@@ -604,7 +604,7 @@ void Set_Floppy_Media_Type()
           param.sectors    = drive_specs[index].sectors_per_cylinder;
           param.sides      = drive_specs[index].number_of_heads;
 
-          printf("Using drive default: %ldk (Cyl=%ld Head=%ld Sec=%2ld)\n",
+          printf(catgets(catalog, 22, 9, "Using drive default: %ldk (Cyl=%ld Head=%ld Sec=%2ld)\n"),
             param.size, param.cylinders, param.sides, param.sectors);
 	  index = -10;
 	  }
@@ -619,7 +619,7 @@ void Set_Floppy_Media_Type()
 
       if (index >= 0)
         {
-        printf("Size %ldk undefined!??\n", param.size);
+        printf(catgets(catalog, 22, 10, "Size %ldk undefined!??\n"), param.size);
         Exit(4,42);	/* should not happen: no default geometry known */
         }
       }
@@ -629,11 +629,11 @@ void Set_Floppy_Media_Type()
         {
         if (param.size > (preferredsize + (preferredsize >> 2)))
           {
-          printf("Want %ldk in %dk drive? Too much. Aborting.\n",
+          printf(catgets(catalog, 22, 11, "Want %ldk in %dk drive? Too much. Aborting.\n"),
             param.size, preferredsize);
           Exit(4,43);
           }
-        printf("OVERFORMAT: %ldk in %dk drive. Good luck!\n",
+        printf(catgets(catalog, 22, 12, "OVERFORMAT: %ldk in %dk drive. Good luck!\n"),
           param.size, preferredsize);
         }
       }
@@ -674,12 +674,12 @@ void Set_Floppy_Media_Type()
       /* (bonus: mode 2 should allow 360k format in 720k drive) */
       if (param.four || param.one || param.eight)
 	{
-	printf("This is a 720k drive: No /1, /4 or /8 possible.\n");
+	printf(catgets(catalog, 22, 13, "This is a 720k drive: No /1, /4 or /8 possible.\n"));
 	Exit(4,44);
 	}
       if (param.size < 720)
 	{
-	printf("Minimum size for this drive type is 720k\n");
+	printf(catgets(catalog, 22, 14, "Minimum size for this drive type is 720k\n"));
 	Exit(4,45);
 	}
       break;
@@ -700,17 +700,17 @@ void Set_Floppy_Media_Type()
       sizecheck_3inch:
       if (param.four || param.one || param.eight)
         {
-        printf("This is a 3.25 inch drive: No /1, /4 or /8 possible.\n");
+        printf(catgets(catalog, 22, 15, "This is a 3.25 inch drive: No /1, /4 or /8 possible.\n"));
         Exit(4,46);
         }
       if (param.size < 720)
         {
-        printf("Minimum size for this drive type is 720k.\n");
+        printf(catgets(catalog, 22, 16, "Minimum size for this drive type is 720k.\n"));
         Exit(4,47);
         }
       if (param.size == 1200)
         {
-        printf("This is a 3.25 inch drive: No 1200k format.\n");
+        printf(catgets(catalog, 22, 17, "This is a 3.25 inch drive: No 1200k format.\n"));
         Exit(4,47);
         }
       break;
@@ -742,15 +742,15 @@ void Set_Floppy_Media_Type()
 
     if (regs.x.cflag != 0)
       {
-      printf("Drive mode (size class %d) setting failed, error %02x hex\n",
+      printf(catgets(catalog, 22, 18, "Drive mode (size class %d) setting failed, error %02x hex\n"),
         sizeclass, regs.h.ah);
       if (regs.h.ah == 0x80)
         {
-        printf("No disk in drive!\n");
+        printf(catgets(catalog, 22, 19, "No disk in drive!\n"));
         Exit(4,48);
         }
       else
-        printf("Continuing anyway.\n");
+        printf(catgets(catalog, 22, 20, "Continuing anyway.\n"));
       }
     }
 
@@ -837,7 +837,7 @@ void Set_Floppy_Media_Type()
 
       if (regs.h.ah==0x80)
         {
-        printf("No disk in drive (timeout)!\n");
+        printf(catgets(catalog, 22, 21, "No disk in drive (timeout)!\n"));
         Exit(4,49);
         }
 
@@ -850,18 +850,18 @@ void Set_Floppy_Media_Type()
         }
       else	/* ... if AH is 0x0ch, that is */
         {
-        printf("Media type %ldk  (%d x %ld x %2d)  not supported by this drive!?\n",
+        printf(catgets(catalog, 22, 22, "Media type %ldk  (%d x %ld x %2d)  not supported by this drive!?\n"),
           param.size, number_of_cylinders, param.sides, sectors_per_cylinder);
-        printf("Geometry set (int 13.18) error (%02x). ", regs.h.ah);
+        printf(catgets(catalog, 22, 23, "Geometry set (int 13.18) error (%02x). "), regs.h.ah);
         if ( (_osmajor < 7) ||
              (sectors_per_cylinder > ddpt->sectors_per_cylinder) )
           {		/* 0.91q: Win9x DOS box uses *63 geometry all the time */
-          printf("Giving up.\n");	/* old DOS - or ddpt geo too small */
+          printf(catgets(catalog, 22, 24, "Giving up.\n"));	/* old DOS - or ddpt geo too small */
           Exit(4,50);
           }
         else		/* ability to ignore added 0.91q */
           {
-          printf("Ignored.\n");
+          printf(catgets(catalog, 22, 25, "Ignored.\n"));
           regs.x.di = 0xffff;	/* "NO NEW DDPT DATA" */
           }
         }
@@ -909,7 +909,7 @@ void Set_Floppy_Media_Type()
         sregs.ds  = FP_SEG(ddpt);	/* segment DS  */
         intdosx(&regs,&regs,&sregs);
 
-        printf("DDPT is in ROM - only standard sizes possible.\n");
+        printf(catgets(catalog, 22, 26, "DDPT is in ROM - only standard sizes possible.\n"));
 
         if (debug_prog==TRUE)
           printf("[DEBUG] New INT 1E (DDPT) vector: %04x:%04x.\n",
@@ -928,7 +928,7 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
   /* update geometry even if the ddpt pointer or contents did not change. */
 
   if (ddpt->sectors_per_cylinder != sectors_per_cylinder) /* DDPT is in ROM */
-    printf("SECTORS PER TRACK stuck to %d, wanted %d. Continuing anyway.\n",
+    printf(catgets(catalog, 22, 27, "SECTORS PER TRACK stuck to %d, wanted %d. Continuing anyway.\n"),
       ddpt->sectors_per_cylinder, sectors_per_cylinder);
 
 
@@ -945,7 +945,7 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
 
     if ( (FP_SEG(ddpt) > 0xa000) && ((FP_SEG(ddpt) & 0x3ff) == 0) )
       {
-      printf("DDPT tweaking impossible: DDPT in ROM\n");
+      printf(catgets(catalog, 22, 28, "DDPT tweaking impossible: DDPT in ROM\n"));
       Exit(4,51);
       }
 
@@ -972,14 +972,14 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
 
     if (gap_len == 0)
       {
-      printf("No gap length known for %d sec/cyl. Good luck with BIOS value!\n",
+      printf(catgets(catalog, 22, 29, "No gap length known for %d sec/cyl. Good luck with BIOS value!\n"),
         sectors_per_cylinder); /* (we will display BIOS value in DEBUG mode) */
-      printf("TWEAK: Sectors per cylinder in DDPT set to %d\n",
+      printf(catgets(catalog, 22, 30, "TWEAK: Sectors per cylinder in DDPT set to %d\n"),
         sectors_per_cylinder);
       }
     else
       {
-      printf("TWEAK: %d Sectors per cylinder, Format gap length %d!\n",
+      printf(catgets(catalog, 22, 31, "TWEAK: %d Sectors per cylinder, Format gap length %d!\n"),
         sectors_per_cylinder, gap_len);
       RestoreDDPT();
       ddpt->gap3_length_xmat = gap_len; /* (gap3_length_rw needs no change) */
@@ -1025,7 +1025,7 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
   int86(0x13,&regs,&regs); /* reset floppy controller */
   if (regs.x.cflag && (regs.h.ah != 0)) {
     regs.x.ax = regs.h.ah;
-    printf("Floppy controller reset failed (code %x) - DDPT rejected?\n",
+    printf(catgets(catalog, 22, 32, "Floppy controller reset failed (code %x) - DDPT rejected?\n"),
       regs.x.ax);
   }
 
@@ -1055,16 +1055,16 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
 #endif
 
       printf("[DEBUG]  Controller setup %2hx: ", control); /* %hx: short hex */
-      if (control & 0x20) printf("[doublestepping] ");
-      if (control & 0x10) printf("[configured type %hu] ", (control & 0x0f));
+      if (control & 0x20) printf(catgets(catalog, 22, 34, "[doublestepping] "));
+      if (control & 0x10) printf(catgets(catalog, 22, 35, "[configured type %hu] "), (control & 0x0f));
         /* only if configured is true int 13.5 will work!? */
       control >>= 6; /* keep only baud rate bits */
       switch (control)
         {
-          case 0:  printf(" 500 kbps (HD 1xx0k)\n"); break;
-          case 1:  printf(" 300 kbps (DD  360k)\n"); break;
-          case 2:  printf(" 250 kbps (DD  720k)\n"); break;
-          default: printf("1000 kbps (ED 2880k)\n"); break;
+          case 0:  printf(catgets(catalog, 22, 36, " 500 kbps (HD 1xx0k)\n")); break;
+          case 1:  printf(catgets(catalog, 22, 37, " 300 kbps (DD  360k)\n"); break;
+          case 2:  printf(catgets(catalog, 22, 38, " 250 kbps (DD  720k)\n")); break;
+          default: printf(catgets(catalog, 22, 39, "1000 kbps (ED 2880k)\n")); break;
         }
     } /* controller settings display */
 
@@ -1072,7 +1072,8 @@ skip_int13_18:	/* *** end skipable int 13.18 stuff (jump added 0.91s) *** */
     {
     char ch;
     write(isatty(1) ? 1 : 2,
-      "-- press ENTER to format disk (ESCAPE to abort) --\n", 51);
+      catgets(catalog, 22, 33, "-- press ENTER to format disk (ESCAPE to abort) --\n"), 
+	  strlen(catgets(catalog, 22, 33, "-- press ENTER to format disk (ESCAPE to abort) --\n")));
       /* writes to stderr to stay visible if redirecting */
 
     do

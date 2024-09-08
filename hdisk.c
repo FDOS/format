@@ -63,7 +63,7 @@ void Get_Device_Parameters()
       /* Max reasonable FAT16 size 256 sectors, min FAT32 size is 513 sectors */
       if (regs.x.cflag == 0)
         {
-          printf("Win98? Default BPB *FAT1x* %u sectors/FAT, %u root size. FAT32 forced.\n",
+          printf(catgets(catalog, 21, 0, "Win98? Default BPB *FAT1x* %u sectors/FAT, %u root size. FAT32 forced.\n"),
             parameter_block.bpb.sectors_per_fat,
             parameter_block.bpb.root_directory_entries);
           parameter_block.bpb.sectors_per_fat = 0;        /* force FAT32 */
@@ -72,14 +72,14 @@ void Get_Device_Parameters()
       else
         {
           if (error_code == 0x0f) {
-            printf("Invalid Drive! Aborting.\n");
+            printf(catgets(catalog, 21, 1, "Invalid Drive! Aborting.\n"));
             goto gdp_giving_up;
           }
           if (error_code == 0x05) {
-            printf("Access Denied! LOCK problem? Aborting.\n");
+            printf(catgets(catalog, 21, 2, "Access Denied! LOCK problem? Aborting.\n"));
             goto gdp_giving_up;
           }
-          printf("GENIOCTL/0860 error %02x. Trying FAT32.\n",
+          printf(catgets(catalog, 21, 3, "GENIOCTL/0860 error %02x. Trying FAT32.\n"),
             error_code);
         }
 
@@ -126,23 +126,23 @@ void Get_Device_Parameters()
       {
         /* Add error trapping here */
         if (error_code == 0x0f) {
-          printf("Invalid Drive! Aborting.\n");
+          printf(catgets(catalog, 21, 1, "Invalid Drive! Aborting.\n"));
           goto gdp_giving_up;
         }
         if (error_code == 0x05) {
-          printf("Access Denied! LOCK problem? Aborting.\n");
+          printf(catgets(catalog, 21, 2, "Access Denied! LOCK problem? Aborting.\n"));
           goto gdp_giving_up;
         }
-        printf("GENIOCTL/4860 error %02x. No FAT32 kernel?\n", error_code);
+        printf(catgets(catalog, 21, 4, "GENIOCTL/4860 error %02x. No FAT32 kernel?\n"), error_code);
         if (regs.x.cflag == 0)
-          printf("FAT1x FAT size %u sectors?\n",
+          printf(catgets(catalog, 21, 5, "FAT1x FAT size %u sectors?\n"),
             parameter_block.bpb.sectors_per_fat);
         regs.x.ax = 0x3306;	/* get internal DOS version */
         regs.x.bx = 0xffff;	/* if 21.3306 not supported */
         intdos(&regs,&regs);	/* returns AL=FF if DOS version below 5.0 */
         /* if ((_osmajor == 5) && (param.drive_number > 1)) */
         if (regs.x.bx == 0x3205)	/* "DOS 5.50" revision DL, flags DH */
-          printf("WinNT/XP/2k DOS box. Cannot format.\n");
+          printf(catgets(catalog, 21, 6, "WinNT/XP/2k DOS box. Cannot format.\n"));
         gdp_giving_up:
         Exit(4,55);		/* VARIOUS ways of G.D.P. to give up... */
       }
@@ -150,7 +150,7 @@ void Get_Device_Parameters()
     if ((!parameter_block.xbpb.root_dir_start_high) &&
         (parameter_block.xbpb.root_dir_start_low < 2))
       { /* added 3 feb 2004 - Win98se dangerous problem fixed */
-        printf("Corrected default BPB FAT32 root dir position to 2.\n");
+        printf(catgets(catalog, 21, 7, "Corrected default BPB FAT32 root dir position to 2.\n"));
         parameter_block.xbpb.root_dir_start_low = 2; /* first data cluster is #2 */
       }
 
@@ -159,7 +159,7 @@ void Get_Device_Parameters()
   if ((parameter_block.bpb.sectors_per_fat > 0) && (parameter_block.bpb.sectors_per_fat <= 12))
     {
       if (param.fat_type == FAT32)
-        printf("GDP self-correct: Must be FAT12! FAT1x size: %u\n",
+        printf(catgets(catalog, 21, 8, "GDP self-correct: Must be FAT12! FAT1x size: %u\n"),
           parameter_block.bpb.sectors_per_fat);
       if ((debug_prog==TRUE) /* && (param.fat_type != FAT12) */ )
         printf("[DEBUG]  FAT1x size: %u, using FAT12.\n",
@@ -172,7 +172,7 @@ void Get_Device_Parameters()
           (parameter_block.bpb.sectors_per_fat < 512)) /* max useful would be 256 */
         {
           if (param.fat_type == FAT32)
-            printf("GDP self-correct: Must be FAT16! FAT1x size: %u\n",
+            printf(catgets(catalog, 21, 9, "GDP self-correct: Must be FAT16! FAT1x size: %u\n"),
               parameter_block.bpb.sectors_per_fat);
           if ((debug_prog==TRUE) /* && (param.fat_type != FAT16) */ )
             printf("[DEBUG]  FAT1x size: %u, using FAT16.\n",
@@ -182,7 +182,7 @@ void Get_Device_Parameters()
       else
         if (param.fat_type != FAT32)
           {
-            printf("GDP self-correct: Is indeed FAT32! FAT size: %u\n",
+            printf(catgets(catalog, 21, 10, "GDP self-correct: Is indeed FAT32! FAT size: %u\n"),
               parameter_block.bpb.sectors_per_fat);
             param.fat_type = FAT32; /* Get_Device_Parameters: 0 FAT1x sectors */
           }
@@ -195,21 +195,21 @@ void Get_Device_Parameters()
       if ( (parameter_block.bpb.sectors_per_fat != 0) ||
            (parameter_block.bpb.root_directory_entries != 0) )
         {
-          printf("GDP self-correct: Removing FAT1x FAT (%u) / root (%u) from FAT32 disk.\n",
+          printf(catgets(catalog, 21, 11, "GDP self-correct: Removing FAT1x FAT (%u) / root (%u) from FAT32 disk.\n"),
             parameter_block.bpb.sectors_per_fat, parameter_block.bpb.root_directory_entries);
           parameter_block.bpb.sectors_per_fat = 0;	  /* G.D.P.: if one 0, other be 0 and type FAT32 */
           parameter_block.bpb.root_directory_entries = 0; /* G.D.P.: if one 0, other be 0 and type FAT32 */
         }
       if (param.fat_type != FAT32)
-        printf("GDP self-correct: Cannot be FAT1x.\n");
+        printf(catgets(catalog, 21, 12, "GDP self-correct: Cannot be FAT1x.\n"));
       param.fat_type = FAT32;                             /* G.D.P.: if one 0, other be 0 and type FAT32 */
     } /* FAT32 */
   else
     {
       if (parameter_block.bpb.sectors_per_fat == 0)
-        printf("GDP self-correct: Cannot be FAT1x, no FAT1x FAT\n");
+        printf(catgets(catalog, 21, 13, "GDP self-correct: Cannot be FAT1x, no FAT1x FAT\n"));
       if (parameter_block.bpb.root_directory_entries == 0)
-        printf("GDP self-correct: Cannot be FAT1x, no FAT1x root.\n");
+        printf(catgets(catalog, 21, 14, "GDP self-correct: Cannot be FAT1x, no FAT1x root.\n"));
       if ( (parameter_block.bpb.sectors_per_fat == 0) ||
            (parameter_block.bpb.root_directory_entries == 0) )
         {
@@ -220,7 +220,7 @@ void Get_Device_Parameters()
     } /* not FAT32 (or maybe FAT32 but not yet detected...) */
 
   if (error_code!=0)
-    printf("GDP default BPB read error %02x.\n", error_code);
+    printf(catgets(catalog, 21, 15, "GDP default BPB read error %02x.\n"), error_code);
 
 }
 
@@ -283,7 +283,7 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
 
       if (parameter_block.bpb.number_of_fats & 1)
         {
-          printf(" Align for odd number of FAT32 FATs.\n");
+          printf(catgets(catalog, 21, 16, " Align for odd number of FAT32 FATs.\n"));
           mask = 7;
         } /* > 2 FATs will cause failure later, but at least THIS can handle it */
 
@@ -324,14 +324,14 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
       number_of_sectors += parameter_block.bpb.large_sector_count_low;
       if (number_of_sectors == 0)
         {
-          printf("Volume has no size!? Aborting.\n");
+          printf(catgets(catalog, 21, 17, "Volume has no size!? Aborting.\n"));
           Exit(4,56);
         }
     }
 
   if (parameter_block.bpb.bytes_per_sector != 512) /* SANITY CHECK */
     {
-      printf("%d bytes / sector, not 512!? Aborting.\n",
+      printf(catgets(catalog, 21, 18, "%d bytes / sector, not 512!? Aborting.\n"),
         parameter_block.bpb.bytes_per_sector);
       Exit(4,57);
     }
@@ -339,7 +339,7 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
   if ((parameter_block.bpb.number_of_fats<1) ||
       (parameter_block.bpb.number_of_fats>2)) /* SANITY CHECK */
     {
-      printf("Not 1 or 2 FATs but %hu!? Aborting.\n",
+      printf(catgets(catalog, 21, 19, "Not 1 or 2 FATs but %hu!? Aborting.\n"),
         parameter_block.bpb.number_of_fats);
       Exit(4,58);
     }
@@ -348,19 +348,19 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
 
   if (i > 128)
     {
-      printf("WARNING: Clusters larger than 64k. This is highly incompatible!\n");
+      printf(catgets(catalog, 21, 20, "WARNING: Clusters larger than 64k. This is highly incompatible!\n"));
     }
   else if (i > 64)
     {
-      printf("WARNING: Clusters larger than 32k. Will not work with Win9x or MS DOS!\n");
-      printf("  WinME, WinNT/2k/XP/2003 and FreeDOS will be okay, though.\n");
+      printf(catgets(catalog, 21, 21, "WARNING: Clusters larger than 32k. Will not work with Win9x or MS DOS!\n"));
+      printf(catgets(catalog, 21, 22, "  WinME, WinNT/2k/XP/2003 and FreeDOS will be okay, though.\n"));
     }
   while ((i < 256) && (i != 0)) 
     i += i;	/* shift left until 128k / cluster */
   if (i != 256) /* SANITY CHECK */
     {
     i = BPB_SECTORS_PER_CLUSTER(parameter_block.bpb);
-    printf("FATAL: Cluster size not 0.5, 1, 2, 4, 8, 16, 32, 64k or 128k but %d.%dk!\n",
+    printf(catgets(catalog, 21, 23, "FATAL: Cluster size not 0.5, 1, 2, 4, 8, 16, 32, 64k or 128k but %d.%dk!\n"),
       i/2, (i & 1) ? 5 : 0);
     Exit(4,59);
     }
@@ -376,19 +376,19 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
     {
     if (param.fat_type!=FAT32)
       {
-        printf(" Almost formatted FAT32 drive as FAT1x, phew...\n");
+        printf(catgets(catalog, 21, 24, " Almost formatted FAT32 drive as FAT1x, phew...\n"));
         param.fat_type = FAT32; /* Set_Hard_Drive_Media_Parameters cluster count fixup */
       }
     if (file_sys_info.total_clusters > (0x3fbc000UL-2))
       {
-        printf("WARNING: FAT32 size will be more than (16 MB - 64 kB)!\n");
-        printf("  Win9x will be unable to use the drive. Other OSes will use more RAM/CPU.\n");
+        printf(catgets(catalog, 21, 25, "WARNING: FAT32 size will be more than (16 MB - 64 kB)!\n"));
+        printf(catgets(catalog, 21, 26, "  Win9x will be unable to use the drive. Other OSes will use more RAM/CPU.\n"));
       }
     }
   else
     {
     if (param.fat_type==FAT32)
-      printf(" Almost formatted FAT1x drive as FAT32, phew...\n");
+      printf(catgets(catalog, 21, 27, " Almost formatted FAT1x drive as FAT32, phew...\n"));
     param.fat_type = (file_sys_info.total_clusters>=4085UL) /* only if misdetected FAT32 */
       ? FAT16 : FAT12; /* Set_Hard_Drive_Media_Parameters cluster count fixup */
     }
@@ -430,22 +430,22 @@ void Set_Hard_Drive_Media_Parameters(int alignment)
   /* 0.91k - already tell the user what she has to expect size-wise */
   if (drive_statistics.bytes_per_sector == 512) {
     unsigned long roughsize;
-    char sizeunit = 'k';
+    char* sizeunit = catgets(catalog, 13, 2, "kbytes");
     roughsize = drive_statistics.sect_available_on_disk >> 1;
     if (roughsize > 9999) {
       roughsize += 512;
       roughsize >>= 10;
-      sizeunit = 'M';
+      sizeunit = catgets(catalog, 13, 3, "Mbytes");
     }
     if (roughsize > 9999) { /* limit for LBA48 aware BIOS + LBA32 DOS: 2 TB */
       roughsize += 512;     /* limit for LBA28 BIOS: 128 GB */
       roughsize >>= 10;
-      sizeunit = 'G'; /* Win9x has max 16 MB / FAT and 32k / clust: 128 GB */
+      sizeunit = catgets(catalog, 13, 14, "Gbytes"); /* Win9x has max 16 MB / FAT and 32k / clust: 128 GB */
     }
-    printf(" Disk size: %lu %cbytes, ", roughsize, sizeunit); /* changed 0.91p */
-  } else printf(" Warning: Disk has nonstandard sector size, "); /* same */
+    printf(catgets(catalog, 21, 28, " Disk size: %lu %s, "), roughsize, sizeunit);
+  } else printf(catgets(catalog, 21, 29, " Warning: Disk has nonstandard sector size, ")); /* same */
 
-  printf("FAT%d. ***\n", /* changed 0.91p */
+  printf("FAT%d. ***\n",
     (param.fat_type==FAT32) ? 32 : ( (param.fat_type==FAT16) ? 16 : 12 ) );
 
 }

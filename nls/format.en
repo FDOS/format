@@ -235,7 +235,7 @@
 13,0:\n Volume Serial Number is %04X-%04X\n
 13,1:bytes
 13,2:kbytes
-13,3:mbytes
+13,3:Mbytes
 13,4:Not 512 bytes/sector - stats will be wrong.\n
 # %13s%c%s %s becomes <number><decimal separator>[0|5] [kbytes|bytes]
 13,5 :%13s%c%s %s total disk space (disk size)\n
@@ -250,6 +250,7 @@
 13,12:
 # FAT12/FAT16, no spaces, see 13.10 & 13.11
 13,13:
+13,14:Gbytes
 
 # misc messages
 14,0:\n Invalid combination of options... please read help. Aborting.\n
@@ -284,3 +285,101 @@
 18,2: Preparing FAT area...\n
 18,3: Optimized initial Root Directory size: %lu clusters.\n
 18,4:Root Directory clipped to 125 clusters!\n
+
+# drivio.c
+19,0: [Error %d]\n
+19,1: Invalid drive! Aborting.\n
+19,2: FreeDOS l. lock error 0x%x ignored.\n
+19,3: Could not lock logical drive (error 0x%x)! Aborting.\n
+19,4: FreeDOS p. lock error 0x%x ignored.\n
+19,5: Could not lock physical floppy drive (error 0x%x)!?\n
+# maybe a better error message? Drive_IO() Invalid request for 0 sectors?
+19,6:Drive_IO(x,y,0)?\n
+# last %s for 19.7 & 19.8 replaced with READ or WRITE from 19.9 or 19.10
+19,7:* bad sector(s): %ld (code 0x%x) on %s *\n
+19,8:Drive_IO(%s %ld, count %d ) [%s] [drive %c%c]\n
+19,9:WRITE
+19,10:READ
+19,11:\nCannot get access flags (error %02x). Aborting.\n
+19,12:\nCannot enable access flags (error %02x). Aborting.\n
+
+# see above for set 20
+
+# hdisk.c
+21,0:Default BPB *FAT1x* %u sectors/FAT, %u root size. FAT32 forced.\n
+21,1:Invalid Drive! Aborting.\n
+21,2:Access Denied! LOCK problem? Aborting.\n
+21,3:GENIOCTL/0860 error %02x. Trying FAT32.\n
+21,4:GENIOCTL/4860 error %02x. No FAT32 kernel?\n
+21,5:FAT1x FAT size %u sectors?\n
+21,6:WinNT/XP/2k DOS box. Cannot format.\n
+21,7:Corrected default BPB FAT32 root dir position to 2.\n
+# GDP = Get_Device_Parameters()
+21,8:GDP self-correct: Must be FAT12! FAT1x size: %u\n
+21,9:GDP self-correct: Must be FAT16! FAT1x size: %u\n
+21,10:GDP self-correct: Is indeed FAT32! FAT size: %u\n
+21,11:GDP self-correct: Removing FAT1x FAT (%u) / root (%u) from FAT32 disk.\n
+21,12:GDP self-correct: Cannot be FAT1x.\n
+21,13:GDP self-correct: Cannot be FAT1x, no FAT1x FAT\n
+21,14:GDP self-correct: Cannot be FAT1x, no FAT1x root.\n
+21,15:GDP default BPB read error %02x.\n
+21,16: Align for odd number of FAT32 FATs.\n
+21,17:Volume has no size!? Aborting.\n
+21,18:%d bytes / sector, not 512!? Aborting.\n
+21,19:Not 1 or 2 FATs but %hu!? Aborting.\n
+21,20:WARNING: Clusters larger than 64k. This is highly incompatible!\n
+# 21.21 & 21.22 go together
+21,21:WARNING: Clusters larger than 32k. Will not work with Win9x or MS DOS!\n
+21,22:  WinME, WinNT/2k/XP/2003 and FreeDOS will be okay, though.\n
+21,23:FATAL: Cluster size not 0.5, 1, 2, 4, 8, 16, 32, 64k or 128k but %d.%dk!\n
+21,24: Almost formatted FAT32 drive as FAT1x, phew...\n
+# 21.25 & 21.26 go together
+21.25:WARNING: FAT32 size will be more than (16 MB - 64 kB)!\n
+21,26:  Win9x will be unable to use the drive. Other OSes will use more RAM/CPU.\n
+21,27: Almost formatted FAT1x drive as FAT32, phew...\n
+# 21.28 or 21.29 followed by "FAT12.\n" or "FAT16.\n"
+# with %lu %s size, e.g. 999 kbytes  -- see 13.1 and similar
+21,28: Disk size: %lu %s, 
+21,29: Warning: Disk has nonstandard sector size, 
+
+# floppy.c
+22,0:Format_Floppy_Cylinder( head=%d cylinder=%d ) sectors=%d [int 13.5]\n
+22,1:Only checking first %d sectors per track\n
+22,2:\nFormat failed, error in first 7 sectors!\n
+22,3:Sector %4ld CHS=[%2d:%d:%2d] bad\n
+22,4:Harddisk drive number! Aborting.\n
+22,5:Formatting to %ldk (Cyl=%ld Head=%ld Sec=%2ld)\n
+22,6:No media type known for %ldk format\n
+22,7:No media type known for %ldk format (Cyl=%ld Head=%ld Sec=%2ld)\n
+22,8:Treating int 13.8 drive type 0x%x as 1440k.\n
+22,9:Using drive default: %ldk (Cyl=%ld Head=%ld Sec=%2ld)\n
+22,10:Size %ldk undefined!??\n
+22,11:Want %ldk in %dk drive? Too much. Aborting.\n
+22,12:OVERFORMAT: %ldk in %dk drive. Good luck!\n
+22,13:This is a 720k drive: No /1, /4 or /8 possible.\n
+22,14:Minimum size for this drive type is 720k\n
+22,15:This is a 3.25 inch drive: No /1, /4 or /8 possible.\n
+22,16:Minimum size for this drive type is 720k.\n
+22,17:This is a 3.25 inch drive: No 1200k format.\n
+22,18:Drive mode (size class %d) setting failed, error %02x hex\n
+22,19:No disk in drive!\n
+22,20:Continuing anyway.\n
+22,21:No disk in drive (timeout)!\n
+22,22:Media type %ldk  (%d x %ld x %2d)  not supported by this drive!?\n
+22,23:Geometry set (int 13.18) error (%02x). 
+22,24:Giving up.\n
+22,25:Ignored.\n
+22,26:DDPT is in ROM - only standard sizes possible.\n
+22,27:SECTORS PER TRACK stuck to %d, wanted %d. Continuing anyway.\n
+22,28:DDPT tweaking impossible: DDPT in ROM\n
+22,29:No gap length known for %d sec/cyl. Good luck with BIOS value!\n
+22,30:TWEAK: Sectors per cylinder in DDPT set to %d\n
+22,31:TWEAK: %d Sectors per cylinder, Format gap length %d!\n
+22,32:Floppy controller reset failed (code %x) - DDPT rejected?\n
+22,33:-- press ENTER to format disk (ESCAPE to abort) --\n
+22,34:
+22,35:
+22,36:
+22,37:
+22,38:
+22,39:

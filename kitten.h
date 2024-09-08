@@ -40,7 +40,7 @@ typedef void * nl_catd;
 /* return translated message, if not found or error returns message
  * in catalog, supports up to 255 sets of 255 messages
 */
-const char * catgets(nl_catd catalog, int setnum, int msgnum, const char *message);
+char const * catgets(nl_catd catalog, int setnum, int msgnum, char const * const message);
 
 /* open translation catalog and return handle - only 1 catalog file supported 
  * generally will pass argv[0], i.e. executable file, but can pass other filenames
