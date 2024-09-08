@@ -2,14 +2,14 @@
 # language:French
 # display codepage:CP850
 # catalog codepage:CP850
-# translators:Berki YenigÅn
+# translators:Berki Yenig√ºn
 
 # version (on help screen)
 0,0:FreeDOS %6s - version %s\n
-0,1:êcrit par Brian E. Reifsnyder, Eric Auer et d'autres.\n
+0,1:√âcrit par Brian E. Reifsnyder, Eric Auer et d'autres.\n
 0,2:Copyright 1999 - 2024 sous les termes de GNU GPL, Version 2+.\n\n
 # 0.3 or 0.4 shown depending on if /Z:longhelp option used or not
-0,3:Syntaxe (cf. documentation pour plus d'informations dÇtaillÇes):\n\n
+0,3:Syntaxe (cf. documentation pour plus d'informations d√©taill√©es):\n\n
 0,4:Syntaxe (cf. documentation ou utiliser /Z:longhelp pour plus d'options):\n\n
 
 # common
@@ -21,8 +21,8 @@
 1,3:OUI
 1,4:NON
 # other possibly common bits
-1,5:êchec !\n
-1,6:êchec.\n
+1,5:√âchec !\n
+1,6:√âchec.\n
 1,7:Annulation.\n
 
 # short help screen (shown if compiled without LEGACY_HELP)
@@ -31,28 +31,28 @@
 # message numbers do not need to match up for messages for different languages
 # Each message should end with a newline \n
 # after every 23 messages user will be prompted to press a key to continue
-2,0:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/F:taille] [/S] [/D]\n
-2,1:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/T:pistes /N:secteurs] [/S] [/D]\n
+2,0:FORMAT lecteur: [/V[:√©tiquette]] [/Q] [/U] [/F:taille] [/S] [/D]\n
+2,1:FORMAT lecteur: [/V[:√©tiquette]] [/Q] [/U] [/T:pistes /N:secteurs] [/S] [/D]\n
 #  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
 #  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
-2,2:FORMAT lecteur: [/V[:Çtiquette]] [/Q] [/U] [/4] [/S] [/D]\n
+2,2:FORMAT lecteur: [/V[:√©tiquette]] [/Q] [/U] [/4] [/S] [/D]\n
 2,3:\n
-2,4: /V:Çtiquette SpÇcifie une Çtiquette de volume pour le disque, enregistre\n
+2,4: /V:√©tiquette Sp√©cifie une √©tiquette de volume pour le disque, enregistre\n
 2,5:            son horodatage.\n
-2,6: /S         Appelle SYS  pour rendre le disque amoráable et ajouter\n
-2,7:            des fichiers systäme.\n
-2,8: /D         Affiche la sortie de dÇbogage. Pour les rapports de bug.\n
-2,9: /Q         Formate rapidement le disque. Si non combinÇ avec /U peut àtre\n
-2,10:            dÇFORMATÇ et prÇserve les informations de mauvais clusters\n
+2,6: /S         Appelle SYS  pour rendre le disque amor√ßable et ajouter\n
+2,7:            des fichiers syst√®me.\n
+2,8: /D         Affiche la sortie de d√©bogage. Pour les rapports de bug.\n
+2,9: /Q         Formate rapidement le disque. Si non combin√© avec /U peut √™tre\n
+2,10:            d√©FORMAT√© et pr√©serve les informations de mauvais clusters\n
 2,11:            (/Q /U ne le fait pas).\n
 2,12: /U         Formate le disque sans condition. Si disquette, formatage de\n
 2,13:            bas niveau.\n
-2,14: /F:taille  SpÇcifie la taille de disquette Ö formater. Tailles \n
-2,15:            normales : 360, 720, 1200, 1440 ou 2880 (unitÇ: Kilooctets).\n
+2,14: /F:taille  Sp√©cifie la taille de disquette √† formater. Tailles \n
+2,15:            normales : 360, 720, 1200, 1440 ou 2880 (unit√©: Kilooctets).\n
 2,16:            /F:0 affiche une liste.\n
 2,17: /4         Formate une disquette 360 ko dans un lecteur de 1,2 Mo.\n
-2,18: /T:pistes  SpÇcifie le nombre de pistes sur une disquette.\n
-2,19: /N:secteurs  SpÇcifie le nombre de secteurs sur une disquette.\n
+2,18: /T:pistes  Sp√©cifie le nombre de pistes sur une disquette.\n
+2,19: /N:secteurs  Sp√©cifie le nombre de secteurs sur une disquette.\n
 
 # short help screen (shown if compiled _with_ LEGACY_HELP)
 # Use as many messages as needed, 1 message per max 79 column line
@@ -65,23 +65,23 @@
 20,2:FORMAT lecteur: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n
 20,3:FORMAT lecteur: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n
 20,4:\n
-20,5: /V:label   SpÇcifie une Çtiquette de volume pour le disque, enregistre\n
+20,5: /V:label   Sp√©cifie une √©tiquette de volume pour le disque, enregistre\n
 20,6:            son horodatage.\n
-20,7: /S         Appelle SYS pour rendre le disque amoráable et ajouter\n
-20,8:            des fichiers systäme.\n
-20,9: /B         GardÇ pour la compatibilitÇ, auparavant rÇservait de l'espace\n
-20,10:            pour les fichiers d'amoráage.\n
-20,11: /D         Affiche la sortie de dÇbogage. Pour les rapports de bug.\n
-20,12: /Q         Formate rapidement le disque. Si non combinÇ avec /U peut àtre\n
-20,13:            dÇFORMATÇ et prÇserve les informations de mauvais clusters\n
+20,7: /S         Appelle SYS pour rendre le disque amor√ßable et ajouter\n
+20,8:            des fichiers syst√®me.\n
+20,9: /B         Gard√© pour la compatibilit√©, auparavant r√©servait de l'espace\n
+20,10:            pour les fichiers d'amor√ßage.\n
+20,11: /D         Affiche la sortie de d√©bogage. Pour les rapports de bug.\n
+20,12: /Q         Formate rapidement le disque. Si non combin√© avec /U peut √™tre\n
+20,13:            d√©FORMAT√© et pr√©serve les informations de mauvais clusters\n
 20,14: /U         Formate le disque sans condition. Si disquette, formatage de\n
 20,15:            bas niveau.\n
-20,16: /F:taille  SpÇcifie la taille de disquette Ö formater. Tailles \n
-20,17:            normales : 360, 720, 1200, 1440 ou 2880 (unitÇ: Kilooctets).\n
+20,16: /F:taille  Sp√©cifie la taille de disquette √† formater. Tailles \n
+20,17:            normales : 360, 720, 1200, 1440 ou 2880 (unit√©: Kilooctets).\n
 20,18:            /F:0 affiche une liste.\n
 20,19: /4         Formate une disquette 360 ko dans un lecteur de 1,2 Mo.\n
-20,20: /T:pistes  SpÇcifie le nombre de pistes sur une disquette.\n
-20,21: /N:secteurs  SpÇcifie le nombre de secteurs sur une disquette.\n
+20,20: /T:pistes  Sp√©cifie le nombre de pistes sur une disquette.\n
+20,21: /N:secteurs  Sp√©cifie le nombre de secteurs sur une disquette.\n
 20,22: /1         Formate une seule face d'une disquette (160 ko / 180 ko).\n
 20,23: /8         Formate une disquette 5.25\" avec 8 secteurs par piste\n
 20,24:            (160 ko / 320 ko).\n
@@ -91,23 +91,23 @@
 # message numbers do not need to match up for messages for different languages
 # Each message should end with a newline \n
 # after every 23 messages user will be prompted to press a key to continue
-3,0:Cette commande FORMAT est Çcrite pour le projet http://www.freedos.org/.\n
+3,0:Cette commande FORMAT est √©crite pour le projet http://www.freedos.org/.\n
 3,1:  Cf. http://www.gnu.org/ pour des informations sur la licence GNU GPL.\n
-3,2:êcrite en 1999-2003 par Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n
+3,2:√âcrite en 1999-2003 par Brian E. Reifsnyder <reifsnyderb@mindspring.com>\n
 3,3:  Mainteneur pour 0.90 / 0.91 2003-2006 : Eric Auer <eric@coli.uni-sb.de>\n
 3,4:Contributeurs: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
 3,5: Bart Oldeman, Jim Hall et d'autres. N'oublions pas tous les testeurs !\n\n
 3,6:\n
-3,7:Options et fonctionnalitÇs additionnelles expliquÇes :\n
-3,8:/D (dÇbogage) et /Y (sauter la confirmation) sont toujours autorisÇes.\n
-3,9:/B (rÇserver de l'espace pour sys) est vide et ne peut àtre combinÇe\n
+3,7:Options et fonctionnalit√©s additionnelles expliqu√©es :\n
+3,8:/D (d√©bogage) et /Y (sauter la confirmation) sont toujours autoris√©es.\n
+3,9:/B (r√©server de l'espace pour sys) est vide et ne peut √™tre combin√©e\n
 3,10:avec /S (sys)\n
-3,11:/V:Çtiquette n'est pas pour les disques 160k/320k. L'Çtiquette enregistre\n
+3,11:/V:√©tiquette n'est pas pour les disques 160k/320k. L'√©tiquette enregistre\n
 3,12:l'horodatage du formatage.\n\n
 
-3,13:Les spÇcifications de taille ne marchent que pour les disquettes. Vous pouvez\n
+3,13:Les sp√©cifications de taille ne marchent que pour les disquettes. Vous pouvez\n
 3,14:utiliser soit /F:taille (en kilooctets, la taille 0 affiche une liste\n
-3,15:des tailles autorisÇes)\n
+3,15:des tailles autoris√©es)\n
 3,16:soit     /T:pistes /N:secteurs_par_piste\n
 3,17:soit toute combinaison de /1 (une face, 160k/180 ko),\n
 3,18:                      /8 (8 secteurs par piste, 160k/320 ko, DOS 1.x)\n
@@ -117,88 +117,88 @@
 3,22: utilisez    /Z:seriously\n
 3,23:Pour sauvegarder seulement les informations unformat (mirror) sans\n
 3,24:formater, utilisez /Z:mirror\n
-3,25:Pour dÇFORMATer un disque pour laquelle des donnÇes miroir fraåches
+3,25:Pour d√©FORMATer un disque pour laquelle des donn√©es miroir fra√Æches
 3,26:existent, utilisez /Z:unformat\n
 3,27:\n
 3,28:Les modes pour les DISQUETTES sont : tente d'utiliser le formatage\n
-3,29:  rapide. N'utilise le formatage de bas niveau que si nÇcessaire.\n
-3,30:  Le formatage rapide sñr enregistre les donnÇes mirror pour unformat.\n
+3,29:  rapide. N'utilise le formatage de bas niveau que si n√©cessaire.\n
+3,30:  Le formatage rapide s√ªr enregistre les donn√©es mirror pour unformat.\n
 3,31:Les modes pour les DISQUES DURS sont : tente d'utiliser le formatage \n
-3,32:  rapide sñr. N'utilise le formatage rapide complet que si nÇcessaire.\n
-3,33:  Le formatage rapide sñr ne fait que rÇinitialiser le systäme de fichiers\n
+3,32:  rapide s√ªr. N'utilise le formatage rapide complet que si n√©cessaire.\n
+3,33:  Le formatage rapide s√ªr ne fait que r√©initialiser le syst√®me de fichiers\n
 3,34:Si vous voulez forcer le formatage de bas niveau (disquettes) ou bien\n
-3,35:  balayer toute la surface du disque et effacer toutes les donnÇes\n
+3,35:  balayer toute la surface du disque et effacer toutes les donn√©es\n
 3,36:  du disque (disques durs), utilisez /U.\n
 3,37:  FORMAT /Q /U est le formatage rapide complet (pas de bas niveau /\n
 3,38:         balayage / effacement !)\n
-3,39:  FORMAT /Q est le formatage rapide sñr (enregistrer les donnÇes mirror\n
-3,40:         si possible) les donnÇes mirror Çcraseront toujours la fin de la\n
-3,41:         zone des donnÇes !\n
-3,42:  FORMAT sÇlectionne automatiquement un mode (cf. ci-dessus) si vous\n
+3,39:  FORMAT /Q est le formatage rapide s√ªr (enregistrer les donn√©es mirror\n
+3,40:         si possible) les donn√©es mirror √©craseront toujours la fin de la\n
+3,41:         zone des donn√©es !\n
+3,42:  FORMAT s√©lectionne automatiquement un mode (cf. ci-dessus) si vous\n
 3,43:              ne choisissez ni /Q ni /U\n\n
 3,44:\n
 3,45:Les types FAT pris en charge sont : FAT12, FAT16, FAT32, tous avec\n
 3,46:    mirror / unformat.\n
 3,47:Les tailles de disquettes prises en charge sont : 160k 180k 320k 360k et\n
 3,48:    1200k pour 5.25 pouces\n
-3,49: et 720k et 1440k (2880k jamais testÇ jusqu'ici) pour les lecteurs 3.5\n
+3,49: et 720k et 1440k (2880k jamais test√© jusqu'ici) pour les lecteurs 3.5\n
 3,50:    pouces.\n
 #3,?:DD drives are limited to 360k/720k respectively. 2880k is ED drives only.\n
 3,51:Les surformatages pris en charge sont : 400k 800k 1680k (et 3660k)\n
 3,52:    avec plus de secteurs\n
 3,53:  et 1494k (au lieu de 1200k) et 1743k (et 3486k) avec plus de pistes, aussi.\n
-3,54:  Plus de pistes ne fonctionnera pas sur tous les lecteurs, utilisez Ö\n
-3,55:    vos risques et pÇrils.\n
+3,54:  Plus de pistes ne fonctionnera pas sur tous les lecteurs, utilisez √†\n
+3,55:    vos risques et p√©rils.\n
 3,56:  Avertissement : les versions anciennes de DOS ne peuvent utiliser le\n
 3,57:  surformatage qu'avec un pilote.\n
-3,58:  720k dans 1440k nÇcessite un disque 720k. Utilisez un lecteur 360k pour
+3,58:  720k dans 1440k n√©cessite un disque 720k. Utilisez un lecteur 360k pour
 3,59:    formater du 360k.\n
 3,60:\n
 3,61:Pour le formatage FAT32, vous pouvez utiliser l'option /A pour forcer\n
 3,62:    l'alignement 4k.\n
 
 # main()
-4,0:Caractäre illÇgal dans l'Çtiquette du volume de : %c\n
-4,1:Les caractäres autorisÇs sont 0-9, A-Z, l'espace, les caractäres spÇciaux 128-255\n
+4,0:Caract√®re ill√©gal dans l'√©tiquette du volume de : %c\n
+4,1:Les caract√®res autoris√©s sont 0-9, A-Z, l'espace, les caract√®res sp√©ciaux 128-255\n
 4,2:et tout ce qui suit :
 # the following is printed for valid label characters from ordinal(' ')+1 through 127
 4,3: %c
-4,4:\nmais pas les caractäres de contrìle et aucun de ce qui suit :
+4,4:\nmais pas les caract√®res de contr√¥le et aucun de ce qui suit :
 # and now for enumerating illegal characters from ordinal(' ')+1 through 127
 4,5: %c"
 # /F:size
 4,6:Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n
-4,7:SpÇcial:  400, 800, 1680, 3360,    1494, 1743, 3486.\n
+4,7:Sp√©cial:  400, 800, 1680, 3360,    1494, 1743, 3486.\n
 # /T tracks (cylinders)
 4,8:OK : 40, 80. ???: 83.\n
 # /N sectors per track
 4,9:Standard: 8, 9, 15, 18, 36.\n
-4,10:SpÇcial:  10, 21, 42.\n
+4,10:Sp√©cial:  10, 21, 42.\n
 # other options
 4,11:Option non reconnue : /%c\n
-4,12:Vous devez spÇcifier une lettre de lecteur.\n
+4,12:Vous devez sp√©cifier une lettre de lecteur.\n
 4,13:Vous ne pouvez pas combiner /T et /N.\n
-4,14:La taille sera modifiÇe par le formatage - foráage du formatage complet\n
-4,15:Ancien : %d secteurs par piste, %d tàtes. Nouveau : %d sect. %d tàtes\n
-4,16:Impossible de trouver le format existant - foráage du formatage complet\n
-4,17:Impossible de trouver le format existant -  les donnÇes UNFORMAT ne seront pas enregistrÇes.\n
-4,18:êcriture d'une copie des secteurs systäme Ö la fin du lecteur :\n
-4,19:Secteur d'amoráage, un FAT, le rÇpertoire racine. Utile pour UNFORMAT.\n
-4,20:êcrasement du secteur d'amoráage, des FAT et du rÇpertoire racine par\n
-4,21:les donnÇes MIRROR/UNFORMAT que vous avez prÇcÇdemment enregistrÇ.\n
+4,14:La taille sera modifi√©e par le formatage - for√ßage du formatage complet\n
+4,15:Ancien : %d secteurs par piste, %d t√™tes. Nouveau : %d sect. %d t√™tes\n
+4,16:Impossible de trouver le format existant - for√ßage du formatage complet\n
+4,17:Impossible de trouver le format existant -  les donn√©es UNFORMAT ne seront pas enregistr√©es.\n
+4,18:√âcriture d'une copie des secteurs syst√®me √† la fin du lecteur :\n
+4,19:Secteur d'amor√ßage, un FAT, le r√©pertoire racine. Utile pour UNFORMAT.\n
+4,20:√âcrasement du secteur d'amor√ßage, des FAT et du r√©pertoire racine par\n
+4,21:les donn√©es MIRROR/UNFORMAT que vous avez pr√©c√©demment enregistr√©.\n
 # message 4,22 should never be reached/shown
 4,22:/Z:comment ???\n
-4, 23: Formatage complet (effacement de toutes les donnÇes)\n
-4, 24: Formatage rapide (vidage uniquement des mÇtadonnÇes)\n
-4, 25: Avertissement : rÇinitialise les marques de clusters dÇfectueux s'il existent.\n
-4, 26: Formatage rapide sñr (tentative de sauvegarde des donnÇes UnFormat)\n
+4, 23: Formatage complet (effacement de toutes les donn√©es)\n
+4, 24: Formatage rapide (vidage uniquement des m√©tadonn√©es)\n
+4, 25: Avertissement : r√©initialise les marques de clusters d√©fectueux s'il existent.\n
+4, 26: Formatage rapide s√ªr (tentative de sauvegarde des donn√©es UnFormat)\n
 # 4,27 through 4,32 display: <action> complete\n
 4,27:Formatage
 4,28:Formatage rapide
-4,29:Formatage rapide sñr
+4,29:Formatage rapide s√ªr
 4,30:Mirror
 4,31:UnFormat
-4,32: terminÇ.\n
+4,32: termin√©.\n
 # 4,33 thru 4,35 are to ask user to repeat previous action
 4,33:Formater
 4,34:Traiter
@@ -222,33 +222,33 @@
 # Check_Remote_Subst()
 6,0:Impossible de formater des lecteurs distants ou ceux avec la commande SUBST (code %04x). Annulation.\n
 6,1:Lecteur invalide ! Annulation.\n
-6,2:Impossible de formater les lecteurs sur lesquels ASSIGN, JOIN ou SUBST ont ÇtÇ utilisÇs. Annulation.\n
+6,2:Impossible de formater les lecteurs sur lesquels ASSIGN, JOIN ou SUBST ont √©t√© utilis√©s. Annulation.\n
 
 # Check_For_Format()
-7,0:  Secteur d'amoráage illisible, le disque n'est pas encore formatÇ\n
-7,1: Conteu du secteur d'amoráage non plausible, le disque n'est pas encore formatÇ en FAT\n
-7,2:Invalide %sBPB (code 0x%x). PAS encore formatÇ.\n
+7,0:  Secteur d'amor√ßage illisible, le disque n'est pas encore format√©\n
+7,1: Conteu du secteur d'amor√ßage non plausible, le disque n'est pas encore format√© en FAT\n
+7,2:Invalide %sBPB (code 0x%x). PAS encore format√©.\n
 
 # Write_System_Files()
-8,0:\nAVERTISSEMENT : Pas de SYS dans PATH - Çchec de l'installation des fichiers systäme !\n
-8,1:\nExÇcution de SYS : %s %s\n
-8,2:\nExÇcution de SYS dans un shell : %s\n
-8,3:\nSYS a retournÇ le niveau d'erreur %d.\n
-8,4:\nAVERTISSEMENT : Çchec de l'exÇcution de SYS.\n
+8,0:\nAVERTISSEMENT : Pas de SYS dans PATH - √©chec de l'installation des fichiers syst√®me !\n
+8,1:\nEx√©cution de SYS : %s %s\n
+8,2:\nEx√©cution de SYS dans un shell : %s\n
+8,3:\nSYS a retourn√© le niveau d'erreur %d.\n
+8,4:\nAVERTISSEMENT : √©chec de l'ex√©cution de SYS.\n
 
 # Ask_User_To_Insert_Disk()
-9,0: InsÇrez une nouvelle disquette pour le lecteur %c :\n
-9,1: Veuillez insÇrer un nouveau disque,\n
-9,2: Lorsque le disque correct est dans le lecteur, appuyez sur ENTRêE...
+9,0: Ins√©rez une nouvelle disquette pour le lecteur %c :\n
+9,1: Veuillez ins√©rer un nouveau disque,\n
+9,2: Lorsque le disque correct est dans le lecteur, appuyez sur ENTR√âE...
 
 # Confirm_Hard_Drive_Formatting()
-10,0:UNFORMAT ramänera votre rÇpertoire racine et votre FAT Ö un Çtat\n
-10,1:prÇcÇdemment sauvegardÇ. Cela peut sÇrieusement perturber les choses !\n
-10,2: AVERTISSEMENT : TOUTES LES DONNêES SUR LE %s\n
+10,0:UNFORMAT ram√®nera votre r√©pertoire racine et votre FAT √† un √©tat\n
+10,1:pr√©c√©demment sauvegard√©. Cela peut s√©rieusement perturber les choses !\n
+10,2: AVERTISSEMENT : TOUTES LES DONN√âES SUR LE %s\n
 10,3:DISQUE DUR
 10,4:DISQUETTE
 10,5: LECTEUR %c: SERONT PERDUES !
-10,6: LECTEUR %c: POURRAIENT “TRE PERDUES !
+10,6: LECTEUR %c: POURRAIENT √äTRE PERDUES !
 10,7: VEUILLEZ CONFIRMER !\n
 # note: will be followed by " (YES/NO)? " from msg 1.3 & 1.4
 10,8: Continuer avec Format ?
@@ -257,28 +257,28 @@
 10,10:Vous devez taper le mot entier %s pour confirmer.
 
 # Ask_Label()
-11,0:Veuillez entrer l'Çtiquette du volume (max. 11 caractäres):
-11,1:Pas d'Çtiquette, le disque n'aura pas d'horodatage de crÇation.\n
+11,0:Veuillez entrer l'√©tiquette du volume (max. 11 caract√®res):
+11,1:Pas d'√©tiquette, le disque n'aura pas d'horodatage de cr√©ation.\n
 
 # Critical_Error_Handler()
-12,0:\n Erreur critique pendant l'accäs %s au disque\n
-12,1:\n Programme terminÇ.\n
+12,0:\n Erreur critique pendant l'acc√®s %s au disque\n
+12,1:\n Programme termin√©.\n
 
 # Display_Drive_Statistics()
-13,0:\n Le numÇro de sÇrie du volume est %04X-%04X\n
+13,0:\n Le num√©ro de s√©rie du volume est %04X-%04X\n
 13,1:octets
 13,2:koctets
 13,3:moctets
-13,4:Pas 512 octets/secteur - les statistiques seront erronÇes.\n
+13,4:Pas 512 octets/secteur - les statistiques seront erron√©es.\n
 # %13s%c%s %s becomes <number><decimal separator>[0|5] [kbytes|bytes]
 13,5 :%13s%c%s %s d'espace disque total (taille de disque)\n
-13,6 :%13s%c%s %s dans les secteurs dÇfectueux\n
-13,7 :%13s%c%s %s dans les clusters avec des secteurs dÇfectueux\n
+13,6 :%13s%c%s %s dans les secteurs d√©fectueux\n
+13,7 :%13s%c%s %s dans les clusters avec des secteurs d√©fectueux\n
 13,8 :%13s%c%s %s disponibles sur le disque (clusters libres)\n
-13,9 :%13s%c%s %s dans chaque unitÇ d'allocation.\n
+13,9 :%13s%c%s %s dans chaque unit√© d'allocation.\n
 # second %s replaced with "  " for FAT32 or "" otherwise
-13,10:%13s%s unitÇs d'allocation sur le disque.\n
-13,11:%13s%s des unitÇs d'allocation marquÇes comme dÇfectueuses\n
+13,10:%13s%s unit√©s d'allocation sur le disque.\n
+13,11:%13s%s des unit√©s d'allocation marqu√©es comme d√©fectueuses\n
 # FAT32, 2 spaces, see 13.10 & 13.11
 13,12:
 # FAT12/FAT16, no spaces, see 13.10 & 13.11
@@ -286,75 +286,75 @@
 
 # misc messages
 14,0:\n Combinaison invalide d'options... Veuillez lire l'aide. Annulation.\n
-14,1:-- appuyez sur EntrÇe pour voir la page suivante ou êchap pour annuler  --
-14,2:\nAbondonnÇ Ö la demande de l'utilisateur.\n
-14,3:Valeur de paramätre non autorisÇe - %s%s\n
-14,4:%3d pourcent terminÇ.
+14,1:-- appuyez sur Entr√©e pour voir la page suivante ou √âchap pour annuler  --
+14,2:\nAbondonn√© √† la demande de l'utilisateur.\n
+14,3:Valeur de param√®tre non autoris√©e - %s%s\n
+14,4:%3d pourcent termin√©.
 
 # Create_File_System()
-15,0:Drapeaux FAT32 0x%04x fixÇs Ö 0.\n
-15,1:La version FAT32 0x%04x a ÇtÇ forcÇe Ö 0.\n
-15,2:Secteur d'infos SdF / Sauvegarde Amoráage
-15,3:forcÇ sur.\n
-15,4:position par dÇfaut invalide.\n
+15,0:Drapeaux FAT32 0x%04x fix√©s √† 0.\n
+15,1:La version FAT32 0x%04x a √©t√© forc√©e √† 0.\n
+15,2:Secteur d'infos SdF / Sauvegarde Amor√ßage
+15,3:forc√© sur.\n
+15,4:position par d√©faut invalide.\n
 15,5: Utilisation des secteurs 6 et 1.\n
-15,6:dÇsactivÇ (pas d'espace).\n
+15,6:d√©sactiv√© (pas d'espace).\n
 
 # Get_FS_Info()
-16,0:Taille du rÇpertoire racine arrondi Ö %u ÇlÇments, multiple de %u.\n
+16,0:Taille du r√©pertoire racine arrondi √† %u √©l√©ments, multiple de %u.\n
 16,1:Pas 512 octets par secteur. Annulation !\n
-16,2:DÇcompte FAT invalide. Annulation !\n
+16,2:D√©compte FAT invalide. Annulation !\n
 
 # Write_Boot_Sectors()
-17,0:Pas de secteur de sauvegarde d'amoráage.\n
-17,1:Position de secteur de sauvegarde d'amoráage invalide %u ??\n
+17,0:Pas de secteur de sauvegarde d'amor√ßage.\n
+17,1:Position de secteur de sauvegarde d'amor√ßage invalide %u ??\n
 17,2:Pas de secteur d'info SdF.\n
 17,3:Position de secteur d'info SdF invalide %u ??\n
 
 # Write_FAT_Tables()
-18,0:DÇcompte FAT invalide. Annulation !\n
+18,0:D√©compte FAT invalide. Annulation !\n
 18,1:AVERTISSEMENT : Chaque FAT est %lu secteurs, > 16MB-64k, incompatible avec Win9x !\n
-18,2: PrÇparation de la zone FAT...\n
-18,3: Taille optimisÇe du rÇpertoire racine initial : %lu clusters.\n
-18,4:Le rÇpertoire racine rÇduit Ö 125 clusters !\n
+18,2: Pr√©paration de la zone FAT...\n
+18,3: Taille optimis√©e du r√©pertoire racine initial : %lu clusters.\n
+18,4:Le r√©pertoire racine r√©duit √† 125 clusters !\n
 
 # drivio.c
 19,0: [Erreur %d]\n
 19,1: Lecteur invalide ! Annulation.\n
-19,2: Erreur de verrouillage FreeDOS l. 0x%x ignorÇe.\n
+19,2: Erreur de verrouillage FreeDOS l. 0x%x ignor√©e.\n
 19,3: Impossible de verrouiller le lecteur logique (erreur 0x%x) ! Annulation.\n
-19,4: Erreur de verrouillage FreeDOS p. 0x%x ignorÇe.\n
+19,4: Erreur de verrouillage FreeDOS p. 0x%x ignor√©e.\n
 19,5: Impossible de verrouiller le lecteur de disquette physique (erreur 0x%x) !?\n
 # maybe a better error message? Drive_IO() Invalid request for 0 sectors?
 19,6:Drive_IO(x,y,0)?\n
 # last %s for 19.7 & 19.8 replaced with READ or WRITE from 19.9 or 19.10
-19,7:* secteur(s) dÇfectueux : %ld (code 0x%x) en %s *\n
-19,8:Drive_IO(%s %ld, dÇcompte %d ) [%s] [lecteur %c%c]\n
-19,9:êCRITURE
+19,7:* secteur(s) d√©fectueux : %ld (code 0x%x) en %s *\n
+19,8:Drive_IO(%s %ld, d√©compte %d ) [%s] [lecteur %c%c]\n
+19,9:√âCRITURE
 19,10:LECTURE
-19,11:\nImpossible d'obtenir les drapeaux d'accäs (erreur %02x). Annulation.\n
-19,12:\nImpossible d'activer les drapeaux d'accäs (erreur %02x). Annulation.\n
+19,11:\nImpossible d'obtenir les drapeaux d'acc√®s (erreur %02x). Annulation.\n
+19,12:\nImpossible d'activer les drapeaux d'acc√®s (erreur %02x). Annulation.\n
 
 # see above for set 20
 
 # hdisk.c
-21,0:BPB par dÇfaut *FAT1x* %u secteurs/FAT, %u taille racine. FAT32 forcÇ.\n
+21,0:BPB par d√©faut *FAT1x* %u secteurs/FAT, %u taille racine. FAT32 forc√©.\n
 21,1:Lecteur invalide ! Annulation.\n
-21,2:Accäs refusÇ! Probläme de VERROUILLAGE ? Annulation.\n
+21,2:Acc√®s refus√©! Probl√®me de VERROUILLAGE ? Annulation.\n
 21,3:GENIOCTL/0860 erreur %02x. Essai de FAT32.\n
 21,4:GENIOCTL/4860 erreur %02x. Pas de noyau FAT32 ?\n
 21,5:Taille de FAT1x FAT %u secteurs ?\n
 21,6:Invite DOS de WinNT/XP/2k. Impossible de formater.\n
-21,7:Correction de la position par dÇfaut du rÇpertoire racine BPB FAT32 Ö 2.\n
+21,7:Correction de la position par d√©faut du r√©pertoire racine BPB FAT32 √† 2.\n
 # GDP = Get_Device_Parameters()
-21,8:Autocorrection GDP : doit àtre FAT12 ! Taille FAT1x : %u\n
-21,9:Autocorrection GDP : doit àtre FAT16 ! Taille FAT1x : %u\n
+21,8:Autocorrection GDP : doit √™tre FAT12 ! Taille FAT1x : %u\n
+21,9:Autocorrection GDP : doit √™tre FAT16 ! Taille FAT1x : %u\n
 21,10:Autocorrection GDP : est en effet  FAT32 ! Taille FAT : %u\n
 21,11:Autocorrection GDP : suppression de FAT1x FAT (%u) / racine (%u) du disque FAT32.\n
-21,12:Autocorrection GDP : ne peut àtre FAT1x.\n
-21,13:Autocorrection GDP : ne peut àtre FAT1x, pas de FAT FAT1x\n
-21,14:Autocorrection GDP : ne peut àtre FAT1x, pas de racine FAT1x.\n
-21,15:Erreur de lecture %02x BPB par dÇfaut GDP.\n
+21,12:Autocorrection GDP : ne peut √™tre FAT1x.\n
+21,13:Autocorrection GDP : ne peut √™tre FAT1x, pas de FAT FAT1x\n
+21,14:Autocorrection GDP : ne peut √™tre FAT1x, pas de racine FAT1x.\n
+21,15:Erreur de lecture %02x BPB par d√©faut GDP.\n
 21,16: Aligner pour un nombre impair de FAT FAT32.\n
 21,17:Le volume n'a pas de taille !? Annulation.\n
 21,18:%d octets / secteur, pas 512 !? Annulation.\n
@@ -364,28 +364,28 @@
 21,21:AVERTISSEMENT : clusters plus grands que 32k. Ne fonctionnera pas avec Win9x ou MS DOS !\n
 21,22:  WinME, WinNT/2k/XP/2003 et FreeDOS seront OK, cependant.\n
 21,23:FATAL : la taille du cluster n'est pas 0,5, 1, 2, 4, 8, 16, 32, 64k ou 128k mais %d.%dk !\n
-21,24: Nous avons presque formatÇ le lecteur FAT32 en tant que FAT1x, ouf...\n
+21,24: Nous avons presque format√© le lecteur FAT32 en tant que FAT1x, ouf...\n
 # 21.25 & 21.26 go together
-21.25:AVERTISSEMENT : La taille de FAT32  sera supÇrieure Ö (16 MB - 64 kB) !\n
-21,26:  Win9x sera incapable d'utiliser le lecteur. Les autres SE utiliseront plus de RAM/Êproc.\n
-21,27: Nous avons presque formatÇ le lecteur FAT1x ent ant que FAT32, ouf...\n
+21.25:AVERTISSEMENT : La taille de FAT32  sera sup√©rieure √† (16 MB - 64 kB) !\n
+21,26:  Win9x sera incapable d'utiliser le lecteur. Les autres SE utiliseront plus de RAM/¬µproc.\n
+21,27: Nous avons presque format√© le lecteur FAT1x ent ant que FAT32, ouf...\n
 # 21.28 or 21.29 followed by "FAT12.\n" or "FAT16.\n"
 # with %lu %s size, e.g. 999 kbytes  -- see 13.1 and similar
 21,28: Taille du disque : %lu %s, 
 21,29: Avertissement : le disque a une taille de secteur non standard, 
 
 # floppy.c
-22,0:Format_Floppy_Cylinder( tàte=%d cylindre=%d ) secteurs=%d [int 13.5]\n
-22,1:VÇrification des %d premiers secteurs par piste\n
-22,2:\nêchec du formatage, erreur dans les 7 premiers secteurs !\n
-22,3:Secteur %4ld CHS=[%2d:%d:%2d] dÇfectueux\n
-22,4:NumÇro de disque dur ! Annulation.\n
-22,5:Formatage en %ldk (Cyl=%ld Tàte=%ld Sec=%2ld)\n
+22,0:Format_Floppy_Cylinder( t√™te=%d cylindre=%d ) secteurs=%d [int 13.5]\n
+22,1:V√©rification des %d premiers secteurs par piste\n
+22,2:\n√âchec du formatage, erreur dans les 7 premiers secteurs !\n
+22,3:Secteur %4ld CHS=[%2d:%d:%2d] d√©fectueux\n
+22,4:Num√©ro de disque dur ! Annulation.\n
+22,5:Formatage en %ldk (Cyl=%ld T√™te=%ld Sec=%2ld)\n
 22,6:Aucun type de support connu pour le format %ldk\n
-22,7:Aucun type de support connu pour le format %ldk (Cyl=%ld Tàte=%ld Sec=%2ld)\n
-22,8:Lecteur de type int 13.8 0x%x traitÇ en tant que 1440k.\n
-22,9:Utilisation des valeurs par dÇfaut du lecteur : %ldk (Cyl=%ld Tàte=%ld Sec=%2ld)\n
-22,10:Taille %ldk non dÇfinie !??\n
+22,7:Aucun type de support connu pour le format %ldk (Cyl=%ld T√™te=%ld Sec=%2ld)\n
+22,8:Lecteur de type int 13.8 0x%x trait√© en tant que 1440k.\n
+22,9:Utilisation des valeurs par d√©faut du lecteur : %ldk (Cyl=%ld T√™te=%ld Sec=%2ld)\n
+22,10:Taille %ldk non d√©finie !??\n
 22,11:Vous shouhaitez %ldk dans un lecteur %dk ? C'est beaucoup trop. Annulation.\n
 22,12:SURFORMATAGE : %ldk dans un lecteur %dk. Bonne chance !\n
 22,13:C'est un lecteur 720k : aucun /1, /4 ou bien /8 de possible.\n
@@ -393,101 +393,101 @@
 22,15:Ceci est un lecteur 3,25 pouces : aucun /1, /4 ou bien /8 de possible.\n
 22,16:La taille minimale pour ce type de lecteur est 720k\n
 22,17:Ceci est un lecteur 3,25 pouces : pas de formatage 1200k.\n
-22,18:êchec du rÇglage du mode de lecteur (classe de taille %d), erreur %02x hex\n
+22,18:√âchec du r√©glage du mode de lecteur (classe de taille %d), erreur %02x hex\n
 22,19:Pas de disque dans le lecteur !\n
-22,20:On continue malgrÇ tout.\n
-22,21:Pas de disque dans le lecteur (dÇpassement du dÇlai d'attente) !\n
+22,20:On continue malgr√© tout.\n
+22,21:Pas de disque dans le lecteur (d√©passement du d√©lai d'attente) !\n
 22,22:Type de support %ldk  (%d x %ld x %2d)  non pris en charge par ce lecteur !?\n
-22,23:Erreur de jeu de gÇomÇtrie (int 13.18) (%02x).
+22,23:Erreur de jeu de g√©om√©trie (int 13.18) (%02x).
 22,24:Abandon.\n
-22,25:IgnorÇ.\n
+22,25:Ignor√©.\n
 22,26:DDPT est en ROM - seules les tailles standard sont possibles.\n
-22,27:SECTEURS PAR PISTE bloquÇs Ö %d, souhaitÇs %d. On continue malgrÇ tout.\n
+22,27:SECTEURS PAR PISTE bloqu√©s √† %d, souhait√©s %d. On continue malgr√© tout.\n
 22,28:Ajustement DDPT impossible : DDPT est en ROM\n
 22,29:Aucune longueur d'intervalle connue pour %d sec/cyl. Bonne chance avec la valeur du BIOS !\n
-22,30:AJUSTEMENT : secteurs par cylindre dans DDPT rÇglÇs sur %d\n
+22,30:AJUSTEMENT : secteurs par cylindre dans DDPT r√©gl√©s sur %d\n
 22,31:AJUSTEMENT : %d secteurs par cylindre, longueur d'intervalle de formatage %d !\n
-22,32:êchec de la rÇinitialisation du contrìleur de disquette (code %x) - DDPT rejetÇ ?\n
-22,33:-- appuyez sur ENTRêE pour formater le disque (êchap pour annuler) --\n
+22,32:√âchec de la r√©initialisation du contr√¥leur de disquette (code %x) - DDPT rejet√© ?\n
+22,33:-- appuyez sur ENTR√âE pour formater le disque (√âchap pour annuler) --\n
 22,34:[doublestepping]
-22,35:[type configurÇ %hu]
+22,35:[type configur√© %hu]
 22,36: 500 kbps (HD 1xx0k)\n
 22,37: 300 kbps (DD  360k)\n
 22,38: 250 kbps (DD  720k)\n
 22,39:1000 kbps (ED 2880k)\n
 
 # savefs.c
-23,0:Impossible d'Çcrire le secteur MIRROR MAP %lu - UNFORMAT gÉchÇe !\n
-23,1:Pas 512 octets / secteur. Impossible de sauvegarder les donnÇes UNFORMAT.\n
-23,2:Pas 1 ou 2 copies FAT. Impossible de sauvegarder les donnÇes UNFORMAT.\n
-23,3:AVERTISSEMENT : nombre de secteurs rÇservÇ / d'amoráage est %u, pas 1.\n
-23,4:AVERTISSEMENT : les secteurs rÇservÇs sont %u mais seront %u apräs formatage.\n
-23,5: Doit àtre FAT32, pas %s !\n
-23,6: Les donnÇs unformat NE seront PAS enregistrÇes, la liste de clusters dÇfectueux ne sera pas prÇservÇe.\n
-23,7:AVERTISSEMENT : FAT32 avec un rÇpertoire racine supplÇmentaire de style FAT1x ???\n
-23,8: Doit àtre FAT32, pas FAT1x!\n
-23,9: RÇpertoire racine FAT32 mais FAT FAT1x !\n
-23,10: taille %s mais censÇ àtre FAT32 !\n
-23,11: RÇpertoire racine, FAT ou taille de lecteur peu plausible ! Secteur d'amoráage dÇfectueux ?\n
-23,12: Gros FAT pour peu de donnÇes ? Secteur d'amoráage dÇfectueux ??\n
-23,13:Le rÇpertoire racine n'est PAS dans le premier cluster, il ne sera PAS sauvegardÇ !\n
-23,14: Le lecteur semble non formatÇ, les informations UNFORMAT NON sauvegardÇes.\n
-23,15:Le nombre de secteurs rÇservÇs diffäre : TROUVê %lu / PRêVU %u.\n
-23,16:Le nombre de FAT diffäre : TROUVê %lu / PRêVU %hu\n
-23,17:La taille des clusters diffäre : TROUVêE %lu / PRêVUE %hu (sectors)\n
+23,0:Impossible d'√©crire le secteur MIRROR MAP %lu - UNFORMAT g√¢ch√©e !\n
+23,1:Pas 512 octets / secteur. Impossible de sauvegarder les donn√©es UNFORMAT.\n
+23,2:Pas 1 ou 2 copies FAT. Impossible de sauvegarder les donn√©es UNFORMAT.\n
+23,3:AVERTISSEMENT : nombre de secteurs r√©serv√© / d'amor√ßage est %u, pas 1.\n
+23,4:AVERTISSEMENT : les secteurs r√©serv√©s sont %u mais seront %u apr√®s formatage.\n
+23,5: Doit √™tre FAT32, pas %s !\n
+23,6: Les donn√©s unformat NE seront PAS enregistr√©es, la liste de clusters d√©fectueux ne sera pas pr√©serv√©e.\n
+23,7:AVERTISSEMENT : FAT32 avec un r√©pertoire racine suppl√©mentaire de style FAT1x ???\n
+23,8: Doit √™tre FAT32, pas FAT1x!\n
+23,9: R√©pertoire racine FAT32 mais FAT FAT1x !\n
+23,10: taille %s mais cens√© √™tre FAT32 !\n
+23,11: R√©pertoire racine, FAT ou taille de lecteur peu plausible ! Secteur d'amor√ßage d√©fectueux ?\n
+23,12: Gros FAT pour peu de donn√©es ? Secteur d'amor√ßage d√©fectueux ??\n
+23,13:Le r√©pertoire racine n'est PAS dans le premier cluster, il ne sera PAS sauvegard√© !\n
+23,14: Le lecteur semble non format√©, les informations UNFORMAT NON sauvegard√©es.\n
+23,15:Le nombre de secteurs r√©serv√©s diff√®re : TROUV√â %lu / PR√âVU %u.\n
+23,16:Le nombre de FAT diff√®re : TROUV√â %lu / PR√âVU %hu\n
+23,17:La taille des clusters diff√®re : TROUV√âE %lu / PR√âVUE %hu (sectors)\n
 #  FOUND # FAT?? / PLANNED # FAT??
-23,18:La taille de FAT diffäre : TROUVêE %lu %s / PRêVUE %lu %s\n
-23,19:Les donnÇes MIRROR auraient ÇcrasÇ des clusters utilisÇs. Annulation.
-23,20:Formatage sñr : je dois supprimer %lu secteurs de donnÇes utilisÇs !\n
-23,21:Erreur d'Çcriture du pointeur de carte Mirror - UNFORMAT Çchouera pour vous !\n
-23,22:êtape de sauvegarde des donnÇes UNFORMAT / mirror ignorÇe.\n
-23,23:Erreur de lecture sur le secteur %lu - donnÇes UNFORMAT endommagÇes\n
-23,24:Erreur d'Çcriture sur le secteur %lu - donnÇes UNFORMAT endommagÇes\n
+23,18:La taille de FAT diff√®re : TROUV√âE %lu %s / PR√âVUE %lu %s\n
+23,19:Les donn√©es MIRROR auraient √©cras√© des clusters utilis√©s. Annulation.
+23,20:Formatage s√ªr : je dois supprimer %lu secteurs de donn√©es utilis√©s !\n
+23,21:Erreur d'√©criture du pointeur de carte Mirror - UNFORMAT √©chouera pour vous !\n
+23,22:√âtape de sauvegarde des donn√©es UNFORMAT / mirror ignor√©e.\n
+23,23:Erreur de lecture sur le secteur %lu - donn√©es UNFORMAT endommag√©es\n
+23,24:Erreur d'√©criture sur le secteur %lu - donn√©es UNFORMAT endommag√©es\n
 23,25: La carte mirror fait %lu octets, 
 23,26: %lu secteurs mis en miroir.\n
-23,27:Pas de donnÇes MIRROR / UNDELETE : mauvaise magie.\n
-23,28:\n Fin de la carte mirror. UNFORMAT effectuÇ.\n
-23,29: Clonage du secteur d'amoráage dans la sauvegarde.\n
-23,30: Invalidation des donnÇs du secteur d'informations du systäme de fichiers.\n
+23,27:Pas de donn√©es MIRROR / UNDELETE : mauvaise magie.\n
+23,28:\n Fin de la carte mirror. UNFORMAT effectu√©.\n
+23,29: Clonage du secteur d'amor√ßage dans la sauvegarde.\n
+23,30: Invalidation des donn√©s du secteur d'informations du syst√®me de fichiers.\n
 23,31:*** Impossible de copier le secteur de sauvegarde %lu vers le secteur %lu ***\n
-23,32:Le secteur d'amoráage serait ÇcrasÇ par des absurditÇs, 0 ou > 7 FAT.\n
+23,32:Le secteur d'amor√ßage serait √©cras√© par des absurdit√©s, 0 ou > 7 FAT.\n
 23,33:*** Impossible de restaurer le secteur %lu ***\n
 23,34:*** Impossible de cloner le secteur FAT %lu vers le secteur %lu ***\n
-23,35:AVERTISSEMENT : %hu copies FAT demandÇes, utilisation de %hu Ö la place.\n
+23,35:AVERTISSEMENT : %hu copies FAT demand√©es, utilisation de %hu √† la place.\n
 23,36:AVERTISSEMENT : UNFORMAT transforme le lecteur FAT1x en FAT32.\n
 23,37:AVERTISSEMENT : UNFORMAT transforme le lecteur FAT32 en FAT1x!?\n
-23,38:\n DonnÇes du secteur d'amoráage : %hu copies FAT (dÇcalage %lu), %lu secteurs par FAT\n
+23,38:\n Donn√©es du secteur d'amor√ßage : %hu copies FAT (d√©calage %lu), %lu secteurs par FAT\n
 
 # savefs.c unable to save filesystem properties error message
 # Use as many messages as needed, 1 message per max 79 column line
 # message numbers do not need to match up for messages for different languages
 # Each message should end with a newline \n
 # after every 23 messages user will be prompted to press a key to continue
-24,0:Les propriÇtÇs du systäme de fichier seront modifiÇes, impossible de\n
-24,1:prÇserver l'ancienne liste (Çventuellement vide) de clusters dÇfectueux.\n
+24,0:Les propri√©t√©s du syst√®me de fichier seront modifi√©es, impossible de\n
+24,1:pr√©server l'ancienne liste (√©ventuellement vide) de clusters d√©fectueux.\n
 24,2:Utilisez un outil de balayage de la surface ou bien FORMAT /U si vous
-24,5:souhaitez mettre Ö jour la liste des clusters dÇfectueux.\n
+24,5:souhaitez mettre √† jour la liste des clusters d√©fectueux.\n
 
 # recordbc.c
-25,0:Disque inutilisable : secteur dÇfectueux dans les donnÇes systäme. Formatage terminÇ.\n
-25,1:\nSecteur d'amoráage endommagÇ.\n
-25,2:\nSecteur FAT endommagÇ.\n
-25,3:\nSecteur du rÇpertoire racine endommagÇ.\n
-25,4:\nSecteur d'amoráage endommagÇ.\n
-25,5:\nSecteur FAT endommagÇ.\n
-25,6:\nSecteur du rÇpertoire racine endommagÇ.\n
-25,7:\nSecteur rÇservÇ (amoráage, info, sauvegarde de l'un ou l'autre...) endommagÇ.\n
-25,8:\nSecteur FAT endommagÇ.\n
-25,9:*** Secteur dÇfectueux %lu, le cluster %lu marquÇ comme dÇfectueux dans FAT ! ***\n
-25,10:AVERTISSEMENT : il faut marquer le cluster UTILISê %lu comme dÇfectueux !\n
-25,11:*** %u secteurs dÇfectueux trouvÇs. %lu clusters marquÇs comme dÇfectueux. ***\n
+25,0:Disque inutilisable : secteur d√©fectueux dans les donn√©es syst√®me. Formatage termin√©.\n
+25,1:\nSecteur d'amor√ßage endommag√©.\n
+25,2:\nSecteur FAT endommag√©.\n
+25,3:\nSecteur du r√©pertoire racine endommag√©.\n
+25,4:\nSecteur d'amor√ßage endommag√©.\n
+25,5:\nSecteur FAT endommag√©.\n
+25,6:\nSecteur du r√©pertoire racine endommag√©.\n
+25,7:\nSecteur r√©serv√© (amor√ßage, info, sauvegarde de l'un ou l'autre...) endommag√©.\n
+25,8:\nSecteur FAT endommag√©.\n
+25,9:*** Secteur d√©fectueux %lu, le cluster %lu marqu√© comme d√©fectueux dans FAT ! ***\n
+25,10:AVERTISSEMENT : il faut marquer le cluster UTILIS√â %lu comme d√©fectueux !\n
+25,11:*** %u secteurs d√©fectueux trouv√©s. %lu clusters marqu√©s comme d√©fectueux. ***\n
 
 # bcread.c (bad clusters)
-26,0:\n *** Trop de clusters dÇfectueux ! Effectuez une analyse de la surface apräs FORMATAGE ! ***\n
-26,1:BadClustPreserve annulÇ : pas 512 octets/secteur !\n
-26,2: Analyse des secteurs FAT %lu Ö %lu...\n
+26,0:\n *** Trop de clusters d√©fectueux ! Effectuez une analyse de la surface apr√®s FORMATAGE ! ***\n
+26,1:BadClustPreserve annul√© : pas 512 octets/secteur !\n
+26,2: Analyse des secteurs FAT %lu √† %lu...\n
 26,3: Analyse du FAT existant...\n
-26,4:\n Statistiques des clusters : %lu utilisÇs, %lu dÇfectueux, %lu ÇlÇments, %lu dernier.\n
-26,5:\n Statistiques des clusters : %lu utilisÇs, %lu dÇfectueux, %lu ÇlÇments, %lu dernier.\n
+26,4:\n Statistiques des clusters : %lu utilis√©s, %lu d√©fectueux, %lu √©l√©ments, %lu dernier.\n
+26,5:\n Statistiques des clusters : %lu utilis√©s, %lu d√©fectueux, %lu √©l√©ments, %lu dernier.\n
 26,6: Impossible de traiter le FAT12 existant, trop grand !\n
-26,7:\n Statistiques des clusters : %lu utilisÇs, %lu dÇfectueux, %lu ÇlÇments, %lu dernier.\n
+26,7:\n Statistiques des clusters : %lu utilis√©s, %lu d√©fectueux, %lu √©l√©ments, %lu dernier.\n
