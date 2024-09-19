@@ -318,7 +318,7 @@ void Save_File_System(int overwrite)
 
 
 
-  printf(" Saving UNFORMAT information...\n");
+  printf(catgets(catalog, 23, 39, " Saving UNFORMAT information...\n"));
 
   /* Compute the beginning sector of the mirror map and the size of */
   /* the mirror image.     */

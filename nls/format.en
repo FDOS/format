@@ -427,6 +427,7 @@
 23,36:WARNING: UNFORMAT turns FAT1x drive into FAT32.\n
 23,37:WARNING: UNFORMAT turns FAT32 drive into FAT1x!?\n
 23,38:\n Boot sector data: %hu FAT copies (offset %lu), %lu sectors per FAT\n
+23,39: Saving UNFORMAT information...\n
 
 # savefs.c unable to save filesystem properties error message
 # Use as many messages as needed, 1 message per max 79 column line
