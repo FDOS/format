@@ -629,7 +629,10 @@ void Display_Percentage_Formatted(unsigned long percentage)
 
 void IllegalArg(char *option, char *argptr)
 {
-    printf(catgets(catalog, 14, 3, "Parameter value not allowed - %s%s\n"), option, argptr);
+	if (argptr != NULL)
+      printf(catgets(catalog, 14, 3, "Parameter value not allowed - %s%s\n"), option, argptr);
+    else
+      printf(catgets(catalog, 14, 5, "Required parameter value is missing - %s:value\n"), option);
     Exit(4,14);
 } /* IllegalArg */
 

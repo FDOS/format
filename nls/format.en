@@ -260,6 +260,7 @@
 14,2:\nAborted at user request.\n
 14,3:Parameter value not allowed - %s%s\n
 14,4:%3d percent completed.
+14,5:Required parameter value is missing - %s:value\n
 
 # Create_File_System()
 15,0:FAT32 flags 0x%04x fixed to 0.\n

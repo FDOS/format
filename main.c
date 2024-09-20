@@ -222,6 +222,22 @@ void Write_System_Files(void)
 } /* Write_System_Files */
 
 
+
+/* given string in form of :# (or just #), return the # or 0 if missing/error */
+int getRequiredValue(char *optarg)
+{
+	int n = 0;
+	/* argument value is not missing nor blank */
+	if ((optarg != NULL) && *optarg)
+	{
+		if (isdigit(*optarg)) /* assume # -- omitted : */
+			n = atoi(optarg);
+		else  /* assume :# */
+			n = atoi (optarg + 1);
+	}
+}
+
+
 /*
 /////////////////////////////////////////////////////////////////////////////
 //  MAIN ROUTINE
@@ -386,7 +402,7 @@ void main(int argc, char *argv[])
 	case 'F':           /* /F:size */
 	case 'f':           /* /F:size */
 	  param.f = TRUE;
-	  n = atoi (optarg + 1);
+	  n = getRequiredValue(optarg);
 
 	  if ((n == 160) || (n == 180) || (n == 320) || (n == 360) ||
 	      (n == 720) || (n == 1200) || (n == 1440) || (n == 2880) ||
@@ -399,14 +415,14 @@ void main(int argc, char *argv[])
 	    {
             printf(catgets(catalog, 4, 6, "Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n"));
             printf(catgets(catalog, 4, 7, "Special:  400, 800, 1680, 3360,    1494, 1743, 3486.\n"));
-	    IllegalArg("/F",optarg);
+            IllegalArg("/F",optarg);
 	    }
 	  break;
 
 	case 'T': /* tracks (cylinders) */
 	case 't': /* tracks (cylinders) */
 	  param.t = TRUE;
-	  n = atoi (optarg + 1);
+	  n = getRequiredValue(optarg);
 
 	  if ((n == 40) || (n == 80) || (n == 83))
 	    {
@@ -422,7 +438,7 @@ void main(int argc, char *argv[])
 	case 'N': /* sectors per track */
 	case 'n': /* sectors per track */
 	  param.n = TRUE;
-	  n = atoi (optarg + 1);
+	  n = getRequiredValue(optarg);
 
 	  if ((n == 8) || (n == 9) || (n == 15) || (n == 18) || (n == 36) ||
               (n == 10) || (n == 21) || (n == 42))
