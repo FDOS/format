@@ -23,7 +23,7 @@ nls/*.lv working-tree-encoding=CP775 text eol=auto
 nls/*.nl working-tree-encoding=CP850 text eol=auto
 nls/*.fi working-tree-encoding=CP850 text eol=auto
 nls/*.fr working-tree-encoding=CP850 text eol=auto
-nls/*.de working-tree-encoding=CP850 text eol=auto
+#nls/*.de working-tree-encoding=CP858 text eol=auto
 nls/*.dk working-tree-encoding=CP850 text eol=auto
 nls/*.it working-tree-encoding=CP850 text eol=auto
 nls/*.pt working-tree-encoding=CP850 text eol=auto

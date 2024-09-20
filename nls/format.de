@@ -1,0 +1,462 @@
+# program: FreeDOS FORMAT.EXE message set - version 0.92a and later
+# language:German
+# display codepage:CP858, (CR+LF)
+# catalog codepage:UTF8
+# translators:W. Spiegl
+
+# version (on help screen)
+0,0:FreeDOS %6s - Version %s\n
+0,1:Geschrieben von Brian E. Reifsnyder, Eric Auer und anderen.\n
+0,2:Copyright 1999 - 2024 under the terms of the GNU GPL, Version 2+.\n\n
+# 0.3 or 0.4 shown depending on if /Z:longhelp option used or not
+0,3:Syntax (weitere Details und Hintergrundinfos vgl. Dokumentation):\n\n
+0,4:Syntax (vgl. Dokumentation oder /Z:longhelp für weitere Optionen):\n\n
+
+# common
+1,0:\n
+# these two options for Yes and No are only 1 character and must be upper case
+1,1:J
+1,2:N
+# user has to type full word matching this
+1,3:JA
+1,4:NEIN
+# other possibly common bits
+1,5:Fehlgeschlagen!\n
+1,6:Fehlgeschlagen.\n
+1,7:Abbruch.\n
+
+# short help screen (shown if compiled without LEGACY_HELP)
+# Use as many messages as needed, 1 message per max 79 column line
+# but if possible keep to less than 23 lines
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+2,0:FORMAT Laufwerk: [/V[:label]] [/Q] [/U] [/F:Größe] [/S] [/D]\n
+2,1:FORMAT Laufwerk: [/V[:label]] [/Q] [/U] [/T:Spuren /N:Sektoren] [/S] [/D]\n
+#  /* the /4 option is a legacy shorthand for size selection: 360k in 1.2M drive */
+#  /* (drive type detection and "double stepping" setting are automatic on ATs.) */
+2,2:FORMAT Laufwerk: [/V[:label]] [/Q] [/U] [/4] [/S] [/D]\n
+2,3:\n
+2,4: /V:label   Gibt der Festplatte ein Label und speichert deren Datum / Uhrzeit.\n
+2,5: /S         Ruft SYS auf, um die Disk mit Systemdateien bootfähig zu machen.\n
+2,6: /D         Ist sehr ausführlich und zeigt Debugging-Ausgabe. Für Bugreports.\n
+2,7: /Q         Disk-Schnellformatierung. Kann UNFORMATiert werden,falls nicht mit\n
+2,8:            /U kombiniert, behält Clusterfehlermarkierungen (/Q /U nicht!).\n
+2,9: /U         Formatiert die Disk bedingungslos. Low-Level-Format bei Diskette.\n
+2,10: /F:Größe   Gibt Größe der zu formatierenden Diskette an. Normalgrößen sind:\n
+2,11:            360, 720, 1200, 1440 oder 2880 (Einheit: kB). /F:0 listet auf.\n
+2,12: /4          Formatiert eine 360k Diskette in einem 1,2 MB Diskettenlaufwerk.\n
+2,13: /T:Spuren   Gibt die Anzahl der Spuren auf einer Diskette an.\n
+2,14: /N:Sektoren Gibt die Anzahl der Sektoren auf einer Diskette an.\n
+
+# short help screen (shown if compiled _with_ LEGACY_HELP)
+# Use as many messages as needed, 1 message per max 79 column line
+# but if possible keep to less than 23 lines
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+20,0:FORMAT Laufwerk: [/V[:label]] [/Q] [/U] [/F:Größe] [/B | /S] [/D]\n
+20,1:FORMAT Laufwerk: [/V[:label]] [/Q] [/U] [/T:Spuren /N:Sektoren] [/B | /S] [/D]\n
+20,2:FORMAT Laufwerk: [/V[:label]] [/Q] [/U] [/4] [/B | /S] [/D]\n
+20,3:FORMAT Laufwerk: [/Q] [/U] [/1] [/4] [/8] [/B | /S] [/D]\n
+20,4:\n
+20,5: /V:label   Gibt der Festplatte ein Label und speichert deren Datum / Uhrzeit.\n
+20,6: /S         Ruft SYS auf, um die Disk mit Systemdateien bootfähig zu machen.\n
+20,7: /B         Wegen Kompatibilität behalten, früher für Bootdateien reserviert.\n
+20,8: /D         Ist sehr ausführlich und zeigt Debugging-Ausgabe. Für Bugreports.\n
+20,9: /Q         Disk-Schnellformatierung. Kann UNFORMATiert werden,falls nicht mit\n
+20,10:            /U kombiniert, behält Clusterfehlermarkierungen (/Q /U nicht!).\n
+20,11: /U         Formatiert die Disk bedingungslos. Low-Level-Format bei Diskette.\n
+20,12: /F:Größe   Gibt Größe der zu formatierenden Diskette an. Normalgrößen sind:\n
+20,13:            360, 720, 1200, 1440 oder 2880 (Einheit: kB). /F:0 listet auf.\n
+20,14: /4         Formatiert eine 360k Diskette in einem 1,2 MB Diskettenlaufwerk.\n
+20,15: /T:Spuren  Gibt die Anzahl der Spuren auf einer Diskette an.\n
+20,16: /N:Sektoren Gibt die Anzahl der Sektoren auf einer Diskette an.\n
+20,17: /1          Formatiert nur eine Seite einer Diskette (160 / 180kB).\n
+20,18: /8          Formatiert eine 5.25\" Disk mit 8 Sektoren pro Spur (160 / 320kB).\n
+
+# detailed help screen
+# Use as many messages as needed, 1 message per max 79 column line
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+3,0:Diese FORMAT-Datei wurde für das http://www.freedos.org/ Projekt erstellt.\n
+3,1:  Siehe http://www.gnu.org/ für Informationen über die GNU GPL Lizenz.\n
+3,2:1999-2003 von Brian E. Reifsnyder <reifsnyderb@mindspring.com> erstellt.\n
+3,3:  Maintainer für 0.90 / 0.91 2003-2006: Eric Auer <eric@coli.uni-sb.de>\n
+3,4:Mitwirkende: Jan Verhoeven, John Price, James Clark, Tom Ehlert,\n
+3,5:  Bart Oldeman, Jim Hall und andere. Nicht zu vergessen alle Tester!\n
+3,6:\n
+3,7:Erklärung der Schalter und Zusatzfunktionen:\n
+3,8:/D (debug) und /Y (Bestätigungsanfrage überspringen) sind immer erlaubt.\n
+3,9:/B Reserviere Speicher für sys ist Dummy, keine Kombination mit /s möglich.\n
+3,10:/V:label ist nicht für 160k/320k Disks. Label speichert das Format Datum/Zeit\n
+3,11:\n
+3,12:Größenangaben gibt es nur bei Disketten. Sie können entweder /F:Größe (in kB)\n
+3,13:angeben, /F:0 zeigt eine Liste der erlaubten Größen,\n
+3,14:oder: /T:Spuren /N:Sektoren_pro_Spur\n
+3,15:oder eine Kombination von: /1 (einseitig, 160k/180k),\n
+3,16:                           /8 (8 Sektoren pro Spur, 160k/320k, DOS 1.x) und\n
+3,17:                           /4 (format 160-360k Disk in einem 1200k Laufwerk).\n
+3,18:\n
+3,19:Um die Bestätigung der HD-Formatierung zu unterdrücken:        /Z:seriously\n
+3,20:Um nur UNFORMAT (MIRROR)-Daten ohne Formatierung zu speichern: /Z:mirror\n
+3,21:Zum UNFORMATieren einer Disk, welche frische MIRROR-Daten hat: /Z:unformat\n
+3,22:\n
+3,23:Modi für FLOPPY sind: Schnellformatierung (speichert Infodaten für UNFORMAT)\n
+3,24:und lowlevel format. Verwenden Sie lowlevel format nur wenn wirklich benötigt.\n
+3,25:Modi für HD sind: Versucht, Schnellformatierung anzuwenden. Verwenden Sie\n
+3,26:  schnelles Vollformat nur bei Bedarf. Dieses resettet nur das Dateisystem.\n
+3,27:Wenn Sie bei Disketten lowlevel format erzwingen ODER bei HD die gesamte\n
+3,28:  Diskoberfläche scannen und alle Inhalte löschen wollen, wählen Sie /U.\n
+3,29:  FORMAT /Q /U ist schnelles Vollformat (KEIN lowlevel format / scan / wipe!)\n
+3,30:  FORMAT /Q ist Schnellformatierung (speichert MIRROR-Daten falls möglich)\n
+3,31:    Die MIRROR-Daten überschreiben immer das Ende des Datenbereichs!\n
+3,32:  Wenn weder /Q noch /U gewählt ist, wählt FORMAT automatisch einen Modus.\n
+3,33:\n
+3,34:Unterstützte FAT-Typen sind: FAT12, FAT16, FAT32, alle mit MIRROR / UNFORMAT.\n
+3,35:Unterstützte Floppy-Größen sind: 160k 180k 320k 360k und 1200k für 5.25 Inch\n
+3,36:  und 720k und 1440k (2880k bisher nie getestet) für 3.5 Inch Laufwerke.\n
+#3,?:DD Laufwerke sind auf 360k/720k begrenzt. 2880k nur bei ED Laufwerken.\n
+3,37:Unterstützte Überformate sind auch: 400k 800k 1680k (und 3660k) mit mehr\n
+3,38:  Sektoren und 1494k (statt 1200k) und 1743k (und 3486k) mit mehr Spuren.\n
+3,39:  Mehr Spuren funktioniert nicht auf allen Laufwerken, d.h. ist gefährlich!\n
+3,40:  Warnung: Ältere DOS Versionen brauchen für Überformate einen Treiber!\n
+3,41:  720k in 1440k LW braucht eine 720k Disk. Die 360k Disk braucht ein 360k LW!\n
+3,42:\n
+3,43:Bei FAT32 Formatierung geht der /A Schalter für 4k-Ausrichtungserzwingung.\n
+
+# main()
+4,0:Ungültiges Zeichen im Label des Volumes: %c\n
+4,1:Gültige Zeichen sind 0-9, A-Z, Leertaste, Sonderzeichen / länderspezifische\n
+4,2: Zeichen 128-255 und alle von:
+# the following is printed for valid label characters from ordinal(' ')+1 through 127
+4,3: %c
+4,4:\naber keine Steuerzeichen und keine:
+# and now for enumerating illegal characters from ordinal(' ')+1 through 127
+4,5: %c"
+# /F:Größe
+4,6:Standard: 160, 180, 320, 360, 720, 1200, 1440, 2880.\n
+4,7:Spezial:  400, 800, 1680, 3360,    1494, 1743, 3486.\n
+# /T Spuren (Zylinder)
+4,8:Ok: 40, 80. ???: 83.\n
+# /N Sektoren pro Spur
+4,9:Standard: 8, 9, 15, 18, 36.\n
+4,10:Spezial:  10, 21, 42.\n
+# other options
+4,11:Nicht erkannte Option: /%c\n
+4,12:Laufwerksbuchstabe muß angegeben sein.\n
+4,13:/T und /N kann nicht kombiniert werden.\n
+4,14:Verändere durch die Formatierung die Größe - erzwinge Vollformatierung\n
+4,15:Alt: %d Sektoren pro Spur, %d Köpfe. Neu: %d Sekt. %d Köpfe\n
+4,16:Finde kein existierendes Format - erzwinge Vollformatierung\n
+4,17:Finde kein existierendes Format - speichere keine UNFORMAT Daten.\n
+4,18:Schreibe eine Kopie der Systemsektoren an das Ende des Laufwerks:\n
+4,19:Bootsektor, eine FAT, Rootverzeichnis. Hilfreich für UNFORMAT.\n
+4,20:Überschreibe Bootsektor, FATs und Rootverzeichnis mit\n
+4,21:MIRROR/UNFORMAT Daten, die Sie früher gespeichert haben.\n
+# message 4,22 should never be reached/shown
+4,22:/Z:was???\n
+4, 23: Vollformatierung (wipe alle Daten)\n
+4, 24: Schnellformatierung (entfernt nur die Metadaten)\n
+4, 25: Warnung: Resettet fehlerhafte Clustermarkierungen, falls vorhanden.\n
+4, 26: Sichere Schnellformatierung (versucht, UNFORMAT Daten zu speichern)\n
+# 4,27 through 4,32 display: <action> complete\n
+4,27:Formatierung
+4,28:Schnellformatierung
+4,29:Sichere Schnellformatierung
+4,30:Mirror
+4,31:UnFormat
+4,32: beendet.\n
+# 4,33 thru 4,35 are to ask user to repeat previous action
+4,33:Formatieren
+4,34:Verarbeiten
+4,35: einer anderen Floppy (j/n)?
+# 4,36 thru 4,38 tell user we are repeating action
+4,36:Verarbeiten
+4,37:Formatieren
+4,38:%s der nächsten Floppy...\n
+
+# the following are long option keywords /Z:keyword
+5,0:Ungültiger /Z:Modus - gültig: MIRROR, UNFORMAT, SERIOUSLY\n"));
+# take a new mirror data snapshot
+5,1:mirror
+# revert to mirrored state, dangerous!
+5,2:unformat
+# User MEANS to format harddisk
+5,3:seriously
+# display LONG (detailed) version of help
+5,4:longhelp
+
+# Check_Remote_Subst()
+6,0:Remote- oder SUBSTed-LW können nicht formatiert werden (Code %04x). Abbruch.\n
+6,1:Ungültiges Laufwerk! Abbruch.\n
+6,2:Kann ASSIGNed, JOINed oder SUBSTed Laufwerk nicht formatieren. Abbruch.\n
+
+# Check_For_Format()
+7,0:  Der Bootsektor ist nicht lesbar, die Diskette noch nicht formatiert\n
+7,1: Die Bootsektorinhalte sind unplausibel, die HD noch nicht FAT-formatiert\n
+7,2:Ungültiger %sBPB (Code 0x%x). Noch NICHT formatiert.\n
+
+# Write_System_Files()
+8,0:\nWARNUNG: Kein SYS im PFAD - konnte Systemdateien nicht installieren!\n
+8,1:\nSYS ausführen: %s %s\n
+8,2:\nSYS in einer Shell ausführen: %s\n
+8,3:\nSYS gab den Errorlevel %d zurück.\n
+8,4:\nWARNUNG: Die Ausführung von SYS ist fehlgeschlagen.\n
+
+# Ask_User_To_Insert_Disk()
+9,0: Neue Diskette in Laufwerk %c einlegen:\n
+9,1: Bitte eine neue Diskette einlegen,\n
+9,2: Drücken Sie ENTER, wenn die richtige Diskette im Laufwerk ist...
+
+# Confirm_Hard_Drive_Formatting()
+10,0:UNFORMAT setzt Ihr Stammverzeichnis und die FAT auf einen zuvor gespeicherten\n
+10,1:Stand zurück. Das kann die Dinge ernsthaft durcheinander bringen!\n
+10,2: WARNUNG: ALLE DATEN AUF %s\n
+10,3:DER FESTPLATTE
+10,4:DER FLOPPY DISK (Diskette)
+10,5: Laufwerk %c: WERDEN VERLOREN GEHEN!
+10,6: Laufwerk %c: KÖNNEN VERLOREN GEHEN!
+10,7: BITTE BESTÄTIGEN!\n
+# note: will be followed by " (YES/NO)? " from msg 1.3 & 1.4
+10,8: Fortfahren mit Format
+10,9: Fortfahren mit Unformat
+# %s will be replaced with msg from 1.3
+10,10:Zur Bestätigung müssen Sie das ganze Wort %s eingeben.
+
+# Ask_Label()
+11,0:Bitte geben Sie das Label des Volumes ein (max. 11 Zeichen):
+11,1:Kein Label, die Disk wird keinen Erkennungszeitstempel haben.\n
+
+# Critical_Error_Handler()
+12,0:\n Kritischer Fehler bei Zugriff auf Disk %s\n
+12,1:\n Programm beendet.\n
+
+# Display_Drive_Statistics()
+13,0:\n Die Volume-Seriennummer lautet: %04X-%04X\n
+13,1:Bytes
+13,2:KBytes
+13,3:MBytes
+13,4:Keine 512 Bytes/Sektor - die Berechnungen werden falsch sein.\n
+# %13s%c%s %s becomes <number><decimal separator>[0|5] [KBytes|Bytes]
+13,5 :%13s%c%s %s Speicherplatz gesamt (Diskgröße)\n
+13,6 :%13s%c%s %s in defekten Sektoren\n
+13,7 :%13s%c%s %s in Clustern mit defekten Sektoren\n
+13,8 :%13s%c%s %s auf der Disk verfügbar (freie Cluster)\n
+13,9 :%13s%c%s %s in jeder Zuordnungseinheit.\n
+# second %s replaced with "  " for FAT32 or "" otherwise
+13,10:%13s%s Zuordnungseinheiten auf der Disk.\n
+13,11:%13s%s der als schlecht markierten Zuordnungseinheiten\n
+# FAT32, 2 spaces, see 13.10 & 13.11
+13,12:
+# FAT12/FAT16, no spaces, see 13.10 & 13.11
+13,13:
+13,14:GBytes
+
+# misc messages
+14,0:\n Ungültige Optionskombination... Bitte die Hilfe lesen. Abbruch.\n
+14,1:-- Drücken Sie ENTER, für die nächste Seite oder ESC um abzubrechen --
+14,2:\nAuf Benutzeranforderung abgebrochen.\n
+14,3:Parameterwert nicht zulässig - %s%s\n
+14,4:%3d Prozent erledigt.
+
+# Create_File_System()
+15,0:FAT32 Flags 0x%04x gefixt auf 0.\n
+15,1:FAT32 Version 0x%04x erzwungen auf 0.\n
+15,2:Backup Boot / FS Info Sektor 
+15,3:erzwungen auf.\n
+15,4:Standardposition ungültig.\n
+15,5: Verwende Sektor 6 und 1.\n
+15,6:deaktiviert (kein Raum).\n
+
+# Get_FS_Info()
+16,0:Die Größe des Rootverz. wurde auf %u Einträge, (Vielfaches von %u) gerundet.\n
+16,1:Keine 512 Bytes pro Sektor. Abbruch!\n
+16,2:Ungültige FAT-Zahl. Abbruch!\n
+
+# Write_Boot_Sectors()
+17,0:Kein Backup Bootssektor.\n
+17,1:Ungültige Position des Backup-Bootsektors %u??\n
+17,2:Kein FS Infosektor.\n
+17,3:Ungültige FS Infosektorposition %u??\n
+
+# Write_FAT_Tables()
+18,0:Ungültige FAT-Anzahl. Abbruch!\n
+18,1:WARNUNG: Jede FAT hat %lu Sektoren, > 16MB-64k, Win9x inkompatibel!\n
+18,2: Bereite FAT-Bereich vor...\n
+18,3: Optimierte anfängliche Größe des Stammverzeichnisses: %lu Cluster....\n
+18,4:Rootverzeichnis auf 125 Cluster beschnitten!\n
+
+# drivio.c
+19,0: [Fehler %d]\n
+19,1: Ungültiges Laufwerk! Abbruch.\n
+19,2: FreeDOS l. Sperrfehler 0x%x ignoriert.\n
+19,3: Logisches Laufwerk konnte nicht gesperrt werden (Fehler 0x%x)! Abbruch.\n
+19,4: FreeDOS p. Sperrfehler 0x%x ignoriert.\n
+19,5: Physikal. Diskettenlaufwerk konnte nicht gesperrt werden (Fehler 0x%x)!?\n
+# maybe a better error message? Drive_IO() Invalid request for 0 sectors?
+19,6:Drive_IO(x,y,0)?\n
+# last %s for 19.7 & 19.8 replaced with READ or WRITE from 19.9 or 19.10
+19,7:* Defekte Sektor(en): %ld (Code 0x%x) auf %s *\n
+19,8:Drive_IO(%s %ld, Anzahl %d ) [%s] [Laufwerk %c%c]\n
+19,9:SCHREIBE
+19,10:LESE
+19,11:\nKann keine Zugriffsflags erhalten (Fehler %02x). Abbruch.\n
+19,12:\nKann Zugriffsflags nicht aktivieren (Fehler %02x). Abbruch.\n
+
+# see above for set 20
+
+# hdisk.c
+21,0:Standard-BPB *FAT1x* %u Sektoren/FAT, %u Rootgröße. FAT32 erzwungen.\n
+21,1:Ungültiges Laufwerk! Abbruch.\n
+21,2:Zugang verweigert! LOCK-Problem? Abbruch.\n
+21,3:GENIOCTL/0860 Fehler %02x. Versuche FAT32.\n
+21,4:GENIOCTL/4860 Fehler %02x. Kein FAT32 Kernel?\n
+21,5:FAT1x FAT Größe %u Sektoren?\n
+21,6:WinNT/XP/2k DOS Box. Kann nicht formatieren.\n
+21,7:Standardmäßige BPB FAT32-Rootverzeichnisposition auf 2 korrigiert.\n
+# GDP = Get_Device_Parameters()
+21,8:GDP Selbstkorrektur: Muß FAT12 sein! FAT1x Größe: %u\n
+21,9:GDP Selbstkorrektur: Muß FAT16 sein! FAT1x Größe: %u\n
+21,10:GDP Selbstkorrektur: Ist tatsächlich FAT32! FAT Größe: %u\n
+21,11:GDP Selbstkorrektur: Entferne FAT1x FAT (%u) / root (%u) von FAT32 Disk.\n
+21,12:GDP Selbstkorrektur: Kann kein FAT1x sein.\n
+21,13:GDP Selbstkorrektur: Kann kein FAT1x sein, kein FAT1x FAT\n
+21,14:GDP Selbstkorrektur: Kann kein FAT1x sein, kein FAT1x root.\n
+21,15:GDP Standard BPB Lesefehler %02x.\n
+21,16: Ausrichten für ungerade Anzahl von FAT32 FATs.\n
+21,17:Volume hat keine Größe!? Abbruch.\n
+21,18:%d Bytes / Sektor, nicht 512!? Abbruch.\n
+21,19:Nicht 1 oder 2 FATs sondern %hu!? Abbruch.\n
+21,20:WARNUNG: Cluster größer als 64k. Das ist höchstgradig unkompatibel!\n
+# 21.21 & 21.22 go together
+21,21:WARNUNG: Clustergröße > 32k. Wird unter Win9x/MS-DOS nicht funktionieren!\n
+21,22:  WinME, WinNT/2k/XP/2003 und FreeDOS werden allerdings okay sein.\n
+21,23:FATAL: Clustergröße nicht 0.5, 1, 2, 4, 8, 16, 32, 64k, 128k sondern %d.%dk!\n
+21,24: Beinahe FAT32-Laufwerk als FAT1x formatiert, puh...\n
+# 21.25 & 21.26 go together
+21.25:WARNUNG: FAT32 Größe wird mehr als (16 MB - 64 kB) sein!\n
+21,26:  Win9x kann das Laufwerk nicht benutzen. Andere OSes brauchen mehr RAM/CPU.\n
+21,27: Beinahe FAT1x-Laufwerk als FAT32 formatiert, puh...\n
+# 21.28 or 21.29 followed by "FAT12.\n" or "FAT16.\n"
+# with %lu %s size, e.g. 999 kbytes  -- see 13.1 and similar
+21,28: Festplattengröße: %lu %s, 
+21,29: Warnung: Die Festplatte hat keine standardmäßige Sektorgröße, 
+
+# floppy.c
+22,0:Format_Floppy_Cylinder( Kopf=%d Zyl=%d ) Sektoren=%d [int 13.5]\n
+22,1:Prüfe nur die ersten %d Sektoren pro Spur\n
+22,2:\nFormatierung fehlgeschlagen, Fehler in den ersten 7 Sektoren!\n
+22,3:Sektor %4ld CHS=[%2d:%d:%2d] ist schlecht\n
+22,4:Festplattenlaufwerk-Nummer! Abbruch.\n
+22,5:Formatiere auf %ldk (Zyl=%ld Kopf=%ld Sekt=%2ld)\n
+22,6:Kein Medientyp für %ldk-Format bekannt\n
+22,7:Kein Medientyp für %ldk-Format bekannt (Zyl=%ld Kopf=%ld Sekt=%2ld)\n
+22,8:Behandlung von Int 13.8 Laufwerkstyp 0x%x als 1440k.\n
+22,9:Verwende Laufwerksvorgabe: %ldk (Zyl=%ld Kopf=%ld Sekt=%2ld)\n
+22,10:Größe %ldk undefiniert!??\n
+22,11:Wollen Sie %ldk im %dk-Laufwerk? Zu viel! Abbruch.\n
+22,12:ÜBERFORMAT: %ldk im %dk Laufwerk. Viel Glück!\n
+22,13:Das ist ein 720k Laufwerk: /1, /4 oder /8 sind nicht möglich.\n
+22,14:Die Minimalgröße für diesen Laufwerkstyp ist 720k\n
+22,15:Dies ist ein 3.25 Inch Laufwerk: /1, /4 oder /8 sind nicht möglich.\n
+22,16:Die Minimalgröße für diesen Laufwerkstyp ist 720k\n
+22,17:Dies ist ein 3.25 Inch Laufwerk: Kein 1200k Format.\n
+22,18:Laufwerksmoduseinstellung (Größenklasse %d) fehlgeschlagen, Fehler %02x hex\n
+22,19:Keine Diskette im Laufwerk!\n
+22,20:Mache trotzdem weiter.\n
+22,21:Keine Disk im Laufwerk (Zeitüberschreitung)!\n
+22,22:Medientyp %ldk  (%d x %ld x %2d) von diesem Laufwerk nicht unterstützt!?\n
+22,23:Geometriesatz (Int 13.18) Fehler (%02x). 
+22,24:Gebe auf.\n
+22,25:Ignoriert.\n
+22,26:DDPT ist in ROM - nur Standardgrößen möglich.\n
+22,27:SECTORS PER TRACK blieb bei %d hängen, gewollt %d. Fahre trotzdem fort.\n
+22,28:DDPT-Optimierung unmöglich: DDPT im ROM\n
+22,29Keine Lückenlänge für %d Sekt/Zyl bekannt. Viel Glück mit dem BIOS-Wert!\n
+22,30:TWEAK: Sektoren pro Zylinder in DDPT gesetzt auf %d\n
+22,31:TWEAK: %d Sektoren pro Zylinder, Formatlückenlänge %d!\n
+22,32:Floppy-Controller-Reset fehlgeschlagen (Code %x) - DDPT abgelehnt?\n
+22,33:-- Drücken Sie ENTER, um die Platte zu formatieren (ESCAPE zum Abbrechen) --\n
+22,34:[Doppelschritt] 
+22,35:[konfigurierter Typ %hu] 
+22,36: 500 kbps (HD 1xx0k)\n
+22,37: 300 kbps (DD  360k)\n
+22,38: 250 kbps (DD  720k)\n
+22,39:1000 kbps (ED 2880k)\n
+
+# savefs.c
+23,0:MIRROR map Sektor %lu kann nicht geschrieben werden - UNFORMAT beschädigt!\n
+23,1:Keine 512 Bytes / Sektor. UNFORMAT Daten können nicht gespeichert werden.\n
+23,2:Nicht 1 oder 2 FAT-Kopien. UNFORMAT Daten können nicht gespeichert werden.\n
+23,3:WARNUNG: Die Anzahl der reservierten / Bootsektoren ist %u, nicht 1.\n
+23,4:WARNUNG: Reservierte Sektoren sind %u, nach der Formatierung aber %u.\n
+23,5: Muss FAT32 sein, nicht %s!\n
+23,6: Speichere UNFORMAT-Infos NICHT, behalte fehlerhafte Clusterliste auch nicht.\n
+23,7:WARNUNG: FAT32 mit zusätzlichem Rootverzeichnis im FAT1x Stil???\n
+23,8: Muss FAT32 sein, nicht FAT1x!\n
+23,9: FAT32 Rootverzeichnis aber FAT1x FAT!\n
+23,10: %s Größe, sollte aber FAT32 sein!\n
+23,11: Unplausibles Rootverzeichnis, FAT oder Laufwerksgröße! Falscher Bootsektor?\n
+23,12: Große FAT für wenige Daten? Falscher Bootsektor?\n
+23,13:Rootverzeichnis NICHT im 1. Cluster, wird NICHT gespeichert!\n
+23,14: Laufwerk sieht unformatiert aus, UNFORMAT-Infos werden NICHT gespeichert.\n
+23,15:Die Zahl der reservierten Sektoren differiert: GEFUNDEN %lu / GEPLANT %u.\n
+23,16:Die Zahl der FATs differiert: GEFUNDEN %lu / GEPLANT %hu\n
+23,17:Die Clustergröße differiert: GEFUNDEN %lu / GEPLANT %hu (Sektoren)\n
+#  FOUND # FAT?? / PLANNED # FAT??
+23,18:Die FAT Größe differiert: GEFUNDEN %lu %s / GEPLANT %lu %s\n
+23,19:Die MIRROR-Daten würden verwendete Cluster überschreiben. Abbruch.
+23,20:SafeFormat: %lu benutzte Datensektoren müssen gelöscht werden!\n
+23,21:Mirror map Zeiger-Schreibfehler - UNFORMAT wird bei Ihnen fehlschlagen!\n
+23,22:Überspringe den Schritt UNFORMAT / mirror Datenbackup.\n
+23,23:Lesefehler im Sektor %lu - UNFORMAT-Daten beschädigt.\n
+23,24:Schreibfehler im Sektor %lu - UNFORMAT-Daten beschädigt.\n
+23,25: Die mirror map ist %lu Bytes lang, 
+23,26: %lu Sektoren gespiegelt.\n
+23,27:Keine MIRROR / UNDELETE Daten: Falscher Zauber.\n
+23,28:\n Ende der mirror map. UNFORMAT erledigt.\n
+23,29: Klone Bootsektor in das Backup.\n
+23,30: Ungültigmachen der Daten des Dateisystem-Infosektors.\n
+23,31:*** Der Backupsektor %lu konnte nicht in den Sektor %lu kopiert werden ***\n
+23,32:Der Bootsektor würde durch Unsinn überschrieben, 0 oder > 7 FATs.\n
+23,33:*** Der Sektor %lu konnte nicht wiederhergestellt werden ***\n
+23,34:*** Der FAT-Sektor %lu konnte nicht in den Sektor %lu geklont werden ***\n
+23,35:WARNUNG: %hu FAT Kopien angefordert, verwende stattdessen %hu.\n
+23,36:WARNUNG: UNFORMAT verwandelt ein FAT1x Laufwerk in FAT32.\n
+23,37:WARNUNG: verwandelt ein FAT32-Laufwerk in FAT1x!?\n
+23,38:\n Bootsektordaten: %hu FAT-Kopien (Offset %lu), %lu Sektoren pro FAT\n
+
+# savefs.c unable to save filesystem properties error message
+# Use as many messages as needed, 1 message per max 79 column line
+# message numbers do not need to match up for messages for different languages
+# Each message should end with a newline \n
+# after every 23 messages user will be prompted to press a key to continue
+24,0:Die Eigenschaften des Dateisystems werden sich ändern, kann die (evtl.\n
+24,1:leere) alte Bad-Cluster-Liste nicht beibehalten. Verwenden Sie einen Ober-\n
+24,2:flächenscan oder FORMAT /U um die Bad-Cluster-Liste zu aktualisieren.\n
+
+# recordbc.c
+25,0:Defekte Disk: Schlechter Sektor in den Systemdaten. Formatierung abgebrochen.\n
+25,1:\nBootsektor defekt.\n
+25,2:\nFAT Sektor defekt.\n
+25,3:\nRoot Verzeichnissektor defekt.\n
+25,4:\nBootsektor defekt.\n
+25,5:\nFAT Sektor defekt.\n
+25,6:\nRoot Verzeichnissektor defekt.\n
+25,7:\nReservierter Sektor (Boot, Info, Backup von beidem...) defekt.\n
+25,8:\nFAT Sektor defekt.\n
+25,9:*** Schlechter Sektor %lu, Cluster %lu als schlecht in FAT markiert! ***\n
+25,10:WARNUNG: Muss BENUTZTEN cluster %lu als schlecht markieren!\n
+25,11:** %u fehlerhafte Sektoren gefunden. %lu Cluster als fehlerhaft markiert. **\n
+
+# bcread.c (bad clusters)
+26,0:\n *** Zu viele fehlerhafte Cluster! Führen Sie einen Oberflächenscan aus!\n
+26,1:BadClustPreserve abgebrochen: nicht 512 Bytes/Sektor!\n
+26,2: Scanne FAT Sektoren von %lu bis %lu...\n
+26,3: Scanne existierende FAT...\n
+26,4:\n Clusterstatistik: %lu benutzt, %lu defekt, %lu Objekte, %lu übrig.\n
+26,5:\n Clusterstatistik: %lu benutzt, %lu defekt, %lu Objekte, %lu übrig.\n
+26,6: Kann vorhandene FAT12 nicht verarbeiten, zu groß!\n
+26,7:\n Clusterstatistik: %lu benutzt, %lu defekt, %lu Objekte, %lu übrig.\n
