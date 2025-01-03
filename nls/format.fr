@@ -1,7 +1,7 @@
 # program: FreeDOS FORMAT.EXE message set - version 0.92a and later
 # language:French
 # display codepage:CP850
-# catalog codepage:CP850
+# catalog codepage:UTF8
 # translators:Berki Yenigün
 
 # version (on help screen)
@@ -9,8 +9,8 @@
 0,1:Écrit par Brian E. Reifsnyder, Eric Auer et d'autres.\n
 0,2:Copyright 1999 - 2024 sous les termes de GNU GPL, Version 2+.\n\n
 # 0.3 or 0.4 shown depending on if /Z:longhelp option used or not
-0,3:Syntaxe (cf. documentation pour plus d'informations détaillées):\n\n
-0,4:Syntaxe (cf. documentation ou utiliser /Z:longhelp pour plus d'options):\n\n
+0,3:Syntaxe (cf. documentation pour plus d'informations détaillées) :\n\n
+0,4:Syntaxe (cf. documentation ou utiliser /Z:longhelp pour plus d'options) :\n\n
 
 # common
 1,0:\n
@@ -135,7 +135,7 @@
 3,40:         si possible) les données mirror écraseront toujours la fin de la\n
 3,41:         zone des données !\n
 3,42:  FORMAT sélectionne automatiquement un mode (cf. ci-dessus) si vous\n
-3,43:              ne choisissez ni /Q ni /U\n\n
+3,43:         ne choisissez ni /Q ni /U\n\n
 3,44:\n
 3,45:Les types FAT pris en charge sont : FAT12, FAT16, FAT32, tous avec\n
 3,46:    mirror / unformat.\n
@@ -151,7 +151,7 @@
 3,55:    vos risques et périls.\n
 3,56:  Avertissement : les versions anciennes de DOS ne peuvent utiliser le\n
 3,57:  surformatage qu'avec un pilote.\n
-3,58:  720k dans 1440k nécessite un disque 720k. Utilisez un lecteur 360k pour
+3,58:  720k dans 1440k nécessite un disque 720k. Utilisez un lecteur 360k pour\n
 3,59:    formater du 360k.\n
 3,60:\n
 3,61:Pour le formatage FAT32, vous pouvez utiliser l'option /A pour forcer\n
@@ -290,6 +290,7 @@
 14,2:\nAbondonné à la demande de l'utilisateur.\n
 14,3:Valeur de paramètre non autorisée - %s%s\n
 14,4:%3d pourcent terminé.
+14,5:La valeur du paramètre requis est manquante - %s:valeur\n
 
 # Create_File_System()
 15,0:Drapeaux FAT32 0x%04x fixés à 0.\n
@@ -371,8 +372,8 @@
 21,27: Nous avons presque formaté le lecteur FAT1x ent ant que FAT32, ouf...\n
 # 21.28 or 21.29 followed by "FAT12.\n" or "FAT16.\n"
 # with %lu %s size, e.g. 999 kbytes  -- see 13.1 and similar
-21,28: Taille du disque : %lu %s, 
-21,29: Avertissement : le disque a une taille de secteur non standard, 
+21,28: Taille du disque : %lu %s,
+21,29: Avertissement : le disque a une taille de secteur non standard,
 
 # floppy.c
 22,0:Format_Floppy_Cylinder( tête=%d cylindre=%d ) secteurs=%d [int 13.5]\n
@@ -420,7 +421,7 @@
 23,0:Impossible d'écrire le secteur MIRROR MAP %lu - UNFORMAT gâchée !\n
 23,1:Pas 512 octets / secteur. Impossible de sauvegarder les données UNFORMAT.\n
 23,2:Pas 1 ou 2 copies FAT. Impossible de sauvegarder les données UNFORMAT.\n
-23,3:AVERTISSEMENT : nombre de secteurs réservé / d'amorçage est %u, pas 1.\n
+23,3:AVERTISSEMENT : nombre de secteurs réservés / d'amorçage est %u, pas 1.\n
 23,4:AVERTISSEMENT : les secteurs réservés sont %u mais seront %u après formatage.\n
 23,5: Doit être FAT32, pas %s !\n
 23,6: Les donnés unformat NE seront PAS enregistrées, la liste de clusters défectueux ne sera pas préservée.\n
@@ -443,7 +444,7 @@
 23,22:Étape de sauvegarde des données UNFORMAT / mirror ignorée.\n
 23,23:Erreur de lecture sur le secteur %lu - données UNFORMAT endommagées\n
 23,24:Erreur d'écriture sur le secteur %lu - données UNFORMAT endommagées\n
-23,25: La carte mirror fait %lu octets, 
+23,25: La carte mirror fait %lu octets,
 23,26: %lu secteurs mis en miroir.\n
 23,27:Pas de données MIRROR / UNDELETE : mauvaise magie.\n
 23,28:\n Fin de la carte mirror. UNFORMAT effectué.\n
@@ -455,8 +456,9 @@
 23,34:*** Impossible de cloner le secteur FAT %lu vers le secteur %lu ***\n
 23,35:AVERTISSEMENT : %hu copies FAT demandées, utilisation de %hu à la place.\n
 23,36:AVERTISSEMENT : UNFORMAT transforme le lecteur FAT1x en FAT32.\n
-23,37:AVERTISSEMENT : UNFORMAT transforme le lecteur FAT32 en FAT1x!?\n
+23,37:AVERTISSEMENT : UNFORMAT transforme le lecteur FAT32 en FAT1x !?\n
 23,38:\n Données du secteur d'amorçage : %hu copies FAT (décalage %lu), %lu secteurs par FAT\n
+23,39:Enregistrement des informations UNFORMAT...\n
 
 # savefs.c unable to save filesystem properties error message
 # Use as many messages as needed, 1 message per max 79 column line
@@ -487,7 +489,7 @@
 26,1:BadClustPreserve annulé : pas 512 octets/secteur !\n
 26,2: Analyse des secteurs FAT %lu à %lu...\n
 26,3: Analyse du FAT existant...\n
-26,4:\n Statistiques des clusters : %lu utilisés, %lu défectueux, %lu éléments, %lu dernier.\n
-26,5:\n Statistiques des clusters : %lu utilisés, %lu défectueux, %lu éléments, %lu dernier.\n
+26,4:\n Statistiques des clusters : %lu utilisés, %lu défectueux, %lu éléments, %lu derniers.\n
+26,5:\n Statistiques des clusters : %lu utilisés, %lu défectueux, %lu éléments, %lu derniers.\n
 26,6: Impossible de traiter le FAT12 existant, trop grand !\n
-26,7:\n Statistiques des clusters : %lu utilisés, %lu défectueux, %lu éléments, %lu dernier.\n
+26,7:\n Statistiques des clusters : %lu utilisés, %lu défectueux, %lu éléments, %lu derniers.\n

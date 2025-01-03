@@ -1,7 +1,7 @@
 # program: FreeDOS FORMAT.EXE message set - version 0.92a and later
 # language:Turkish
 # display codepage:CP857
-# catalog codepage:CP857
+# catalog codepage:UTF8
 # translators:Berki Yenigün
 
 # version (on help screen)
@@ -276,6 +276,7 @@
 14,2:\nKullanıcı isteğine istinaden iptal edildi.\n
 14,3:Parametre değerine izin verilmez - %s%s\n
 14,4:Yüzde %3d tamamlandı.
+14,5:Gerekli parametre değeri eksik - %s:değer\n
 
 # Create_File_System()
 15,0:0x%04x FAT32 bayrakları 0 olarak sabitlendi.\n
@@ -357,8 +358,8 @@
 21,27: FAT1x sürücüyü neredeyse FAT32 olarak biçimlendiriyorduk, aman...\n
 # 21.28 or 21.29 followed by "FAT12.\n" or "FAT16.\n"
 # with %lu %s size, e.g. 999 kbytes  -- see 13.1 and similar
-21,28: Disk boyutu: %lu %s, 
-21,29: Uyarı: Diskin sektör boyutu standart değil, 
+21,28: Disk boyutu: %lu %s,
+21,29: Uyarı: Diskin sektör boyutu standart değil,
 
 # floppy.c
 22,0:Format_Floppy_Cylinder( kafa=%d silindir=%d ) sektör=%d [int 13.5]\n
@@ -384,7 +385,7 @@
 22,20:Yine de devam ediliyor.\n
 22,21:Sürücüde disk yok (zaman aşımı)!\n
 22,22:Ortam türü %ldk  (%d x %ld x %2d)  bu sürücü tarafından desteklenmez mi!?\n
-22,23:Geometri set (int 13.18) hatası (%02x). 
+22,23:Geometri set (int 13.18) hatası (%02x).
 22,24:Vazgeçiliyor.\n
 22,25:Dikkate alınmadı.\n
 22,26:DDPT ROM'da - sadece standart boyutlar mümkün.\n
@@ -395,8 +396,8 @@
 22,31:AYAR: silindir başı %d sektör, biçim boşluk uzunluğu %d!\n
 22,32:Disket kontrolcüsü sıfırlaması başarısız oldu (kod %x) - DDPT ret mi edildi?\n
 22,33:-- Diski biçimlendirmek için ENTER tuşuna basın (İptal etmek için ESCAPE) --\n
-22,34:[doublestepping] 
-22,35:[yapılandırılan tür %hu] 
+22,34:[doublestepping]
+22,35:[yapılandırılan tür %hu]
 22,36: 500 kbps (HD 1xx0k)\n
 22,37: 300 kbps (DD  360k)\n
 22,38: 250 kbps (DD  720k)\n
@@ -429,7 +430,7 @@
 23,22:UNFORMAT / mirror verilerinin yedeklenmesi adımı atlanıyor.\n
 23,23:%lu sektöründe okuma hatası - UNFORMAT verisi hasarlı\n
 23,24:%lu sektöründe yazma hatası - UNFORMAT verisi hasarlı\n
-23,25: Mirror haritası %lu bayt boyutunda, 
+23,25: Mirror haritası %lu bayt boyutunda,
 23,26: %lu sektör yansıtıldı.\n
 23,27:MIRROR / UNDELETE verisi yok: yanlış sihir.\n
 23,28:\n mirror haritasının sonu. UNFORMAT tamamlandı.\n
@@ -443,6 +444,7 @@
 23,36:UYARI: UNFORMAT FAT1x sürücüyü FAT32 olarak değiştiriyor.\n
 23,37:UYARI: UNFORMAT FAT32 sürücüyü FAT1x olarak değiştiriyor!?\n
 23,38:\n Başlatma sektörü verileri: %hu FAT kopyası (kayma %lu), FAT başına %lu sektör\n
+23,39:UNFORMAT bilgileri kaydediliyor...\n
 
 # savefs.c unable to save filesystem properties error message
 # Use as many messages as needed, 1 message per max 79 column line
