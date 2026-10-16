@@ -30,6 +30,7 @@ nls/*.pt working-tree-encoding=CP850 text eol=auto
 nls/*.es working-tree-encoding=CP850 text eol=auto
 nls/*.sv working-tree-encoding=CP850 text eol=auto
 nls/*.hu working-tree-encoding=CP852 text eol=auto
+nls/*.pl working-tree-encoding=CP852 text eol=auto
 nls/*.rs working-tree-encoding=CP852 text eol=auto
 nls/*.sl working-tree-encoding=CP852 text eol=auto
 nls/*.tr working-tree-encoding=CP857 text eol=auto
